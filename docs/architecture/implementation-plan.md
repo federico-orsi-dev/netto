@@ -258,7 +258,7 @@ interface SalaryCalculationResult {
 - `averageMonthlyNet = normalize(annualNet / 12)`.
 - `averageSalaryPayment = normalize(annualNet / salaryPaymentsPerYear)`.
 
-All `MoneyAmount` values are non-negative. Direction (`start`, `subtract`, `add`, `end`, `informational`) lives on semantic components rather than being encoded as negative money.
+All fiscal components and bases represented by `MoneyAmount` are non-negative. M3 implementation proved one necessary exception for the derived `modeledBurden`: at low supported RAL, the verified cuneo cash sum and trattamento integrativo coexist and can exceed outflows, so `modeledBurden = totalOutflows - totalCashBenefits` is signed and annual net can exceed RAL. Direction (`start`, `subtract`, `add`, `end`, `informational`) still lives on semantic components rather than being encoded as negative component money. This correction preserves the approved composition formula and is covered by the RAL EUR 10,000 golden fixture.
 
 `evaluatedRuleIds` records verified predicates/stages considered for the request; `appliedRuleIds` records rules that materially produced the result. A verified rule may legitimately evaluate to a zero/not-applicable outcome and still have an eligibility trace. Excluded rules appear only in `exclusions`, never in either rule list or as synthetic zero components. `breakdownOrder` contains only final monetary changes relevant to the current result; zero eligibility outcomes remain inspectable in trace.
 

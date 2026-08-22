@@ -2,9 +2,11 @@
 
 > Inserisci una RAL e ottieni una stima trasparente del netto italiano, con ogni numero collegato a regole fiscali e fonti autorevoli.
 
-**Status:** M2 — Implementation Architecture & Execution Plan complete. The bounded 2026 fiscal model and coding contracts are ready for an explicitly authorized M3; no calculator implementation exists yet.
+**Status:** M3 deterministic domain engine implemented and validated; awaiting independent domain review before M4 product UI work.
 
 Netto is a production-minded hiring-assignment prototype for an Italian employee or candidate evaluating a compensation package. V1 will estimate annual net salary, average monthly net, and average contractual instalment for fiscal year 2026 under one explicit Milan/Lombardy employee profile.
+
+The repository now contains a strict TypeScript, React, and Vite scaffold plus the pure `calculateSalary2026` domain facade. The fiscal engine implements the 15 verified rules, preserves all 9 exclusions as explicit boundaries, uses `decimal.js` only behind a monetary adapter, and validates the complete EUR 10,000–120,000 whole-euro input range. The final product interface remains an M4 deliverable.
 
 ## Current scope
 

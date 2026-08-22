@@ -1,15 +1,15 @@
 # Project State
 
-- **Phase:** M2 — Implementation Architecture & Execution Plan
-- **Milestone status:** complete; ready for an explicitly authorized M3
+- **Phase:** M3 — Deterministic Domain Engine
+- **Milestone status:** implementation complete and locally validated; awaiting independent domain review
 - **Architecture:** approved through M2; Phase 0 closed
 - **Fiscal foundation:** 15 verified, 9 excluded, 0 candidate, and 0 blocked rules; bounded assumptions and product money policy approved
-- **Current task:** none; M1 is frozen and M2 is closed
-- **Next permitted milestone:** M3 deterministic domain engine only after an explicit new goal
-- **Pending human gate:** M3 implementation authorization; production dependencies are selected by architecture but installed only in M3; release approval remains separate
+- **Current task:** none; M3 implementation is closed pending its independent money/fiscal/pipeline/trace review
+- **Next permitted milestone:** independent M3 domain review; M4 must not start automatically
+- **Pending human gate:** acceptance of the independently reviewed M3 domain engine; release approval remains separate
 - **Release:** not eligible
-- **Last meaningful run:** `RUN-2026-08-22-016` — M2 implementation architecture and execution plan
-- **Last updated:** 2026-08-22
+- **Last meaningful run:** `RUN-2026-08-23-017` — M3 deterministic domain engine implementation
+- **Last updated:** 2026-08-23
 
 ## M1 closure
 
@@ -40,6 +40,16 @@ M2 converts the frozen product, fiscal, architecture, testing, delivery, and AI-
 
 No implementation code, package manifest, dependency installation, application test, remote mutation, Cloudflare project, or deployment was created in M2. There are no blocking implementation decisions; scaffold-time version selection and visual tokens are explicitly deferrable.
 
+## M3 implementation closure
+
+M3 implements the strict React/TypeScript/Vite scaffold, the domain-owned `decimal.js` adapter, typed 2026 fiscal context and source metadata, explicit contribution/national/local stages, year-bound `calculateSalary2026` facade, canonical public-cent amount registry, semantic components, deterministic trace, typed errors, exclusions, fixtures, and invariants. The React shell is intentionally only a placeholder; M4 owns the product interface.
+
+All 15 verified Rule IDs are represented in executable metadata and tested responsibilities. All 9 excluded Rule IDs remain limitation metadata and cannot enter evaluated/applied rule lists or calculation components. No fiscal lifecycle state or canonical source conclusion changed.
+
+Implementation exposed one M2 contract inconsistency: verified low-income cash benefits can exceed outflows, making derived modeled burden negative and annual net greater than RAL. The implementation contract now permits only `modeledBurden` to be signed; every fiscal component/base remains non-negative. The RAL EUR 10,000 golden fixture proves the case and preserves the approved annual-net composition.
+
+Validation passes strict typecheck, ESLint import boundaries, Prettier check, 90 rule/boundary/golden/invariant tests, the separate 110,001-value exhaustive range test, and the Vite production build. The exhaustive gate preserves minimum modeled public net IRPEF EUR 126.73 at RAL EUR 10,000. Independent review remains required before M4.
+
 ## Canonical orientation
 
 - [Product specification](docs/product/product-spec.md)
@@ -58,5 +68,6 @@ No implementation code, package manifest, dependency installation, application t
 - [Targeted independent review](docs/ai-engineering/runs/2026-08-22-014-m1-targeted-independent-review.md)
 - [M1 closure](docs/ai-engineering/runs/2026-08-22-015-m1-fiscal-foundation-closure.md)
 - [M2 planning run](docs/ai-engineering/runs/2026-08-22-016-m2-implementation-architecture.md)
+- [M3 implementation run](docs/ai-engineering/runs/2026-08-23-017-m3-deterministic-domain-engine.md)
 
 This file is a snapshot, not a diary. It describes authority recorded in canonical artifacts; it does not create authority.
