@@ -17,9 +17,9 @@ No executable expectation may be justified only by model memory or an external c
 
 ## M1 output
 
-M1 must propose deterministic fixtures for every material threshold and representative full-engine scenarios spanning low income, relief and deduction transitions, national brackets, contribution transitions, local exemptions, middle income, and the upper supported range. M1 does not implement tests.
+M1 defines deterministic fixtures for every material threshold and representative full-engine scenario spanning low income, relief and deduction transitions, national brackets, contribution transitions, local exemptions, middle income, and the upper supported range. M1 does not implement tests.
 
-Exact formula fixtures are tested before product normalization. Public aggregation fixtures apply the approved component-first money policy and must prove that each displayed aggregate equals the sum of its displayed components. Article 13 requires direct-income fixtures at EUR 49,997 / 49,998 / 49,999: the statutory exact deduction is EUR 0.191 / 0 / 0 and the normalized public component is EUR 0.19 / 0 / 0. Re-enumerate the whole supported RAL range with the approved assumption and policy and assert that the modeled net IRPEF minimum remains above the sourced local-tax de-minimis lineage before treating that boundary as output-unreachable.
+Exact formula fixtures are tested before product normalization. Public aggregation fixtures apply the approved component-first money policy and must prove that each displayed aggregate equals the sum of its displayed components. Article 13 requires direct-income fixtures at EUR 49,997 / 49,998 / 49,999: the statutory exact deduction is EUR 0.191 / 0 / 0 and the normalized public component is EUR 0.19 / 0 / 0. Re-enumerate the whole supported RAL range with the approved assumption and policy and assert that the modeled net IRPEF minimum remains at least EUR 126.73. This invariant protects the bounded exclusion of `RULE-LOCAL-2026-001`; any failure must reopen that exclusion rather than invent the unresolved predicate.
 
 ## Quality workflow once code exists
 

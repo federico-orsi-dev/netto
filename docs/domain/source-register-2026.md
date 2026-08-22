@@ -32,10 +32,10 @@ Each entry owns: stable Source ID; issuer; title; official URL; document type; p
 
 - **Issuer/title:** INPS, *Circolare numero 101 del 29-11-2024*.
 - **Official URL/type:** <https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa/dettaglio.circolari-e-messaggi.2024.11.circolare-numero-101-del-29-11-2024_14714.html>; official administrative circular.
-- **Publication/effective/fiscal year:** 2024-11-29; standing FPLD statement, subject to current-law check; used for 2026 candidate research.
+- **Publication/effective/fiscal year:** 2024-11-29; standing FPLD statement corroborated against the current 2026 INPS framework.
 - **Jurisdiction/access:** Italy, FPLD; accessed 2026-08-22.
 - **Location/claim:** paragraph 1, final two paragraphs before operational instructions. States that for the generality of FPLD members IVS is 33%, split 23.81% employer and 9.19% employee, plus the additional employee 1% above the first band.
-- **Authority/conflicts:** competent institution; the circular's immediate subject is narrower, so the independent verifier must confirm the general statement and absence of a 2026 superseding change.
+- **Authority/conflicts:** competent institution; the circular's immediate subject is narrower, and independent review confirmed its general statement within the bounded 2026 profile with no material superseding change found.
 
 ### SRC-INPS-CLASSIFICATION-2025
 
@@ -68,10 +68,10 @@ Each entry owns: stable Source ID; issuer; title; official URL; document type; p
 
 - **Issuer/title:** INPS, *Circolare numero 5 del 20-01-2025 — Modifiche alla disciplina contributiva in materia di integrazione salariale e fondi di solidarietà*.
 - **Official URL/type:** <https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa/dettaglio.circolari-e-messaggi.2025.01.circolare-numero-5-del-20-01-2025_14781.html>; official administrative circular.
-- **Publication/effective/fiscal year:** 2025-01-20; from 2025-01-01 without identified sunset; candidate applicability in 2026.
+- **Publication/effective/fiscal year:** 2025-01-20; from 2025-01-01 without identified sunset; contextual evidence for FIS profiles excluded from the fixed V1 archetype.
 - **Jurisdiction/access:** Italy, FIS and specified bilateral funds; accessed 2026-08-22.
 - **Location/claim:** paragraphs 1 and 2.1. Qualifying employers averaging up to five employees receive a 40% reduction of the 0.50% FIS rate after at least 24 months without a wage-support application; the employee bears one third.
-- **Authority/conflicts:** competent institution. Continued 2026 operation and exact eligibility require independent confirmation.
+- **Authority/conflicts:** competent institution; exact FIS eligibility remains outside the verified fixed CIGS profile and must be reopened if that profile changes.
 
 ### SRC-INPS-2022-637
 
@@ -158,10 +158,10 @@ Each entry owns: stable Source ID; issuer; title; official URL; document type; p
 
 - **Issuer/title:** INPS, *Circolare numero 156 del 30-12-2025 — Conguaglio contributivo di fine anno 2025*.
 - **Official URL/type:** <https://www.inps.it/it/it/inps-comunica/atti/circolari-e-messaggi-e-normativa/dettaglio.circolari-e-messaggi.2025.12.circolare-numero-156-del-30-12-2025_15125.html>; official administrative circular.
-- **Publication/effective/fiscal year:** 2025-12-30; 2025 operations evidencing standing mechanics; only mechanics reused for 2026 candidate research.
+- **Publication/effective/fiscal year:** 2025-12-30; 2025 operations evidence standing cumulative/year-end mechanics used in the verified 2026 annual-estimate interpretation; 2025 monetary amounts are not reused.
 - **Jurisdiction/access:** Italy / private employee reporting; accessed 2026-08-22.
 - **Location/claim:** paragraphs 4, 4.1, 5 and 5.1. Additional 1% and eligible ceiling are cumulative across the civil year and corrected at year-end/termination.
-- **Authority/conflicts:** competent institution; its 2025 amounts are not reused and a later 2026 year-end circular may refine mechanics.
+- **Authority/conflicts:** competent institution; its 2025 amounts are not reused. Reopen if a later 2026 year-end circular materially changes the annual-estimate mechanics.
 
 ### SRC-NAT-TUIR-ART3-2026
 
@@ -194,10 +194,10 @@ Each entry owns: stable Source ID; issuer; title; official URL; document type; p
 
 - **Issuer/title:** Italian Republic / MEF, TUIR article 51, *Determinazione del reddito di lavoro dipendente*.
 - **Official URL/type:** <https://def.finanze.it/DocTribFrontend/getAttoNormativoDetail.do?ACTION=getArticolo&articolo=Articolo+51&codiceOrdinamento=0000000000000510000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000&id=%7B31D694E8-4398-4030-873B-FEAF5A6647F9%7D>; consolidated primary legislation.
-- **Publication/effective/fiscal year:** 1986-12-31; displayed current article from 2026-05-23; paragraph 2(a) candidate-applicable throughout 2026.
+- **Publication/effective/fiscal year:** 1986-12-31; displayed current article from 2026-05-23; paragraph 2(a) applicable throughout the bounded 2026 model.
 - **Jurisdiction/access:** Italy; accessed 2026-08-22.
 - **Location/claim:** paragraphs 1 and 2(a). Employment income broadly includes employment-related sums/values while mandatory statutory employee/employer social contributions do not form income.
-- **Authority/conflicts:** official TUIR; visible 2026 changes concern other benefits, but reviewer must confirm paragraph 2(a)'s full-year continuity.
+- **Authority/conflicts:** official TUIR; independent review found the visible 2026 changes concern other benefits and no material interruption of paragraph 2(a)'s full-year use.
 
 ### SRC-NAT-L207-ART1-2-9
 
@@ -206,7 +206,7 @@ Each entry owns: stable Source ID; issuer; title; official URL; document type; p
 - **Publication/effective/fiscal year:** 2024-12-31; from 2025-01-01 with structural provisions continuing; 2026.
 - **Jurisdiction/access:** Italy; accessed 2026-08-22.
 - **Location/claim:** article 1(2–9), especially 4–6 and 9. Establishes structural fiscal-wedge sum/deduction, deduction amendments, income adjustments and automatic recognition.
-- **Authority/conflicts:** its paragraph-2 35% rate is superseded for 2026 by L. 199/2025; paragraphs 4–9 remain candidate-applicable.
+- **Authority/conflicts:** its paragraph-2 35% rate is superseded for 2026 by L. 199/2025; paragraphs 4–9 remain applicable to the verified bounded rules.
 
 ### SRC-NAT-DL3-ART1-2026
 
@@ -302,10 +302,10 @@ Each entry owns: stable Source ID; issuer; title; official URL; document type; p
 
 - **Issuer/title:** Comune di Milano, *Regolamento per l'applicazione dell'Addizionale Comunale IRPEF*.
 - **Official URL/type:** <https://fareimpresa.comune.milano.it/documents/20126/200621592/Regolamento%2Bper%2Bl%27applicazione%2Bdell%27Addizionale%2BComunale%2Ball%27Imposta%2Bsul%2BReddito%2Bdelle%2BPersone%2BFisiche.pdf/f5423372-46d4-c742-7cbe-4d0959865ec0?t=1613126257286>; official municipal regulation.
-- **Publication/effective/fiscal year:** amended 2020-09-28; threshold from 2020 and automatic continuation absent timely change; candidate 2026 applicability.
+- **Publication/effective/fiscal year:** amended 2020-09-28; threshold from 2020 and automatic continuation absent timely change; 2026 applicability confirmed by the current Comune page and budget materials.
 - **Jurisdiction/access:** Milan; accessed 2026-08-22.
 - **Location/claim:** articles 3(2–4), 4, 5, 6(2–3). Establishes 0.80%, whole-base application above inclusive EUR 23,000 exemption, due gate, domicile and continuation.
-- **Authority/conflicts:** controlling local rule; reviewer must search for any timely superseding 2026 resolution.
+- **Authority/conflicts:** controlling local rule; the independent review found no timely superseding 2026 rate/threshold measure in the registered current sources.
 
 ### SRC-LOCAL-2026-008
 

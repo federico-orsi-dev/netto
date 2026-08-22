@@ -3,7 +3,7 @@ title: Fiscal Rule Catalog 2026
 fiscal_year: 2026
 jurisdiction: Italy / Lombardy / Milan
 scenario: standard private-sector employee
-status: targeted-independent-re-review
+status: m1-verified
 ---
 
 # Fiscal Rule Catalog 2026
@@ -26,7 +26,7 @@ Allowed states are exactly `candidate`, `verified`, `excluded`, and `blocked`. C
 
 Each rule owns: stable Rule ID; name; fiscal year; jurisdiction; status; calculation stage/order; applicability; eligibility; exclusions; required inputs; calculation base; formula; rates; brackets; thresholds; rounding behavior; interactions/order; edge cases; Source IDs; evidence summary; engineering interpretation; assumptions; unresolved questions; expected trace representation; and required tests.
 
-## Candidate calculation stages
+## Verified calculation stages
 
 Research must establish, rather than assume, the legally material relationships among:
 
@@ -39,30 +39,30 @@ Research must establish, rather than assume, the legally material relationships 
 7. Milan municipal additional tax.
 8. Modeled deductions and estimated annual net.
 
-Independent review assessed the same 24 Rule IDs one-for-one: 18 review-verified, 6 review-blocked, and 0 rejected. Those are evidence-review dispositions, not canonical lifecycle transitions. After reconciliation and the two human product-policy approvals, this catalog contains 15 `candidate`, 1 `blocked`, 8 `excluded`, and 0 `verified` rules. The separate engineering money policy is `approved`; explicit human fiscal approval of Rule IDs remains outstanding.
+Independent review assessed the same 24 Rule IDs one-for-one at Checkpoint A, and the targeted re-review later resolved the approved assumption/policy handoffs. Review dispositions were reconciled against authoritative evidence before the human owner approved the bounded M1 fiscal foundation on 2026-08-22. This catalog now contains 15 `verified`, 9 `excluded`, 0 `candidate`, and 0 `blocked` rules. The separate engineering money policy is `approved` outside the fiscal-rule lifecycle.
 
-## Candidate rules — social security
+## Fiscal rules — social security
 
 ### RULE-INPS-2026-005 — Complete employee social-security contribution profile
 
 - **Fiscal year / jurisdiction:** 2026; Italy; INPS private-employer schemes.
-- **Status:** `candidate`; the human-approved V1 contribution-base assumption and product money policy resolve the former amount-producing blockers without verifying the component rules.
+- **Status:** `verified` for the bounded V1 profile after authoritative research, independent review, reconciliation, and explicit human fiscal approval on 2026-08-22.
 - **Calculation stage/order:** derive after contribution base and before IRPEF taxable income; employee-paid pension and wage-support/fund components reduce annual net and the employment-income tax base.
-- **Applicability:** canonical private-sector, non-executive, permanent employee working for an article 10 CIGO industrial employer with more than 15 employees, within CIGS scope, and not subject to any mandatory sector solidarity/supplemental fund carrying an employee contribution. General FPLD treatment is the candidate pension profile.
-- **Eligibility:** the human-approved fixed archetype supplies the article 10 CIGO, headcount, CIGS-scope, and no-employee-funded-sector/supplemental-fund facts required to select the contribution treatment. Independent evidence supports the named component rates and composition, but not a deterministic amount until the contribution-base assumption and annual-estimate money policy are approved.
+- **Applicability:** canonical private-sector, non-executive, permanent employee working for an article 10 CIGO industrial employer with more than 15 employees, within CIGS scope, and not subject to any mandatory sector solidarity/supplemental fund carrying an employee contribution. General FPLD treatment is the verified pension profile.
+- **Eligibility:** the human-approved fixed archetype supplies the article 10 CIGO, headcount, CIGS-scope, and no-employee-funded-sector/supplemental-fund facts required to select the contribution treatment. Independent evidence supports the named component rates and composition; the separately approved contribution-base assumption and annual-estimate money policy make the bounded result deterministic without becoming fiscal law.
 - **Exclusions:** FIS only if article 10 CIGO scope is explicit; a sector fund cannot be excluded merely because CIGO/CIGS applies. Executives, apprentices, special pension schemes, employee-specific relief, and employers outside the final fixed archetype remain excluded.
 - **Required inputs:** whole-euro RAL only. Article 10 CIGO industrial scope, more-than-15 average workforce/CIGS scope, general FPLD, and no applicable mandatory employee-funded sector solidarity/supplemental fund are fixed disclosed scenario assumptions rather than user inputs.
 - **Calculation base:** contribution income; under the product contract, annual RAL maps to this base only as an explicit valid-remuneration estimate assumption.
-- **Formula/rates:** candidate evidence proposes a general 9.19% employee FPLD pension share, a separate 0.30% employee CIGS share for the approved archetype, and a further 1% on the 2026 pension base above EUR 56,224. These values remain unverified.
-- **Brackets/thresholds:** candidate FPLD additional 1% threshold of EUR 56,224; approved employer headcount is above 15 and CIGS scope is assumed. The candidate 2026 EUR 122,295 pension ceiling is above the supported EUR 120,000 maximum and therefore would not change an in-range result.
+- **Formula/rates:** general 9.19% employee FPLD pension share, separate 0.30% employee CIGS share for the approved archetype, and a further 1% on the 2026 pension base above EUR 56,224.
+- **Brackets/thresholds:** additional 1% threshold of EUR 56,224; approved employer headcount is above 15 and CIGS scope is assumed. The verified 2026 EUR 122,295 pension ceiling is above the supported EUR 120,000 maximum and therefore does not change an in-range result.
 - **Rounding behavior:** normalize each public employee contribution component under approved `POLICY-MONEY-2026-001`, then sum those normalized components and use that aggregate downstream. This is not payroll-exact behavior.
 - **Interactions/ordering:** total employee contributions precede calculation of employment-income taxable base. Omitting an applicable supplemental component changes contributions, taxable income, tax, and net.
 - **Edge cases:** employers covered by CIGS, FIS at different headcounts, sector bilateral funds, conditional FIS reductions, profile changes, multiple employers, or an expanded salary ceiling.
 - **Source IDs:** `SRC-INPS-2024-101`, `SRC-INPS-2026-006`, `SRC-INPS-CLASSIFICATION-2025`, `SRC-INPS-2022-637`, `SRC-INPS-2022-076`, `SRC-LEGAL-DLGS148-2015-ART10`, `SRC-LEGAL-DLGS148-2015-ART23`, `SRC-INPS-FIS-CURRENT`, `SRC-INPS-2025-005`, `SRC-INPS-2024-086`, `SRC-INPS-2026-2548`.
 - **Evidence summary:** INPS identifies 9.19% as the general FPLD pension share and separately ties other contribution characteristics to employer classification and wage-support coverage. Official evidence supports a 0.30% employee CIGS component for the fixed archetype and a current telecom-sector counterexample in which a 0.15% employee-funded sector contribution coexists with CIGO/CIGS. The previously unresolved amount-producing base/policy handoff is now governed by the approved V1 assumption and product money policy; no new fixed-profile rate was discovered.
-- **Engineering interpretation:** model FPLD, additional IVS, and CIGS as separate candidate components under the fixed archetype. The no-sector-fund fact is an explicit scenario boundary, not a zero-valued calculated component, and the result must never be described as universal for all private employees.
+- **Engineering interpretation:** model FPLD, additional IVS, and CIGS as separate verified components under the fixed archetype. The no-sector-fund fact is an explicit scenario boundary, not a zero-valued calculated component, and the result must never be described as universal for all private employees.
 - **Assumptions:** article 10 CIGO industrial employer; average workforce above 15; employer and worker within CIGS scope; general FPLD employee; no mandatory sector solidarity/supplemental fund carrying an employee contribution; no special relief.
-- **Unresolved questions:** targeted independent re-review of the approved assumption/policy handoffs, then explicit human fiscal approval; no rate or employer-profile issue remains open.
+- **Unresolved questions:** none material within the bounded V1 profile; reopen on employer-profile, fund-coverage, contribution-regime, fiscal-year, or supported-range change.
 - **Expected trace representation:** once resolved, list the 9.19% pension component, additional 1% when active, and any selected wage-support/fund component separately, with the employer-profile assumption visible.
 - **Required tests:** threshold fixtures at RAL EUR 56,223/56,224/56,225; profile-table fixtures for CIGS, FIS headcount variants and bilateral-fund coverage; supported maximum EUR 120,000; exact reconciliation after the approved rounding policy.
 
@@ -70,7 +70,7 @@ Full candidate source/rule reconstruction and alternatives are retained in [RUN-
 
 ### RULE-INPS-2026-001 — Canonical contribution base from RAL
 
-- **Fiscal year / jurisdiction / status:** 2026; Italy / INPS / FPLD; `candidate` under the human-approved V1 estimator assumption; the equality is not fiscal law.
+- **Fiscal year / jurisdiction / status:** 2026; Italy / INPS / FPLD; `verified` within the human-approved V1 estimator assumption; the equality itself remains product scope, not fiscal law.
 - **Calculation stage/order:** derive the annual contribution base before pension, CIGS, and IRPEF calculations.
 - **Applicability / eligibility:** full-year subordinate employment under the cash-only RAL contract; general FPLD profile and lawful ordinary contribution-subject remuneration.
 - **Exclusions:** TFR, benefits, bonuses, reimbursements, exceptional pay, multiple employers, relief, and omitted contribution-income components.
@@ -83,13 +83,13 @@ Full candidate source/rule reconstruction and alternatives are retained in [RUN-
 - **Source IDs:** `SRC-LEGAL-DLGS314-1997-ART6`, `SRC-INPS-2026-006`.
 - **Evidence summary:** law defines contribution income in the reference period and preserves contribution minima; it does not equate user-entered RAL with the legal base. The one-input identity can therefore exist only as a bounded estimator assumption.
 - **Engineering interpretation:** keep the two domain concepts separate and derive one from the other only under a visible assumption; do not add CCNL, hours, level, or pay-period inputs to this focused estimator.
-- **Assumptions / unresolved questions:** approved: one employer, full year, lawful ordinary cash RAL, fully contribution-subject except where an explicit modeled rule states otherwise, with no omitted contribution income or relief. Targeted review must confirm that the catalog consistently treats this as product scope rather than verified law.
+- **Assumptions / unresolved questions:** approved: one employer, full year, lawful ordinary cash RAL, fully contribution-subject except where an explicit modeled rule states otherwise, with no omitted contribution income or relief. Independent review confirmed that this is product scope rather than verified legal identity; reopen when the input/profile contract changes.
 - **Expected trace representation:** estimated contribution base, identity formula, assumptions, and sources.
 - **Required tests:** identity at EUR 10,000, 56,223/56,224/56,225, 119,999, and 120,000; installment-count invariance.
 
 ### RULE-INPS-2026-002 — General FPLD employee IVS share
 
-- **Fiscal year / jurisdiction / status:** 2026; Italy / INPS / FPLD; `candidate`.
+- **Fiscal year / jurisdiction / status:** 2026; Italy / INPS / FPLD; `verified`.
 - **Calculation stage/order:** base employee pension contribution after the contribution-base/ceiling stage.
 - **Applicability / eligibility:** ordinary general-FPLD non-agricultural employee under the fixed profile.
 - **Exclusions:** executives or workers in special funds, apprentices, domestic/agricultural work, sector-specific pension schemes, relief, and waivers.
@@ -102,13 +102,13 @@ Full candidate source/rule reconstruction and alternatives are retained in [RUN-
 - **Source IDs:** `SRC-INPS-2024-101`, `SRC-INPS-2026-006`, `SRC-INPS-CLASSIFICATION-2025`.
 - **Evidence summary:** INPS states the 9.19% employee share for the generality of FPLD members and separates the additional band contribution.
 - **Engineering interpretation:** expose a named IVS pension component, not a generic all-INPS amount.
-- **Assumptions / unresolved questions:** general FPLD, no relief, base equals RAL in range; verifier must confirm current 2026 applicability and absence of a profile-specific change.
+- **Assumptions / unresolved questions:** general FPLD, no relief, and the approved V1 contribution-base assumption; reopen for a different pension profile or relief.
 - **Expected trace representation:** base, 9.19%, multiplication, amount, FPLD assumption, source.
 - **Required tests:** exact pre-round amounts: EUR 10,000 → 919; EUR 56,224 → 5,166.9856; EUR 120,000 → 11,028; proportionality below any ceiling.
 
 ### RULE-INPS-2026-003 — Additional employee IVS above the first pensionable band
 
-- **Fiscal year / jurisdiction / status:** 2026; Italy / INPS / FPLD; `candidate`.
+- **Fiscal year / jurisdiction / status:** 2026; Italy / INPS / FPLD; `verified`.
 - **Calculation stage/order:** after base IVS and before aggregate employee contributions.
 - **Applicability / eligibility:** employee pension rate below 10%, including the fixed 9.19% FPLD profile; positive pension base above EUR 56,224.
 - **Exclusions:** no amount at/below the band, regimes with employee pension rate at least 10%, and base beyond an applicable ceiling.
@@ -121,13 +121,13 @@ Full candidate source/rule reconstruction and alternatives are retained in [RUN-
 - **Source IDs:** `SRC-LEGAL-DL384-1992-ART3TER`, `SRC-INPS-2026-006`, `SRC-INPS-2025-156`.
 - **Evidence summary:** primary law supplies the extra percentage and INPS supplies the 2026 band and cumulative annual mechanics.
 - **Engineering interpretation:** apply an annual excess-base formula and disclose that withholding timing is not simulated.
-- **Assumptions / unresolved questions:** one employer/full year and base rate 9.19%; verifier must confirm annualization and source consolidation.
+- **Assumptions / unresolved questions:** one employer/full year and base rate 9.19%; reopen for multiple employment relationships, period simulation, or fiscal-year change.
 - **Expected trace representation:** annual base, band, excess, 1%, amount, assumption, source.
 - **Required tests:** EUR 56,223 → 0; 56,224 → 0; 56,225 → 0.01; 120,000 → 637.76; installment invariance.
 
 ### RULE-INPS-2026-004 — Annual pension contribution-base ceiling
 
-- **Fiscal year / jurisdiction / status:** 2026; Italy / eligible contribution-system workers; `candidate` and inactive within the supported range.
+- **Fiscal year / jurisdiction / status:** 2026; Italy / eligible contribution-system workers; `verified` and inactive within the supported range.
 - **Calculation stage/order:** constrain pension base before base and additional IVS.
 - **Applicability / eligibility:** workers first compulsorily insured from 1996 or qualifying optants.
 - **Exclusions:** pre-1996 seniority without a qualifying option.
@@ -213,14 +213,14 @@ Full candidate source/rule reconstruction and alternatives are retained in [RUN-
 - **Reconciliation invariant:** at every public aggregation node, `displayedAggregate = sum(displayedComponents)` exactly in canonical cents. The final annual-net node must reconcile from the same displayed contribution, tax, local-tax, and cash-benefit components; monthly and contractual-instalment values derive from annual net and never change annual fiscal components.
 - **Rationale / trade-off:** visible components and aggregates reconcile exactly. At RAL EUR 10,005 the approved contribution policy yields EUR 919.46 IVS + EUR 30.02 CIGS = EUR 949.48, rather than the EUR 949.47 produced by aggregate-first rounding. This one-cent difference is disclosed estimator behavior, not a payroll-exact claim.
 - **Alternatives considered:** aggregate-first rounding; payroll-period simulation; whole-euro return-style rounding.
-- **Approval state:** human-approved product policy. Targeted independent re-review must verify consistent ownership, precedence, handoffs, and invariants before M1 fiscal approval; it must not reinterpret this policy as law.
+- **Approval state:** human-approved product policy. Targeted independent re-review confirmed ownership, precedence, handoffs, and invariants; the policy remains outside the fiscal-rule lifecycle and must never be reinterpreted as law.
 - **Trace / tests:** expose exact value, scale, mode and rounded value; test half-cent ties, adjacent values, reconciliation, determinism, and absence of binary-float leakage.
 
-## Candidate rules — national income tax and automatic relief
+## Fiscal rules — national income tax and automatic relief
 
 ### RULE-NAT-BASE-2026 — Ordinary employment income and IRPEF taxable base
 
-- **Fiscal year / jurisdiction / status:** 2026; Italy; `candidate`.
+- **Fiscal year / jurisdiction / status:** 2026; Italy; `verified`.
 - **Calculation stage/order:** after mandatory employee contributions; before gross IRPEF.
 - **Applicability / eligibility:** resident full-year employee with only ordinary cash employment income under TUIR article 49.
 - **Exclusions:** TFR, benefits, bonuses, substitute-taxed/exempt pay, employer contributions, other income, and personal article 10 deductions.
@@ -233,13 +233,13 @@ Full candidate source/rule reconstruction and alternatives are retained in [RUN-
 - **Source IDs:** `SRC-NAT-TUIR-ART3-2026`, `SRC-NAT-TUIR-ART51-2026`.
 - **Evidence summary:** TUIR defines resident taxable income and excludes mandatory employee contributions from employment income.
 - **Engineering interpretation:** the identity is valid only inside the fixed no-other-income/no-other-deduction scenario.
-- **Assumptions / unresolved questions:** one full-year job and all RAL ordinary; verifier must reconcile the exact contribution/rounding handoff.
+- **Assumptions / unresolved questions:** one full-year job and all RAL ordinary; contribution and money handoffs are governed by the approved V1 assumption and policy.
 - **Expected trace representation:** RAL, contributions, resulting income, assumptions, sources.
 - **Required tests:** identity, non-negative base, source-linked contribution handoff, and rejection/exclusion of undecomposed special pay.
 
 ### RULE-NAT-GROSS-IRPEF-2026 — Progressive gross IRPEF
 
-- **Fiscal year / jurisdiction / status:** 2026; Italy; `candidate`.
+- **Fiscal year / jurisdiction / status:** 2026; Italy; `verified`.
 - **Calculation stage/order:** after national taxable base; before deductions and credits.
 - **Applicability / eligibility:** resident individual subject to ordinary IRPEF.
 - **Exclusions:** substitute-taxed components.
@@ -252,13 +252,13 @@ Full candidate source/rule reconstruction and alternatives are retained in [RUN-
 - **Source IDs:** `SRC-NAT-TUIR-ART11-2026`, `SRC-NAT-L199-ART1-2026`.
 - **Evidence summary:** L. 199/2025 changes the second rate to 33% from 2026.
 - **Engineering interpretation:** apply each rate only to its taxable slice.
-- **Assumptions / unresolved questions:** base from `RULE-NAT-BASE-2026`; none material beyond independent reconstruction.
+- **Assumptions / unresolved questions:** base from `RULE-NAT-BASE-2026`; none material within the 2026 V1 envelope.
 - **Expected trace representation:** one row per occupied bracket with bounds, slice, rate, tax, source.
 - **Required tests:** taxable-income fixtures 27,999/28,000/28,001 and 49,999/50,000/50,001; continuity and monotonicity.
 
 ### RULE-NAT-EMPLOYMENT-DEDUCTION-2026 — Employment-income deduction
 
-- **Fiscal year / jurisdiction / status:** 2026; Italy; `candidate`.
+- **Fiscal year / jurisdiction / status:** 2026; Italy; `verified`.
 - **Calculation stage/order:** after gross IRPEF; before net IRPEF.
 - **Applicability / eligibility:** full-year permanent employee income under TUIR articles 49/13; total income at most EUR 50,000.
 - **Exclusions:** pensions, fixed-term minimum, and partial-year proration.
@@ -277,7 +277,7 @@ Full candidate source/rule reconstruction and alternatives are retained in [RUN-
 
 ### RULE-NAT-NET-IRPEF-2026 — Net ordinary IRPEF
 
-- **Fiscal year / jurisdiction / status:** 2026; Italy; `candidate`.
+- **Fiscal year / jurisdiction / status:** 2026; Italy; `verified`.
 - **Calculation stage/order:** after modeled deductions; before separate non-taxable cash benefits.
 - **Applicability / eligibility:** ordinary IRPEF in the fixed scenario.
 - **Exclusions:** personal/family deductions and foreign-tax credits.
@@ -290,13 +290,13 @@ Full candidate source/rule reconstruction and alternatives are retained in [RUN-
 - **Source IDs:** `SRC-NAT-TUIR-ART11-2026`, `SRC-NAT-L207-ART1-2-9`, `SRC-NAT-DL3-ART1-2026`.
 - **Evidence summary:** TUIR caps deductions at gross tax and statutes classify the cash measures separately.
 - **Engineering interpretation:** separate liability reduction from positive cash benefits in result and trace.
-- **Assumptions / unresolved questions:** only modeled deductions apply; verifier must reconcile this result with the local-tax due gate.
+- **Assumptions / unresolved questions:** only modeled deductions apply; the unresolved local de-minimis edge is boundedly excluded under the supported-range invariant.
 - **Expected trace representation:** gross tax, each deduction, capacity cap, net tax, separate benefits.
 - **Required tests:** non-negative invariant, order, and no cash benefit inside deduction capacity.
 
 ### RULE-NAT-CUNEO-SUM-2026 — Non-taxable fiscal-wedge sum
 
-- **Fiscal year / jurisdiction / status:** 2026; Italy; `candidate`.
+- **Fiscal year / jurisdiction / status:** 2026; Italy; `verified`.
 - **Calculation stage/order:** eligibility from income; cash addition after liabilities.
 - **Applicability / eligibility:** non-pension employee with adjusted total income `R <= 20000`.
 - **Exclusions:** pensions, income above limit, and absent impatriate adjustments.
@@ -309,13 +309,13 @@ Full candidate source/rule reconstruction and alternatives are retained in [RUN-
 - **Source IDs:** `SRC-NAT-L207-ART1-2-9`, `SRC-NAT-ADE-CIR4E-2025`.
 - **Evidence summary:** law supplies eligibility, rates, annualization and automatic recognition.
 - **Engineering interpretation:** add after liabilities; never call it a tax deduction or subtract it from RAL.
-- **Assumptions / unresolved questions:** 365 days and no adjusted-income overlays; cent policy and coexistence presentation require review.
+- **Assumptions / unresolved questions:** 365 days and no adjusted-income overlays; approved money policy governs public cents and independent review confirmed coexistence with treatment integrativo.
 - **Expected trace representation:** eligibility income, annualization, selected rate/base, amount, non-taxability, source.
 - **Required tests:** income fixtures 8,499/8,500/8,501; 14,999/15,000/15,001; 19,999/20,000/20,001; non-inclusion in taxable base.
 
 ### RULE-NAT-CUNEO-DEDUCTION-2026 — Additional employee deduction
 
-- **Fiscal year / jurisdiction / status:** 2026; Italy; `candidate`.
+- **Fiscal year / jurisdiction / status:** 2026; Italy; `verified`.
 - **Calculation stage/order:** alongside employment deduction after gross tax; before net IRPEF.
 - **Applicability / eligibility:** non-pension employee with `20000<R<=40000` and full-year work.
 - **Exclusions:** income at/below 20,000 or above 40,000 and pensions.
@@ -328,13 +328,13 @@ Full candidate source/rule reconstruction and alternatives are retained in [RUN-
 - **Source IDs:** `SRC-NAT-L207-ART1-2-9`, `SRC-NAT-ADE-CIR4E-2025`.
 - **Evidence summary:** law supplies amount, bands and phase-out; Agenzia confirms zeroing at 40,000.
 - **Engineering interpretation:** model as non-refundable tax deduction.
-- **Assumptions / unresolved questions:** 365 days and no income modifiers; targeted review must verify the approved policy handoff.
+- **Assumptions / unresolved questions:** 365 days and no income modifiers; approved policy governs the public monetary handoff.
 - **Expected trace representation:** band, phase-out terms, deduction, capacity cap, source.
 - **Required tests:** 19,999/20,000/20,001; 31,999/32,000/32,001; 39,999/40,000/40,001; cap invariant.
 
 ### RULE-NAT-TREATMENT-INTEGRATIVO-LOW-2026 — Low-income treatment integrativo
 
-- **Fiscal year / jurisdiction / status:** 2026; Italy; `candidate`.
+- **Fiscal year / jurisdiction / status:** 2026; Italy; `verified`.
 - **Calculation stage/order:** eligibility after gross tax and employment deduction; downstream cash addition.
 - **Applicability / eligibility:** full-year non-pension employee with `R<=15000` and strict capacity test `grossEmploymentIrpef > employmentDeduction - 75`.
 - **Exclusions:** pension, failed capacity, or income above 15,000.
@@ -347,7 +347,7 @@ Full candidate source/rule reconstruction and alternatives are retained in [RUN-
 - **Source IDs:** `SRC-NAT-DL3-ART1-2026`, `SRC-NAT-L207-ART1-2-9`, `SRC-NAT-ADE-CIR4E-2025`.
 - **Evidence summary:** current law fixes amount, ceiling, EUR 75 adjustment, strict test, proration and recognition.
 - **Engineering interpretation:** add only after exposing the independent capacity comparison.
-- **Assumptions / unresolved questions:** 365 days and ordinary income only; independent verification already confirmed coexistence with the cuneo sum, while final human fiscal approval remains pending.
+- **Assumptions / unresolved questions:** 365 days and ordinary income only; independent verification confirmed coexistence with the cuneo sum.
 - **Expected trace representation:** income, gross tax, deduction, EUR 75 adjustment, strict result, days, amount, source.
 - **Required tests:** 8,173/8,174/8,175; 14,999/15,000/15,001; benefit remains outside taxable base.
 
@@ -406,16 +406,16 @@ Full candidate source/rule reconstruction and alternatives are retained in [RUN-
 - **Expected trace representation:** visible limitation, never zero-value rows.
 - **Required tests:** no personal inputs or deductions and methodology source link.
 
-## Candidate rules — Lombardy and Milan additions
+## Fiscal rules — Lombardy and Milan additions
 
 ### RULE-LOCAL-2026-001 — Common base, domicile, and IRPEF-due gate
 
-- **Fiscal year / jurisdiction / status:** 2026; Italy / Lombardy / Milan; `blocked` pending the exact 2026 IRPEF-due/de-minimis predicate.
+- **Fiscal year / jurisdiction / status:** 2026; Italy / Lombardy / Milan; `excluded` from the bounded V1 calculation because the unresolved de-minimis edge is output-unreachable throughout the supported envelope; the predicate is not verified.
 - **Calculation stage/order:** after deductible employee contributions and the national due determination; before both local liabilities.
 - **Applicability / eligibility:** fiscal domicile in Milan, Lombardy, at 1 January 2026; additions apply only if IRPEF is legally due for the year.
 - **Exclusions:** failed due gate, different domicile, substitute/separate-tax income, and excluded personal facts.
 - **Required inputs / calculation base:** comprehensive IRPEF income, recognized deductible charges, domicile, and sourced `irpefIsDue`; `B = comprehensiveIncome - deductibleCharges`.
-- **Formula:** once the blocked predicate is reconstructed: if `irpefIsDue=false`, both additions are zero; otherwise pass unchanged `B` to each local rule.
+- **Formula:** the unresolved de-minimis predicate is not implemented. Verified upstream rules and exhaustive approved-policy enumeration establish public net IRPEF of at least EUR 126.73 for every supported whole-euro RAL, so V1 passes the sourced common base `B` to each local rule without fabricating an edge predicate.
 - **Rates / brackets / thresholds:** none; exact national due/de-minimis boundary remains a review dependency.
 - **Rounding behavior:** deterministic public normalization is owned by approved `POLICY-MONEY-2026-001`; exact normative local-tax rounding remains excluded by `RULE-LOCAL-2026-ROUNDING`.
 - **Interactions/order:** contributions can reduce `B`; employment deductions affect the due gate but not `B`; the local taxes are sibling calculations.
@@ -423,13 +423,13 @@ Full candidate source/rule reconstruction and alternatives are retained in [RUN-
 - **Source IDs:** `SRC-LOCAL-2026-001`, `SRC-LOCAL-2026-006`, `SRC-LOCAL-2026-011`, `SRC-LOCAL-2026-012`.
 - **Evidence summary:** governing statutes establish a common IRPEF-derived base, 1 January domicile, and an IRPEF-due condition.
 - **Engineering interpretation:** treat the due predicate as an explicit sourced domain fact, not an accidental displayed-value comparison; do not unblock it by importing income-year-2025 filing instructions. Under the approved contribution-base assumption and money policy, exhaustive supported-range enumeration finds the minimum modeled net IRPEF at RAL EUR 10,000: EUR 126.73. This makes the known EUR 10.33 convention output-unreachable in V1, but does not verify the unknown 2026 predicate.
-- **Assumptions / unresolved questions:** only employment income, ordinary contributions, Milan domicile. The exact fiscal predicate remains blocked; targeted independent review must confirm the supported-range invariant and whether bounded exclusion is ready for human governance approval. Reopen if the RAL minimum falls below EUR 10,000, personal credits/deductions enter scope, partial-year work is added, or year-matching evidence changes the predicate.
+- **Assumptions / unresolved questions:** only employment income, ordinary contributions, Milan domicile. The exact income-year-2026 de-minimis predicate remains fiscally unresolved and is neither zero nor universally inapplicable. Reopen if the RAL minimum falls below EUR 10,000; tax, deduction, or fiscal-year mechanics change; personal credits/deductions, partial-year work, other income, domicile, or another profile enters scope; or authoritative evidence establishes materially different applicability.
 - **Expected trace representation:** base derivation, domicile, due-gate source/result, then each addition.
 - **Required tests:** false gate forces both zero; true gate delegates; domicile fixtures; approved-policy enumeration across every whole-euro RAL from 10,000 through 120,000 proves minimum net IRPEF 126.73; direct due-boundary fixtures only if later reconstructed.
 
 ### RULE-LOMBARDY-2026-001 — Lombardy regional additional IRPEF
 
-- **Fiscal year / jurisdiction / status:** 2026; Regione Lombardia; `candidate`.
+- **Fiscal year / jurisdiction / status:** 2026; Regione Lombardia; `verified`.
 - **Calculation stage/order:** after common admission; parallel with Milan; subtracted in annual-net composition.
 - **Applicability / eligibility:** Lombardy domicile at 1 January, positive `B`, and true due gate.
 - **Exclusions:** other domicile, failed gate, income outside comprehensive base, or unmodeled special relief.
@@ -441,14 +441,14 @@ Full candidate source/rule reconstruction and alternatives are retained in [RUN-
 - **Edge cases:** exact bracket endpoints, false gate, non-positive base, transitional authority.
 - **Source IDs:** `SRC-LOCAL-2026-001`, `SRC-LOCAL-2026-002`, `SRC-LOCAL-2026-003`, `SRC-LOCAL-2026-004`, `SRC-LOCAL-2026-005`.
 - **Evidence summary:** regional law, explicit 2026 MEF data and current Regione guidance align on four progressive bands.
-- **Engineering interpretation:** apply each rate marginally to its slice; independent reviewer must reconstruct the transition.
-- **Assumptions / unresolved questions:** no special regional relief; targeted review must verify the approved policy handoff.
+- **Engineering interpretation:** apply each rate marginally to its slice; the transition was independently reconstructed from the registered official evidence.
+- **Assumptions / unresolved questions:** no special regional relief; approved product policy governs public monetary handoffs.
 - **Expected trace representation:** occupied bracket rows, exact subtotal, separate rounding step, sources.
 - **Required tests:** B 14,999/15,000/15,001; 27,999/28,000/28,001; 49,999/50,000/50,001; false gate and sum invariant.
 
 ### RULE-MILAN-2026-001 — Milan municipal additional IRPEF
 
-- **Fiscal year / jurisdiction / status:** 2026; Comune di Milano; `candidate`.
+- **Fiscal year / jurisdiction / status:** 2026; Comune di Milano; `verified`.
 - **Calculation stage/order:** after common admission; parallel with Lombardy; subtracted in annual-net composition.
 - **Applicability / eligibility:** Milan domicile at 1 January, true due gate, and `B > 23000`.
 - **Exclusions:** `B <= 23000`, other domicile, failed gate, and unmodeled special cases.
@@ -467,7 +467,7 @@ Full candidate source/rule reconstruction and alternatives are retained in [RUN-
 
 ### RULE-LOCAL-2026-ORDER — Local-tax ordering and annual-net composition
 
-- **Fiscal year / jurisdiction / status:** 2026; Italy / Lombardy / Milan; `candidate` with only the output-unreachable `RULE-LOCAL-2026-001` dependency pending targeted review.
+- **Fiscal year / jurisdiction / status:** 2026; Italy / Lombardy / Milan; `verified` within the bounded V1 envelope; the unresolved `RULE-LOCAL-2026-001` edge is explicitly excluded rather than treated as verified.
 - **Calculation stage/order:** relational rule across contributions, national tax, local additions, cash benefits, and annual net.
 - **Applicability / eligibility:** fixed scenario once all upstream values have admissible statuses.
 - **Exclusions:** withholding timing, advance/balance, other-income composition, and personal circumstances.
@@ -480,7 +480,7 @@ Full candidate source/rule reconstruction and alternatives are retained in [RUN-
 - **Source IDs:** `SRC-LOCAL-2026-001`, `SRC-LOCAL-2026-003`, `SRC-LOCAL-2026-006`, `SRC-LOCAL-2026-007`, `SRC-LOCAL-2026-011`, plus the Source IDs owned by the upstream national and INPS rules.
 - **Evidence summary:** statutes establish common base/due gate and no cross-base dependency between local additions.
 - **Engineering interpretation:** model a dependency graph; the waterfall may be sequential only as presentation.
-- **Assumptions / unresolved questions:** upstream candidate values and exact due predicate; product rounding is approved, while the due edge remains output-unreachable pending targeted review.
+- **Assumptions / unresolved questions:** upstream verified values and approved product rounding apply; reopen the excluded due edge on any recorded scope or evidence trigger.
 - **Expected trace representation:** dependency links from RAL/contributions to base/taxes and from cash components to annual net.
 - **Required tests:** deductions may change gate not base; contributions change all base-derived taxes; regional never changes municipal; annual reconciliation.
 
@@ -563,7 +563,7 @@ These inputs are taxable/adjusted employment income, not RAL. The contribution s
 | Milan exemption | 22,999 / 23,000 / 23,001 | 0 / 0 / 184.008 before rounding; whole-base activation |
 | Lombardy 28k | 27,999 / 28,000 / 28,001 | Third marginal rate starts only above 28,000 |
 | Lombardy 50k | 49,999 / 50,000 / 50,001 | Fourth marginal rate starts only above 50,000 |
-| IRPEF-due gate | pending sourced threshold − smallest legal unit / threshold / + smallest legal unit | False forces both additions to zero; exact 2026 predicate remains blocked but approved-policy enumeration proves the edge output-unreachable in V1 pending targeted review. |
+| IRPEF-due/de-minimis edge | no direct threshold fixture in V1 | Exact 2026 predicate remains unresolved and excluded; exhaustive whole-euro RAL enumeration must continue to prove minimum public net IRPEF of at least EUR 126.73. Reopen rather than infer behavior if the envelope changes. |
 
 ### Representative full-engine RAL fixtures
 

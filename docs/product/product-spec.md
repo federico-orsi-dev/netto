@@ -19,7 +19,7 @@ RAL means fixed annual gross cash employment remuneration subject to ordinary em
 
 The V1 domain keeps annual gross salary and annual contributable remuneration as distinct concepts. Under the human-approved one-input estimator assumption, entered RAL represents lawful ordinary full-year remuneration fully subject to employee social-security contributions, except where an explicitly modeled rule states otherwise; therefore V1 derives contributable remuneration from RAL. This is a disclosed product/domain assumption, not a statement that Italian law defines RAL as the contribution base.
 
-The fixed employer profile is a disclosed scenario assumption that makes the one-input contribution model deterministic; it is not a claim that the selected contribution treatment is universal across private employers. The approval of this profile does not verify any contribution rate, base, formula, ordering, or rounding policy.
+The fixed employer profile is a disclosed scenario assumption that makes the one-input contribution model deterministic; it is not a claim that the selected contribution treatment is universal across private employers. The profile approval alone did not verify any contribution rate, base, formula, ordering, or rounding policy; those fiscal components subsequently passed the repository evidence, independent-review, reconciliation, and human-approval lifecycle only within this bounded profile.
 
 ## Required outputs
 
