@@ -3,6 +3,8 @@ export {
   validateSalaryCalculationInput,
 } from "./fiscal/2026/calculate-salary-2026";
 export type {
+  CalculationComponent,
+  CalculationTraceEntry,
   CalculationOutcome,
   InputIssue,
   MoneyAmount,
@@ -10,3 +12,12 @@ export type {
   SalaryCalculationResult,
   SalaryPaymentsPerYear,
 } from "./calculation/contracts";
+export type {
+  AssumptionId,
+  CalculationAmountId,
+  CalculationComponentId,
+  ExcludedRuleId,
+  ExplanationKey,
+  TraceEntryId,
+  VerifiedRuleId,
+} from "./fiscal/ids";

@@ -84,6 +84,10 @@ function booleanParameter(name: string, value: boolean): TraceParameter {
   return { name, kind: "boolean", value };
 }
 
+function configuredDecimal(value: number | string): string {
+  return String(value);
+}
+
 function traceEntry(input: {
   readonly id: TraceEntryId;
   readonly purposeKey: ExplanationKey;
@@ -444,7 +448,13 @@ function buildTrace(
       inputAmountIds: ["contributableRemuneration"],
       dependsOn: ["trace:contributable-remuneration"],
       expression: "base remains below 2026 ceiling",
-      parameters: [decimalParameter("ceiling", "122295", "exact_euro")],
+      parameters: [
+        decimalParameter(
+          "ceiling",
+          configuredDecimal(RULESET_2026.contribution.pensionCeilingEuro),
+          "exact_euro",
+        ),
+      ],
       exactOutput: input.contributions.pensionContributionBaseExact,
       publicOutputAmountId: "pensionContributionBase",
     }),
@@ -454,8 +464,14 @@ function buildTrace(
       ruleIds: inps002,
       inputAmountIds: ["pensionContributionBase"],
       dependsOn: ["trace:pension-contribution-base"],
-      expression: "pension base × 9.19%",
-      parameters: [decimalParameter("rate", "0.0919", "rate")],
+      expression: "pension base × rate",
+      parameters: [
+        decimalParameter(
+          "rate",
+          RULESET_2026.contribution.employeeIvsRate,
+          "rate",
+        ),
+      ],
       exactOutput: input.contributions.employeeIvsExact,
       publicOutputAmountId: "employeeIvsContribution",
     }),
@@ -468,10 +484,20 @@ function buildTrace(
       ruleIds: inps003,
       inputAmountIds: ["pensionContributionBase"],
       dependsOn: ["trace:pension-contribution-base"],
-      expression: "max(0, pension base − 56224) × 1%",
+      expression: "max(0, pension base − threshold) × rate",
       parameters: [
-        decimalParameter("threshold", "56224", "exact_euro"),
-        decimalParameter("rate", "0.01", "rate"),
+        decimalParameter(
+          "threshold",
+          configuredDecimal(
+            RULESET_2026.contribution.additionalIvsThresholdEuro,
+          ),
+          "exact_euro",
+        ),
+        decimalParameter(
+          "rate",
+          RULESET_2026.contribution.additionalIvsRate,
+          "rate",
+        ),
       ],
       exactOutput: input.contributions.additionalIvsExact,
       publicOutputAmountId: "additionalIvsContribution",
@@ -482,8 +508,14 @@ function buildTrace(
       ruleIds: inps005,
       inputAmountIds: ["contributableRemuneration"],
       dependsOn: ["trace:contributable-remuneration"],
-      expression: "contributable remuneration × 0.30%",
-      parameters: [decimalParameter("rate", "0.003", "rate")],
+      expression: "contributable remuneration × rate",
+      parameters: [
+        decimalParameter(
+          "rate",
+          RULESET_2026.contribution.employeeCigsRate,
+          "rate",
+        ),
+      ],
       exactOutput: input.contributions.employeeCigsExact,
       publicOutputAmountId: "employeeCigsContribution",
       assumptionIds: ["ASSUMPTION-INDUSTRIAL-CIGS-NO-SECTOR-FUND"],
@@ -529,9 +561,9 @@ function buildTrace(
     "trace:gross-irpef-bracket-3",
   ] as const;
   const grossExpressions = [
-    "min(base, 28000) × 23%",
-    "min(max(base − 28000, 0), 22000) × 33%",
-    "max(base − 50000, 0) × 43%",
+    "first progressive income slice × rate",
+    "second progressive income slice × rate",
+    "remaining progressive income slice × rate",
   ] as const;
   for (let index = 0; index < grossBracketIds.length; index += 1) {
     const amountId = grossBracketIds[index];
@@ -550,6 +582,13 @@ function buildTrace(
         inputAmountIds: ["taxableIncome"],
         dependsOn: ["trace:taxable-income"],
         expression: grossExpressions[index] ?? "invalid",
+        parameters: [
+          decimalParameter(
+            "rate",
+            RULESET_2026.nationalTax.brackets[index]?.rate ?? "0",
+            "rate",
+          ),
+        ],
         exactOutput: exact,
         publicOutputAmountId: amountId,
       }),
@@ -646,8 +685,24 @@ function buildTrace(
       ruleIds: natTreatment,
       inputAmountIds: ["taxableIncome", "grossIrpef", "employmentDeduction"],
       dependsOn: ["trace:gross-irpef", "trace:employment-deduction"],
-      expression: "income ≤ 15000 and gross IRPEF > employment deduction − 75",
+      expression:
+        "income ≤ eligibility maximum and gross IRPEF > employment deduction − adjustment",
       parameters: [
+        decimalParameter(
+          "eligibilityMaximum",
+          configuredDecimal(
+            RULESET_2026.nationalTax.treatmentIntegrativo.incomeMaximumEuro,
+          ),
+          "exact_euro",
+        ),
+        decimalParameter(
+          "deductionAdjustment",
+          configuredDecimal(
+            RULESET_2026.nationalTax.treatmentIntegrativo
+              .deductionAdjustmentEuro,
+          ),
+          "exact_euro",
+        ),
         booleanParameter(
           "eligible",
           input.cashBenefits.treatmentIntegrativoApplies,
@@ -671,10 +726,10 @@ function buildTrace(
     "trace:lombardy-tax-bracket-4",
   ] as const;
   const regionalExpressions = [
-    "min(base, 15000) × 1.23%",
-    "min(max(base − 15000, 0), 13000) × 1.58%",
-    "min(max(base − 28000, 0), 22000) × 1.72%",
-    "max(base − 50000, 0) × 1.73%",
+    "first progressive regional slice × rate",
+    "second progressive regional slice × rate",
+    "third progressive regional slice × rate",
+    "remaining progressive regional slice × rate",
   ] as const;
   for (let index = 0; index < regionalAmountIds.length; index += 1) {
     const amountId = regionalAmountIds[index];
@@ -691,6 +746,13 @@ function buildTrace(
         inputAmountIds: ["taxableIncome"],
         dependsOn: ["trace:taxable-income"],
         expression: regionalExpressions[index] ?? "invalid",
+        parameters: [
+          decimalParameter(
+            "rate",
+            RULESET_2026.localTax.lombardyBrackets[index]?.rate ?? "0",
+            "rate",
+          ),
+        ],
         exactOutput: exact,
         publicOutputAmountId: amountId,
         assumptionIds: ["ASSUMPTION-MILAN-LOMBARDY-DOMICILE"],
@@ -719,8 +781,14 @@ function buildTrace(
       ruleIds: milan,
       inputAmountIds: ["taxableIncome"],
       dependsOn: ["trace:taxable-income"],
-      expression: "base > 23000 ? base × 0.8% : 0",
+      expression: "base > exemption threshold ? base × rate : 0",
       parameters: [
+        decimalParameter(
+          "exemptionThreshold",
+          configuredDecimal(RULESET_2026.localTax.milanExemptionThresholdEuro),
+          "exact_euro",
+        ),
+        decimalParameter("rate", RULESET_2026.localTax.milanRate, "rate"),
         booleanParameter(
           "aboveInclusiveExemption",
           input.localTaxes.municipalTaxApplies,

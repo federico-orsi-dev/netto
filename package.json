@@ -13,7 +13,8 @@
     "format:check": "prettier --check .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:exhaustive": "vitest run src/domain/fiscal/2026/calculate-salary-2026.exhaustive.test.ts"
+    "test:exhaustive": "vitest run src/domain/fiscal/2026/calculate-salary-2026.exhaustive.test.ts",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "decimal.js": "10.6.0",

@@ -1,0 +1,169 @@
+.form {
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-lg);
+}
+
+.fieldGroup {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.label,
+.paymentFieldset legend {
+  font-size: 0.84rem;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.inputShell {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 4rem;
+  padding: 0 var(--space-4);
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.inputShell:focus-within {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 3px rgb(29 104 216 / 12%);
+}
+
+.inputShell input {
+  width: 100%;
+  min-width: 0;
+  padding: 0.65rem 0;
+  border: 0;
+  outline: 0;
+  color: var(--ink-950);
+  background: transparent;
+  font-size: clamp(1.45rem, 4vw, 2rem);
+  font-weight: 720;
+  font-variant-numeric: tabular-nums;
+}
+
+.inputShell input::placeholder {
+  color: #9ba8a4;
+}
+
+.currency {
+  color: var(--accent);
+  font-size: 1.45rem;
+  font-weight: 750;
+}
+
+.suffix {
+  color: var(--ink-650);
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+.help,
+.error,
+.paymentFieldset p,
+.privacy {
+  margin: 0;
+  color: var(--ink-650);
+  font-size: 0.82rem;
+}
+
+.error {
+  color: var(--danger);
+  font-weight: 650;
+}
+
+.paymentFieldset {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-5) 0;
+  padding: 0;
+  border: 0;
+}
+
+.segmented {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+}
+
+.segmented label {
+  position: relative;
+}
+
+.segmented input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.segmented span {
+  display: grid;
+  min-height: 2.75rem;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface-muted);
+  font-weight: 720;
+  cursor: pointer;
+}
+
+.segmented input:checked + span {
+  border-color: var(--accent);
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+}
+
+.segmented input:focus-visible + span {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.submit {
+  display: flex;
+  width: 100%;
+  min-height: 3.4rem;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  border: 0;
+  border-radius: var(--radius-md);
+  color: white;
+  background: var(--accent-strong);
+  font-weight: 760;
+  cursor: pointer;
+  transition:
+    background 150ms ease,
+    transform 150ms ease;
+}
+
+.submit:hover {
+  background: var(--ink-950);
+  transform: translateY(-1px);
+}
+
+.privacy {
+  margin-top: var(--space-4);
+  text-align: center;
+}
+
+.privacy span {
+  margin-right: 0.35rem;
+  color: var(--benefit);
+  font-size: 0.6rem;
+}
+
+@media (max-width: 28rem) {
+  .suffix {
+    display: none;
+  }
+}

@@ -1,14 +1,14 @@
 # Project State
 
-- **Phase:** M3 — Deterministic Domain Engine
-- **Milestone status:** implementation complete and locally validated; awaiting independent domain review
+- **Phase:** M4 — Product UI & Experience
+- **Milestone status:** implementation complete and locally validated; awaiting independent product/accessibility review
 - **Architecture:** approved through M2; Phase 0 closed
 - **Fiscal foundation:** 15 verified, 9 excluded, 0 candidate, and 0 blocked rules; bounded assumptions and product money policy approved
-- **Current task:** none; M3 implementation is closed pending its independent money/fiscal/pipeline/trace review
-- **Next permitted milestone:** independent M3 domain review; M4 must not start automatically
-- **Pending human gate:** acceptance of the independently reviewed M3 domain engine; release approval remains separate
+- **Current task:** none; M4 implementation is closed pending independent product, accessibility, and numeric-ownership review
+- **Next permitted milestone:** independent M4 product/accessibility review; M5 must not start automatically
+- **Pending human gate:** acceptance of the independently reviewed M4 product experience; release approval remains separate
 - **Release:** not eligible
-- **Last meaningful run:** `RUN-2026-08-23-017` — M3 deterministic domain engine implementation
+- **Last meaningful run:** `RUN-2026-08-23-019` — M4 product UI and experience implementation
 - **Last updated:** 2026-08-23
 
 ## M1 closure
@@ -50,6 +50,18 @@ Implementation exposed one M2 contract inconsistency: verified low-income cash b
 
 Validation passes strict typecheck, ESLint import boundaries, Prettier check, 90 rule/boundary/golden/invariant tests, the separate 110,001-value exhaustive range test, and the Vite production build. The exhaustive gate preserves minimum modeled public net IRPEF EUR 126.73 at RAL EUR 10,000. Independent review remains required before M4.
 
+Independent M3 review then passed with 15/15 verified rules and 9/9 exclusions correctly represented, all 110,001 supported inputs validated, and no blocker or major finding. Its one minor trace-maintainability finding is resolved in M4 by sourcing explanation-facing rates and thresholds from the typed `RULESET_2026`, with a focused configuration-to-trace consistency test. Fiscal semantics and lifecycle state remain unchanged.
+
+## M4 implementation closure
+
+M4 replaces the placeholder with the complete Italian V1 journey: purposeful initial state, localized RAL validation, annual/monthly/contractual-instalment result hierarchy, truthful modeled burden or net-benefit context, direct React SVG waterfall, semantic interactive breakdown, contextual explanations, assumptions, exclusions, authoritative sources, and deterministic calculation trace.
+
+Every public financial value resolves from the canonical M3 result and amount registry. Presentation adapters select, order, label, format, and calculate SVG geometry only; frontend modules contain no fiscal formula, tax rate, rounding, or alternative aggregate. React local state owns input and presentation selection only. The application remains static, client-only, without analytics, persistence, backend, remote fiscal API, or salary transmission.
+
+The visual foundation uses a native system UI font stack with tabular numerals, product-owned CSS custom properties/modules, warm neutral surfaces, restrained financial semantics, visible focus, and reduced-motion support. Desktop renders the explanatory SVG and adjacent detail; mobile intentionally replaces the SVG with the same canonical semantic list followed by the selected explanation.
+
+Validation passes the unchanged M3 domain and exhaustive gates plus component/product tests, desktop Chromium and mobile WebKit smoke journeys, automated axe checks, manual keyboard/semantic review, breakpoint visual QA, production build inspection, and production dependency audit. M4 is not deployed and is not release approved; an independent product/accessibility review is the next gate.
+
 ## Canonical orientation
 
 - [Product specification](docs/product/product-spec.md)
@@ -69,5 +81,7 @@ Validation passes strict typecheck, ESLint import boundaries, Prettier check, 90
 - [M1 closure](docs/ai-engineering/runs/2026-08-22-015-m1-fiscal-foundation-closure.md)
 - [M2 planning run](docs/ai-engineering/runs/2026-08-22-016-m2-implementation-architecture.md)
 - [M3 implementation run](docs/ai-engineering/runs/2026-08-23-017-m3-deterministic-domain-engine.md)
+- [Independent M3 domain review](docs/ai-engineering/runs/2026-08-23-018-m3-independent-domain-review.md)
+- [M4 product experience run](docs/ai-engineering/runs/2026-08-23-019-m4-product-experience.md)
 
 This file is a snapshot, not a diary. It describes authority recorded in canonical artifacts; it does not create authority.
