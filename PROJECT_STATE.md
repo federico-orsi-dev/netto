@@ -1,14 +1,14 @@
 # Project State
 
-- **Phase:** M1 — Verified Fiscal Foundation
-- **Milestone status:** verified; ready for implementation planning
-- **Architecture:** approved; Phase 0 closed
+- **Phase:** M2 — Implementation Architecture & Execution Plan
+- **Milestone status:** complete; ready for an explicitly authorized M3
+- **Architecture:** approved through M2; Phase 0 closed
 - **Fiscal foundation:** 15 verified, 9 excluded, 0 candidate, and 0 blocked rules; bounded assumptions and product money policy approved
-- **Current task:** none; M1 is closed
-- **Next permitted milestone:** M2 implementation planning only after an explicit new goal
-- **Pending human gate:** M2 authorization; release approval remains separate
+- **Current task:** none; M1 is frozen and M2 is closed
+- **Next permitted milestone:** M3 deterministic domain engine only after an explicit new goal
+- **Pending human gate:** M3 implementation authorization; production dependencies are selected by architecture but installed only in M3; release approval remains separate
 - **Release:** not eligible
-- **Last meaningful run:** `RUN-2026-08-22-015` — M1 fiscal foundation closure
+- **Last meaningful run:** `RUN-2026-08-22-016` — M2 implementation architecture and execution plan
 - **Last updated:** 2026-08-22
 
 ## M1 closure
@@ -25,10 +25,28 @@ The minimum safe V1 model remains one RAL input. It retains separate domain conc
 
 The fixed profile remains: article 10 CIGO industrial employer, more than 15 employees, CIGS, verified general FPLD treatment, and no mandatory sector solidarity/supplemental fund carrying an employee contribution. M1 approval is bounded to this documented profile and does not make Netto payroll software, a certified tax calculator, or universally accurate.
 
+## M2 closure
+
+M2 converts the frozen product, fiscal, architecture, testing, delivery, and AI-engineering evidence into one implementation contract. Major decisions are:
+
+- one Vite/React application with a pure year-bound `calculateSalary2026` domain facade;
+- `decimal.js` behind one adapter and public safe-integer euro cents;
+- explicit formulas and typed 2026 data rather than a generic rule engine;
+- one canonical amount registry referenced by summary, breakdown, waterfall, explanation, trace, accessibility, and tests;
+- local React state, custom one-field validation, no router, persistence, URL state, or global store;
+- direct React SVG plus semantic HTML waterfall;
+- Cloudflare Pages Git integration, no Worker/Pages Function/backend;
+- three coding milestones: M3 domain engine, M4 product experience, M5 release hardening.
+
+No implementation code, package manifest, dependency installation, application test, remote mutation, Cloudflare project, or deployment was created in M2. There are no blocking implementation decisions; scaffold-time version selection and visual tokens are explicitly deferrable.
+
 ## Canonical orientation
 
 - [Product specification](docs/product/product-spec.md)
 - [Architecture](docs/architecture/architecture.md)
+- [Implementation plan](docs/architecture/implementation-plan.md)
+- [Waterfall decision](docs/architecture/decisions/ADR-0006-direct-svg-and-semantic-html-waterfall.md)
+- [Cloudflare deployment decision](docs/architecture/decisions/ADR-0007-cloudflare-pages-static-deployment.md)
 - [Fiscal Rule Catalog](docs/domain/fiscal-rules-2026.md)
 - [Source Register](docs/domain/source-register-2026.md)
 - [AI workflow](docs/ai-engineering/workflow.md)
@@ -39,5 +57,6 @@ The fixed profile remains: article 10 CIGO industrial employer, more than 15 emp
 - [Approved assumption and money policy](docs/ai-engineering/runs/2026-08-22-013-m1-approved-assumption-money-policy.md)
 - [Targeted independent review](docs/ai-engineering/runs/2026-08-22-014-m1-targeted-independent-review.md)
 - [M1 closure](docs/ai-engineering/runs/2026-08-22-015-m1-fiscal-foundation-closure.md)
+- [M2 planning run](docs/ai-engineering/runs/2026-08-22-016-m2-implementation-architecture.md)
 
 This file is a snapshot, not a diary. It describes authority recorded in canonical artifacts; it does not create authority.

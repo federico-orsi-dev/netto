@@ -1,6 +1,6 @@
 # Test Strategy
 
-This is the canonical testing policy. M1 defines evidence-backed fixtures; M2 and later milestones implement them.
+This is the canonical testing policy. M1 defines evidence-backed fixtures; M2 maps them into the [implementation contract](../architecture/implementation-plan.md); M3 and later milestones implement them.
 
 ## Layers
 

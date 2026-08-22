@@ -2,7 +2,7 @@
 
 > Inserisci una RAL e ottieni una stima trasparente del netto italiano, con ogni numero collegato a regole fiscali e fonti autorevoli.
 
-**Status:** M1 — Verified Fiscal Foundation complete. The bounded 2026 fiscal model is approved for implementation planning; no calculator implementation exists yet.
+**Status:** M2 — Implementation Architecture & Execution Plan complete. The bounded 2026 fiscal model and coding contracts are ready for an explicitly authorized M3; no calculator implementation exists yet.
 
 Netto is a production-minded hiring-assignment prototype for an Italian employee or candidate evaluating a compensation package. V1 will estimate annual net salary, average monthly net, and average contractual instalment for fiscal year 2026 under one explicit Milan/Lombardy employee profile.
 
@@ -18,6 +18,7 @@ Netto is a production-minded hiring-assignment prototype for an Italian employee
 
 - [Product specification](docs/product/product-spec.md)
 - [Approved architecture](docs/architecture/architecture.md)
+- [Implementation architecture and execution plan](docs/architecture/implementation-plan.md)
 - [2026 Fiscal Rule Catalog](docs/domain/fiscal-rules-2026.md)
 - [2026 Source Register](docs/domain/source-register-2026.md)
 - [Testing strategy](docs/testing/test-strategy.md)
