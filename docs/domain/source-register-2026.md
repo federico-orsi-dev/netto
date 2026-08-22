@@ -1,7 +1,7 @@
 ---
 title: Source Register 2026
 fiscal_year: 2026
-status: awaiting-independent-verification
+status: reconciled-current-sources
 access_date: 2026-08-22
 ---
 
@@ -26,7 +26,7 @@ Each entry owns: stable Source ID; issuer; title; official URL; document type; p
 - **Publication/effective/fiscal year:** 2026-01-30; values from 2026-01-01; 2026.
 - **Jurisdiction/access:** Italy, INPS schemes specified by the circular; accessed 2026-08-22.
 - **Location/claim:** paragraphs 1, 5, and 6. Establishes EUR 58.13 general daily minimum, EUR 56,224 first pensionable band and additional employee 1% rule, and EUR 122,295 ceiling with its insurance-history eligibility.
-- **Authority/conflicts:** competent year-specific instruction citing primary law. Independent review must confirm the current attachment/rectification state.
+- **Authority/conflicts:** competent year-specific instruction citing primary law. The current rendered page was reopened during independent review and reconciliation; no conflicting current value or active notice affecting the registered amounts was identified.
 
 ### SRC-INPS-2024-101
 
@@ -130,7 +130,7 @@ Each entry owns: stable Source ID; issuer; title; official URL; document type; p
 ### SRC-LEGAL-DLGS314-1997-ART6
 
 - **Issuer/title:** Italian Republic / Normattiva, *D.Lgs. 2 settembre 1997, n. 314*, article 6.
-- **Official URL/type:** <https://www.normattiva.it/uri-res/N2Ls?urn%3Anir%3A%3A%3A1997%3B314~art6=>; primary legislation.
+- **Official URL/type:** <https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:1997-09-02;314~art6!vig=>; consolidated primary legislation.
 - **Publication/effective/fiscal year:** 1997-09-19; from 1998-01-01; standing rule applicable in 2026.
 - **Jurisdiction/access:** Italy; accessed 2026-08-22.
 - **Location/claim:** article 6 substituting L. 153/1969 article 12, especially paragraphs 1–4. Contribution income broadly follows employment income with contribution-specific inclusions, exclusions and minima/maxima.
@@ -188,7 +188,7 @@ Each entry owns: stable Source ID; issuer; title; official URL; document type; p
 - **Publication/effective/fiscal year:** 1986-12-31; current employee-deduction text from 2025-01-01; 2026.
 - **Jurisdiction/access:** Italy; accessed 2026-08-22.
 - **Location/claim:** paragraphs 1(a–c), 1.1, 6 and 6-bis. Supplies employee-deduction formulas, EUR 65 band, ratio precision, and income definition.
-- **Authority/conflicts:** official TUIR; EUR 1,955 supersedes the older 1,880 amount; no 2026 amendment found.
+- **Authority/conflicts:** official TUIR; EUR 1,955 supersedes the older 1,880 amount; no 2026 amendment found. Paragraph 6's “first four decimal digits” is a statutory truncation instruction, not public-money half-up rounding.
 
 ### SRC-NAT-TUIR-ART51-2026
 
@@ -292,11 +292,11 @@ Each entry owns: stable Source ID; issuer; title; official URL; document type; p
 ### SRC-LOCAL-2026-006
 
 - **Issuer/title:** Italian Republic, D.Lgs. 28 settembre 1998, n. 360, article 1, municipal additional IRPEF.
-- **Official URL/type:** <https://www.comune.milano.it/de/documents/20118/566655/D.lgs%2B28%2Bsettembre%2B1998%2Bn.%2B360.pdf/c1a81e6a-b978-314d-0a6f-0e4591135d1d?download=true&t=1751898796196&version=1.0>; primary legislation hosted by Comune di Milano.
+- **Official URL/type:** <https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:1998-09-28;360~art1!vig=>; consolidated primary legislation.
 - **Publication/effective/fiscal year:** 1998-10-16; standing rule for 2026; 2026.
 - **Jurisdiction/access:** Italy / municipalities; accessed 2026-08-22.
 - **Location/claim:** article 1(3), (3-bis), (4). Authorizes rate/exemption, establishes IRPEF-derived base and due gate.
-- **Authority/conflicts:** controlling primary rule; independent verifier should reopen the current Normattiva consolidation.
+- **Authority/conflicts:** controlling primary rule reopened in current Normattiva consolidation during independent verification and reconciliation.
 
 ### SRC-LOCAL-2026-007
 
@@ -310,11 +310,11 @@ Each entry owns: stable Source ID; issuer; title; official URL; document type; p
 ### SRC-LOCAL-2026-008
 
 - **Issuer/title:** Comune di Milano, *Addizionale comunale IRPEF*.
-- **Official URL/type:** <https://www.comune.milano.it/aree-tematiche/tributi/addizionale-comunale-irpef>; current institutional guidance.
-- **Publication/effective/fiscal year:** last updated 2025-11-28; current entering 2026; 2026 standing rule.
+- **Official URL/type:** <https://www.comune.milano.it/argomenti/tributi/addizionale-comunale-irpef>; current institutional guidance.
+- **Publication/effective/fiscal year:** last updated 2026-05-12; current during 2026; 2026 standing rule.
 - **Jurisdiction/access:** Milan; accessed 2026-08-22.
 - **Location/claim:** payer, exemptions, rates and FAQ 2–4. Restates 1 January domicile, EUR 23,000 exemption, 0.80%, and explicitly says threshold is not a franchise.
-- **Authority/conflicts:** competent explanation; read with continuation clause and year-specific budget evidence.
+- **Authority/conflicts:** competent municipal explanation current during fiscal year 2026. Read with the standing regulation and year-specific budget evidence; it resolves operational continuation of the rate and threshold despite the absent MEF row.
 
 ### SRC-LOCAL-2026-009
 
@@ -332,7 +332,7 @@ Each entry owns: stable Source ID; issuer; title; official URL; document type; p
 - **Publication/effective/fiscal year:** dynamic register accessed 2026-08-22; annual rows; 2020–2026 display.
 - **Jurisdiction/access:** Milan; accessed 2026-08-22.
 - **Location/claim:** 2026 and 2025 rows. 2026 displays no data; 2025 confirms resolution 46/2020, EUR 23,000 and 0.80%.
-- **Authority/conflicts:** absence is a provenance gap, not zero or cessation; reviewer must reconcile it with automatic continuation and 2026 municipal planning.
+- **Authority/conflicts:** absence remains a publication-history gap, not zero or cessation. The Comune page updated 2026-05-12 and standing automatic-continuation rule resolve rate/threshold applicability for the V1 model.
 
 ### SRC-LOCAL-2026-011
 
@@ -342,5 +342,14 @@ Each entry owns: stable Source ID; issuer; title; official URL; document type; p
 - **Jurisdiction/access:** Italy; accessed 2026-08-22.
 - **Location/claim:** Quadro RV, who is/is not required to pay. Corroborates the IRPEF-due gate and exposes a EUR 10.33 condition for income year 2025.
 - **Authority/conflicts:** competent but not 2026-income evidence; do not carry the EUR 10.33 detail into 2026 without reconstruction.
+
+### SRC-LOCAL-2026-012
+
+- **Issuer/title:** Italian Republic / Normattiva, D.P.R. 29 settembre 1973, n. 600, article 1, declaration obligation.
+- **Official URL/type:** <https://www.normattiva.it/uri-res/N2Ls?urn:nir:presidente.repubblica:decreto:1973-09-29;600~art1!vig=>; consolidated primary legislation.
+- **Publication/effective/fiscal year:** 1973-10-16; standing text current in 2026; contextual for the 2026-income local due gate.
+- **Jurisdiction/access:** Italy; accessed 2026-08-22.
+- **Location/claim:** article 1 declaration-exemption text preserves the historical ITL 20,000 / EUR 10.33 non-due lineage.
+- **Authority/conflicts:** primary legislation but not a complete annual local-addition liquidation algorithm. It supports the known de-minimis lineage and bounded materiality analysis; it does not by itself verify the exact income-year-2026 local-tax predicate or rounding sequence.
 
 No source above is registered merely from a search-result snippet. The complete research trails are retained in [INPS research](../ai-engineering/runs/2026-08-22-002-fiscal-research-inps.md), its [CIGS delta](../ai-engineering/runs/2026-08-22-005-fiscal-research-inps-cigs-delta.md), [national-tax research](../ai-engineering/runs/2026-08-22-006-fiscal-research-national-tax.md), and [local-tax research](../ai-engineering/runs/2026-08-22-007-fiscal-research-local-tax.md).

@@ -17,6 +17,8 @@ The hiring team is the evaluation audience, not the product persona.
 
 RAL means fixed annual gross cash employment remuneration subject to ordinary employee taxation and employee social-security contributions. It is not employer cost or total compensation.
 
+The V1 domain keeps annual gross salary and annual contributable remuneration as distinct concepts. Under the human-approved one-input estimator assumption, entered RAL represents lawful ordinary full-year remuneration fully subject to employee social-security contributions, except where an explicitly modeled rule states otherwise; therefore V1 derives contributable remuneration from RAL. This is a disclosed product/domain assumption, not a statement that Italian law defines RAL as the contribution base.
+
 The fixed employer profile is a disclosed scenario assumption that makes the one-input contribution model deterministic; it is not a claim that the selected contribution treatment is universal across private employers. The approval of this profile does not verify any contribution rate, base, formula, ordering, or rounding policy.
 
 ## Required outputs
@@ -46,7 +48,7 @@ The Italian UI uses employee-friendly terminology. Fiscal detail is progressivel
 
 ## Fidelity and non-goals
 
-This is a transparent annual estimate, not a payslip simulator, tax filing tool, or official payroll result. Its contribution estimate applies only to the named industrial-employer/CIGS archetype and is not universal across private employers, sectors, headcounts, or bilateral funds. V1 excludes partial-year work, employer cost, CCNL/profile inputs, other fiscal years, personal circumstances, persistence, accounts, analytics, sharing URLs, comparisons, marginal simulators, and exports.
+This is a transparent annual estimate, not a payslip simulator, tax filing tool, minimum-remuneration/CCNL compliance validator, or official payroll result. Its contribution estimate applies only to the named industrial-employer/CIGS archetype and is not universal across private employers, sectors, headcounts, or bilateral funds. V1 excludes partial-year work, employer cost, CCNL/level/hours/pay-period inputs, other fiscal years, personal circumstances, persistence, accounts, analytics, sharing URLs, comparisons, marginal simulators, and exports. The contribution-base assumption must be reopened if V1 later accepts part-year work, non-cash or exceptional pay, actual payroll reconciliation, or employment-compliance claims.
 
 ## Privacy
 
