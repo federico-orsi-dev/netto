@@ -1,14 +1,14 @@
 # Project State
 
-- **Phase:** Post-V1 Compensation Translator differentiation release complete
-- **Milestone status:** implemented, independently validated by GitHub CI, deployed through Cloudflare Pages, and production verified
+- **Phase:** Netto V1 final submission acceptance complete
+- **Milestone status:** final product corrections validated locally and remotely, deployed through Cloudflare Pages, and production accepted for hiring submission
 - **Architecture:** approved through M2; Phase 0 closed
 - **Fiscal foundation:** 15 verified, 9 excluded, 0 candidate, and 0 blocked rules; bounded assumptions and product money policy approved
 - **Current task:** none
-- **Next permitted milestone:** none; any further product or domain expansion requires a separately authorized goal
-- **Pending human gate:** none; the active post-V1 mandate explicitly authorizes the normal push and Cloudflare Pages Git deployment after local validation
-- **Release:** the post-V1 Compensation Translator is released at [netto-c2o.pages.dev](https://netto-c2o.pages.dev/); latest code-bearing commit `8cce278cfa961940efdd5637f21463842806d985` passed GitHub quality and Cloudflare Pages checks
-- **Last meaningful run:** `RUN-2026-08-23-025` — post-V1 Compensation Translator implementation and release
+- **Next permitted milestone:** none; submit the current artifact rather than extending it
+- **Pending human gate:** none
+- **Release:** the final submission artifact is live at [netto-c2o.pages.dev](https://netto-c2o.pages.dev/); code-bearing commit `f5f3b7173ecd493593239714c5e43a5e4f548cb6` passed GitHub Quality and Cloudflare Pages checks
+- **Last meaningful run:** `RUN-2026-08-23-026` — final submission acceptance
 - **Last updated:** 2026-08-23
 
 ## M1 closure
@@ -96,6 +96,14 @@ Local and remote validation pass 125 Vitest tests, the explicit 110,001-value ex
 
 Cloudflare production verification returned HTTPS 200 with the repository-owned CSP, Permissions Policy, referrer, MIME, and frame protections. The deployed HTML, JavaScript, and CSS match the local release artifact byte-for-byte. The public browser reproduced the single and current/proposed journeys without any third-party runtime resource; current and proposed salary values remain browser-local.
 
+## Final submission acceptance
+
+The evaluator-first production pass retained the released product thesis and found two material presentation defects worth correcting: collapsed comparison rows mixed component-change signs with take-home consequences, and programmatic result focus exposed an oversized browser-default outline on a non-interactive heading. Comparison rows now lead with their signed effect on annual net and preserve the component's own change inside the explanation; result focus remains programmatically meaningful without the distracting heading outline.
+
+Three small language/affordance corrections remove internal English, replace an external-link-shaped comparison arrow with an inline progression arrow, and clarify the footer promise. The fiscal engine, calculation result, comparison contract, supported scope, runtime dependencies, privacy boundary, and release architecture are unchanged.
+
+Local validation passes 125 Vitest tests, the explicit 110,001-input exhaustive gate, 14 Chromium/WebKit Playwright and covered axe journeys, strict type/lint/format checks, production build and artifact validation, relative Markdown links, and a zero-finding production dependency audit. GitHub Quality and Cloudflare Pages passed code-bearing commit `f5f3b7173ecd493593239714c5e43a5e4f548cb6`; production returned the expected security headers and byte-identical JavaScript/CSS. The artifact is accepted for submission. Further feature, fiscal-profile, analytics, or visual expansion has lower expected hiring value than shipping.
+
 ## Canonical orientation
 
 - [Product specification](docs/product/product-spec.md)
@@ -124,5 +132,6 @@ Cloudflare production verification returned HTTPS 200 with the repository-owned 
 - [Production deployment closure](docs/ai-engineering/runs/2026-08-23-023-production-deployment-closure.md)
 - [Post-V1 reviewer presentation](docs/ai-engineering/runs/2026-08-23-024-post-v1-reviewer-presentation.md)
 - [Post-V1 Compensation Translator](docs/ai-engineering/runs/2026-08-23-025-post-v1-compensation-translator.md)
+- [Final submission acceptance](docs/ai-engineering/runs/2026-08-23-026-final-submission-acceptance.md)
 
 This file is a snapshot, not a diary. It describes authority recorded in canonical artifacts; it does not create authority.
