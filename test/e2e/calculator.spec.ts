@@ -23,7 +23,7 @@ async function calculate(page: Page, ral: string) {
   await page.getByLabel(/La tua RAL/).fill(ral);
   await page.getByRole("button", { name: "Traduci la RAL" }).click();
   await expect(
-    page.getByRole("heading", { name: "Cosa diventa la tua RAL" }),
+    page.getByRole("heading", { name: "La tua RAL, tradotta" }),
   ).toBeFocused();
 }
 
@@ -33,7 +33,9 @@ async function compare(page: Page, proposedRal: string) {
   await page.getByLabel("RAL proposta").fill(proposedRal);
   await page.getByRole("button", { name: "Traduci la differenza" }).click();
   await expect(
-    page.getByRole("heading", { name: "Cosa diventa questo cambiamento" }),
+    page.getByRole("heading", {
+      name: /(?:aumento|riduzione|stesso risultato)/,
+    }),
   ).toBeFocused();
 }
 
@@ -49,13 +51,13 @@ test("translates one RAL and one compensation change without external requests",
   await page.goto("/");
   await expect(
     page.getByRole("heading", {
-      name: "La RAL è l'inizio. Netto la traduce.",
+      name: "Capire lo stipendio, prima di accettarlo.",
     }),
   ).toBeVisible();
   await calculate(page, "35.000");
 
   const singleResult = page.getByRole("region", {
-    name: "Cosa diventa la tua RAL",
+    name: "La tua RAL, tradotta",
   });
   await expect(singleResult.getByText("25.973,45 €")).toBeVisible();
   await expect(singleResult.getByText(/^2\.?164,45\s*€$/)).toBeVisible();
@@ -65,7 +67,7 @@ test("translates one RAL and one compensation change without external requests",
 
   await compare(page, "40.000");
   const comparison = page.getByRole("region", {
-    name: "Cosa diventa questo cambiamento",
+    name: /Un aumento di .* vale .* netti all'anno/,
   });
   await expect(comparison.getByText(/^\+5\.?000,00\s*€$/)).toBeVisible();
   await expect(comparison.getByText(/^\+1\.?934,66\s*€$/)).toBeVisible();
@@ -78,7 +80,7 @@ test("translates one RAL and one compensation change without external requests",
   ).toBeVisible();
 
   const irpefItem = page.locator('[data-component-id="netIrpef"]');
-  await irpefItem.locator(":scope > details > summary").click();
+  await irpefItem.getByText("Capire e verificare questa voce").click();
   await expect(
     irpefItem.getByRole("heading", { name: "IRPEF dopo le detrazioni" }),
   ).toBeVisible();
@@ -116,7 +118,9 @@ test("keeps comparison semantics valid for a reduction and equal values", async 
 
   await page.getByLabel("RAL proposta").fill("40.000");
   await page.getByRole("button", { name: "Traduci la differenza" }).click();
-  await expect(page.getByText(/Le due RAL coincidono/)).toBeVisible();
+  await expect(
+    page.getByText(/Le due RAL producono lo stesso risultato/),
+  ).toBeVisible();
   await expect(page.getByText("Non è un'aliquota marginale.")).toHaveCount(0);
 });
 
@@ -129,7 +133,7 @@ test("maintains deliberate keyboard focus through calculate, compare, and close"
   await salary.fill("35.000");
   await page.keyboard.press("Enter");
   await expect(
-    page.getByRole("heading", { name: "Cosa diventa la tua RAL" }),
+    page.getByRole("heading", { name: "La tua RAL, tradotta" }),
   ).toBeFocused();
 
   const comparisonButton = page.getByRole("button", {
@@ -140,7 +144,9 @@ test("maintains deliberate keyboard focus through calculate, compare, and close"
   await page.getByLabel("RAL proposta").fill("40.000");
   await page.keyboard.press("Enter");
   await expect(
-    page.getByRole("heading", { name: "Cosa diventa questo cambiamento" }),
+    page.getByRole("heading", {
+      name: /Un aumento di .* vale .* netti all'anno/,
+    }),
   ).toBeFocused();
 
   await page.getByRole("button", { name: "Chiudi confronto" }).click();
@@ -161,7 +167,7 @@ test("validates the proposed RAL without losing the current translation", async 
     "La stima supporta RAL fino a 120.000 €.",
   );
   await expect(
-    page.getByRole("heading", { name: "Cosa diventa la tua RAL" }),
+    page.getByRole("heading", { name: "La tua RAL, tradotta" }),
   ).toBeVisible();
 });
 
@@ -174,7 +180,7 @@ test("reflows the full comparison at 320 CSS pixels", async ({ page }) => {
   await expectNoHorizontalPageScroll(page);
 
   const heading = page.getByRole("heading", {
-    name: "Cosa diventa questo cambiamento",
+    name: /Un aumento di .* vale .* netti all'anno/,
   });
   await expect
     .poll(() =>
@@ -187,11 +193,13 @@ test("reflows the full comparison at 320 CSS pixels", async ({ page }) => {
     .toBe(true);
 
   const firstChange = page
-    .getByRole("list", { name: "Voci cambiate nel confronto" })
-    .locator(":scope > li")
+    .getByRole("list", { name: "Come si forma la variazione netta" })
+    .locator(":scope > li[data-component-id]")
     .first();
-  await firstChange.locator(":scope > details > summary").click();
-  await expect(firstChange.getByRole("heading")).toBeVisible();
+  await firstChange.getByText("Capire e verificare questa voce").click();
+  await expect(
+    firstChange.getByRole("heading", { name: "IRPEF dopo le detrazioni" }),
+  ).toBeVisible();
 
   await page.getByText("Ipotesi complete").click();
   await page.getByText("Cosa non include").click();
@@ -209,6 +217,6 @@ test("remains complete for reduced-motion users", async ({ page }) => {
   await compare(page, "40.000");
   await expect(page.getByText("38,69%")).toBeVisible();
   await expect(
-    page.getByRole("list", { name: "Voci cambiate nel confronto" }),
+    page.getByRole("list", { name: "Come si forma la variazione netta" }),
   ).toBeVisible();
 });

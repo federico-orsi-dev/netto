@@ -18,6 +18,7 @@ interface ComponentCopy {
   readonly institutionLabel: string;
   readonly institution: string;
   readonly meaning: string;
+  readonly comparisonDriver?: string;
 }
 
 export const INPUT_ERROR_COPY: Record<SalaryInputIssueCode, string> = {
@@ -151,6 +152,8 @@ export const COMPONENT_COPY = {
     institution: "INPS, nel sistema previdenziale dei lavoratori dipendenti.",
     meaning:
       "Riducono il lordo disponibile e sono distinti dalle imposte sul reddito.",
+    comparisonDriver:
+      "Segue la retribuzione soggetta a contributi: se la RAL cambia, cambia anche questa quota.",
   },
   additionalIvs: {
     title: "Contributo IVS aggiuntivo",
@@ -160,6 +163,8 @@ export const COMPONENT_COPY = {
     institution: "INPS, insieme alla contribuzione pensionistica ordinaria.",
     meaning:
       "Compare nel calcolo solo quando la base pensionistica supera la soglia prevista per il 2026.",
+    comparisonDriver:
+      "Cambia solo sulla parte di retribuzione che supera la soglia contributiva 2026.",
   },
   employeeCigs: {
     title: "Contributo CIGS",
@@ -170,6 +175,8 @@ export const COMPONENT_COPY = {
       "INPS, nell'ambito della Cassa Integrazione Guadagni Straordinaria.",
     meaning:
       "Contribuisce al sistema CIGS e non si applica allo stesso modo a ogni rapporto di lavoro privato.",
+    comparisonDriver:
+      "Segue la retribuzione soggetta a contributi nel profilo industriale modellato.",
   },
   employeeContributions: {
     title: "Contributi a tuo carico",
@@ -179,6 +186,8 @@ export const COMPONENT_COPY = {
     institution: "INPS.",
     meaning:
       "Vengono sottratti dalla RAL prima di determinare il reddito su cui calcolare l'IRPEF.",
+    comparisonDriver:
+      "Segue la retribuzione soggetta a contributi: se la RAL cambia, cambia anche il totale trattenuto.",
   },
   grossIrpef: {
     title: "IRPEF lorda",
@@ -212,6 +221,8 @@ export const COMPONENT_COPY = {
     institution: "Allo Stato, come entrata fiscale nazionale.",
     meaning:
       "È questa componente, non l'IRPEF lorda, che viene sottratta nel passaggio finale dal lordo al netto.",
+    comparisonDriver:
+      "Cambia con il reddito imponibile, gli scaglioni IRPEF e le detrazioni applicabili.",
   },
   regionalTax: {
     title: "Addizionale regionale Lombardia",
@@ -220,6 +231,8 @@ export const COMPONENT_COPY = {
     institution: "Alla Regione Lombardia, come entrata fiscale regionale.",
     meaning:
       "Si aggiunge all'IRPEF nazionale secondo le fasce regionali previste per il profilo 2026.",
+    comparisonDriver:
+      "Segue il reddito imponibile e le fasce dell'addizionale Lombardia 2026.",
   },
   municipalTax: {
     title: "Addizionale comunale Milano",
@@ -228,6 +241,8 @@ export const COMPONENT_COPY = {
     institution: "Al Comune di Milano, come entrata fiscale comunale.",
     meaning:
       "Si aggiunge alle imposte nazionali e regionali quando il reddito supera la soglia del profilo V1.",
+    comparisonDriver:
+      "Segue il reddito imponibile quando è superata la soglia di esenzione di Milano.",
   },
   cuneoCashSum: {
     title: "Beneficio fiscale non imponibile",
@@ -236,6 +251,8 @@ export const COMPONENT_COPY = {
     institution: "Dalla disciplina fiscale nazionale.",
     meaning:
       "È un'aggiunta in denaro separata dalle detrazioni IRPEF e può aumentare il risultato oltre la sola RAL.",
+    comparisonDriver:
+      "Varia con la fascia di reddito e termina oltre il limite previsto dalla regola 2026.",
   },
   treatmentIntegrativo: {
     title: "Trattamento integrativo",
@@ -245,6 +262,8 @@ export const COMPONENT_COPY = {
     institution: "Dalla disciplina fiscale nazionale.",
     meaning:
       "Aumenta il risultato annuale stimato; V1 include solo il ramo ordinario supportato dal profilo.",
+    comparisonDriver:
+      "Si attiva o termina quando cambiano le condizioni di reddito modellate.",
   },
   annualNet: {
     title: "Il netto annuale stimato",

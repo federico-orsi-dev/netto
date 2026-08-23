@@ -1,15 +1,15 @@
 # Project State
 
-- **Phase:** Netto V1 final submission acceptance complete
-- **Milestone status:** final product corrections validated locally and remotely, deployed through Cloudflare Pages, and production accepted for hiring submission
+- **Phase:** Netto final visual-authorship and compensation-causality pass
+- **Milestone status:** final product and repository redesign validated locally; production release verification pending
 - **Architecture:** approved through M2; Phase 0 closed
 - **Fiscal foundation:** 15 verified, 9 excluded, 0 candidate, and 0 blocked rules; bounded assumptions and product money policy approved
-- **Current task:** none
-- **Next permitted milestone:** none; submit the current artifact rather than extending it
+- **Current task:** publish the validated final submission artifact and verify GitHub Quality plus Cloudflare Pages
+- **Next permitted milestone:** none; after production verification, submit rather than extend
 - **Pending human gate:** none
-- **Release:** the final submission artifact is live at [netto-c2o.pages.dev](https://netto-c2o.pages.dev/); code-bearing commit `f5f3b7173ecd493593239714c5e43a5e4f548cb6` passed GitHub Quality and Cloudflare Pages checks
-- **Last meaningful run:** `RUN-2026-08-23-026` — final submission acceptance
-- **Last updated:** 2026-08-23
+- **Release:** the preceding accepted artifact remains live at [netto-c2o.pages.dev](https://netto-c2o.pages.dev/); the locally validated final authorship pass awaits its normal `main` release
+- **Last meaningful run:** `RUN-2026-08-24-027` — final visual authorship and compensation causality
+- **Last updated:** 2026-08-24
 
 ## M1 closure
 
@@ -104,6 +104,16 @@ Three small language/affordance corrections remove internal English, replace an 
 
 Local validation passes 125 Vitest tests, the explicit 110,001-input exhaustive gate, 14 Chromium/WebKit Playwright and covered axe journeys, strict type/lint/format checks, production build and artifact validation, relative Markdown links, and a zero-finding production dependency audit. GitHub Quality and Cloudflare Pages passed code-bearing commit `f5f3b7173ecd493593239714c5e43a5e4f548cb6`; production returned the expected security headers and byte-identical JavaScript/CSS. The artifact is accepted for submission. Further feature, fiscal-profile, analytics, or visual expansion has lower expected hiring value than shipping.
 
+## Final visual authorship and compensation causality
+
+The last substantial product pass replaces the remaining generic calculator/ledger reading with one product-owned compensation translation. A single result now reads contract RAL, modeled fiscal passage, and disposable annual/monthly outcome as one statement. A comparison reads gross change, each canonical fiscal movement, and final net change as one cent-reconciled sequence.
+
+For every material changed component, the interface keeps distinct: current and proposed component amounts, the component's own magnitude change, its signed consequence for annual net, a concise fiscal driver, and optional rule/source evidence. This closes the earlier cognitive ambiguity without changing comparison arithmetic or creating UI fiscal logic.
+
+The landing composition, ink/paper/cobalt palette, square document-like controls, and asymmetric explanation layout derive from the salary transformation rather than a reusable fintech dashboard. The Italian product remains intentionally paired with a concise English-first hiring README. Fiscal rules, calculation engine, supported scope, dependencies, privacy, and deployment architecture are unchanged.
+
+Local release validation passes 125 Vitest tests, the explicit 110,001-input exhaustive gate, 14 Chromium/WebKit Playwright and covered axe journeys, strict type/lint/format checks, the production build and artifact inspection, and a zero-finding production dependency audit. Production publication and remote acceptance remain the only open work.
+
 ## Canonical orientation
 
 - [Product specification](docs/product/product-spec.md)
@@ -133,5 +143,6 @@ Local validation passes 125 Vitest tests, the explicit 110,001-input exhaustive 
 - [Post-V1 reviewer presentation](docs/ai-engineering/runs/2026-08-23-024-post-v1-reviewer-presentation.md)
 - [Post-V1 Compensation Translator](docs/ai-engineering/runs/2026-08-23-025-post-v1-compensation-translator.md)
 - [Final submission acceptance](docs/ai-engineering/runs/2026-08-23-026-final-submission-acceptance.md)
+- [Final visual authorship and compensation causality](docs/ai-engineering/runs/2026-08-24-027-final-visual-authorship.md)
 
 This file is a snapshot, not a diary. It describes authority recorded in canonical artifacts; it does not create authority.

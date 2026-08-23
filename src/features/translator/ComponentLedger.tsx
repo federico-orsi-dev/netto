@@ -4,7 +4,11 @@ import {
   RULE_CHANGE_COPY,
   TRACE_STATUS_COPY,
 } from "../../content/it";
-import type { CompensationComparison } from "../../application";
+import type {
+  CompensationComparison,
+  CompensationComponentChange,
+  SignedMoneyAmount,
+} from "../../application";
 import type {
   CalculationComponentId,
   SalaryCalculationResult,
@@ -31,60 +35,55 @@ export function ComponentLedger({ result, comparison }: ComponentLedgerProps) {
         Math.abs(left.annualNetEffect.minorUnits),
     );
     return (
-      <div className={styles.ledgerSection}>
-        <div className={styles.ledgerHeading}>
-          <p>Perché il netto cambia così</p>
-          <h2>Cosa si muove nel calcolo</h2>
+      <div className={styles.changeStory}>
+        <div className={styles.changeHeading}>
+          <p>La differenza, riga per riga</p>
+          <h2>Come si forma il nuovo netto</h2>
           <span>
-            Ogni importo confronta la stessa voce tra la RAL attuale e quella
-            proposta.
+            Partiamo dalla variazione di RAL. Ogni riga mostra quanto cambia la
+            voce e cosa lascia, in più o in meno, nel netto annuale.
           </span>
         </div>
-        {changes.length === 0 ? (
-          <p className={styles.noChanges}>Nessuna voce fiscale cambia.</p>
-        ) : (
-          <ol
-            className={styles.ledger}
-            aria-label="Voci cambiate nel confronto"
-          >
-            {changes.map((change) => {
-              const netEffectDirection =
-                change.annualNetEffect.minorUnits >= 0 ? "add" : "subtract";
-              return (
-                <li key={change.id} data-component-id={change.id}>
-                  <details>
-                    <summary>
-                      <span
-                        className={
-                          netEffectDirection === "add"
-                            ? styles.addMarker
-                            : styles.subtractMarker
-                        }
-                        aria-hidden="true"
-                      >
-                        {netEffectDirection === "add" ? "+" : "−"}
-                      </span>
-                      <span className={styles.ledgerLabel}>
-                        {AMOUNT_COPY[change.amountId].label}
-                      </span>
-                      <strong>
-                        {formatMoneyDelta(change.annualNetEffect)}
-                      </strong>
-                      <span className={styles.openHint}>
-                        Effetto sul netto · apri il perché
-                      </span>
-                    </summary>
-                    <ComponentInsight
-                      result={comparison.proposed}
-                      componentId={change.id}
-                      comparison={comparison}
-                    />
-                  </details>
-                </li>
-              );
-            })}
-          </ol>
-        )}
+        <ol
+          className={styles.changeEquation}
+          aria-label="Come si forma la variazione netta"
+        >
+          <li className={styles.grossChange}>
+            <EquationOperator amount={comparison.grossRalDelta} />
+            <div className={styles.changeBody}>
+              <div className={styles.changeTitle}>
+                <h3>RAL nel contratto</h3>
+                <strong>{formatMoneyDelta(comparison.grossRalDelta)}</strong>
+              </div>
+              <p>
+                {formatMoney(comparison.current.amounts.annualGrossSalary)} →{" "}
+                {formatMoney(comparison.proposed.amounts.annualGrossSalary)}
+              </p>
+            </div>
+          </li>
+          {changes.map((change) => (
+            <ComparisonChangeRow
+              key={change.id}
+              change={change}
+              result={comparison.proposed}
+            />
+          ))}
+          <li className={styles.netChange}>
+            <span className={styles.equalsOperator} aria-hidden="true">
+              =
+            </span>
+            <div className={styles.changeBody}>
+              <div className={styles.changeTitle}>
+                <h3>Netto disponibile nell'anno</h3>
+                <strong>{formatMoneyDelta(comparison.annualNetDelta)}</strong>
+              </div>
+              <p>
+                {formatMoney(comparison.current.amounts.annualNet)} →{" "}
+                {formatMoney(comparison.proposed.amounts.annualNet)}
+              </p>
+            </div>
+          </li>
+        </ol>
         <RuleChanges comparison={comparison} />
       </div>
     );
@@ -96,11 +95,11 @@ export function ComponentLedger({ result, comparison }: ComponentLedgerProps) {
   return (
     <div className={styles.ledgerSection}>
       <div className={styles.ledgerHeading}>
-        <p>Dentro la traduzione</p>
-        <h2>Dove cambia il lordo</h2>
+        <p>Dal lordo al netto</p>
+        <h2>Cosa passa tra i due numeri</h2>
         <span>
-          Apri una voce per capire che cos'è, cosa significa qui e da quale
-          regola deriva.
+          Ogni voce dice se riduce o aumenta il risultato. Aprila solo se vuoi
+          capire il perché o verificare la fonte.
         </span>
       </div>
       <ol className={styles.ledger} aria-label="Voci dal lordo al netto">
@@ -128,11 +127,7 @@ export function ComponentLedger({ result, comparison }: ComponentLedgerProps) {
                   <strong>{formatSignedMoney(amount, direction)}</strong>
                   <span className={styles.openHint}>Apri il perché</span>
                 </summary>
-                <ComponentInsight
-                  result={result}
-                  componentId={componentId}
-                  comparison={null}
-                />
+                <ComponentInsight result={result} componentId={componentId} />
               </details>
             </li>
           );
@@ -142,14 +137,72 @@ export function ComponentLedger({ result, comparison }: ComponentLedgerProps) {
   );
 }
 
+function ComparisonChangeRow({
+  change,
+  result,
+}: {
+  readonly change: CompensationComponentChange;
+  readonly result: SalaryCalculationResult;
+}) {
+  const effectIsPositive = change.annualNetEffect.minorUnits > 0;
+  const componentIncreases = change.amountDelta.minorUnits > 0;
+  const copy = COMPONENT_COPY[change.id];
+
+  return (
+    <li className={styles.componentChange} data-component-id={change.id}>
+      <EquationOperator amount={change.annualNetEffect} />
+      <div className={styles.changeBody}>
+        <div className={styles.changeTitle}>
+          <h3>{AMOUNT_COPY[change.amountId].label}</h3>
+          <strong>
+            {formatMoneyMagnitude(change.annualNetEffect)}{" "}
+            {effectIsPositive ? "in più" : "in meno"}
+            <span> nel netto</span>
+          </strong>
+        </div>
+        <p className={styles.amountMovement}>
+          {formatMoney(change.currentAmount)} →{" "}
+          {formatMoney(change.proposedAmount)}
+          <span>
+            La voce {componentIncreases ? "aumenta" : "diminuisce"} di{" "}
+            {formatMoneyMagnitude(change.amountDelta)}.
+          </span>
+        </p>
+        <p className={styles.changeReason}>{copy.comparisonDriver}</p>
+        <details className={styles.whyDetails}>
+          <summary>Capire e verificare questa voce</summary>
+          <ComponentInsight result={result} componentId={change.id} />
+        </details>
+      </div>
+    </li>
+  );
+}
+
+function EquationOperator({ amount }: { readonly amount: SignedMoneyAmount }) {
+  const isPositive = amount.minorUnits >= 0;
+  return (
+    <span
+      className={isPositive ? styles.addOperator : styles.subtractOperator}
+      aria-hidden="true"
+    >
+      {isPositive ? "+" : "−"}
+    </span>
+  );
+}
+
+function formatMoneyMagnitude(amount: SignedMoneyAmount): string {
+  return formatMoney({
+    currency: "EUR",
+    minorUnits: Math.abs(amount.minorUnits),
+  });
+}
+
 function ComponentInsight({
   result,
   componentId,
-  comparison,
 }: {
   readonly result: SalaryCalculationResult;
   readonly componentId: CalculationComponentId;
-  readonly comparison: CompensationComparison | null;
 }) {
   const component = result.components[componentId];
   const copy = COMPONENT_COPY[componentId];
@@ -158,24 +211,9 @@ function ComponentInsight({
   const sources = trace.sourceIds
     .map((sourceId) => result.sources.find(({ id }) => id === sourceId))
     .filter((source) => source !== undefined);
-  const comparisonChange = comparison?.componentChanges.find(
-    ({ id }) => id === componentId,
-  );
 
   return (
     <div className={styles.insight}>
-      {comparisonChange === undefined ? null : (
-        <p className={styles.comparisonImpact}>
-          <span>
-            {formatMoney(comparisonChange.currentAmount)} →{" "}
-            {formatMoney(comparisonChange.proposedAmount)}
-          </span>
-          <strong>
-            Variazione della voce:{" "}
-            {formatMoneyDelta(comparisonChange.amountDelta)}
-          </strong>
-        </p>
-      )}
       <h3>{copy.title}</h3>
       <p>{copy.summary}</p>
       <dl className={styles.conceptList}>

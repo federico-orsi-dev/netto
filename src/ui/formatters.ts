@@ -5,6 +5,7 @@ const euroFormatter = new Intl.NumberFormat("it-IT", {
   currency: "EUR",
   minimumFractionDigits: 2,
   maximumFractionDigits: 2,
+  useGrouping: true,
 });
 
 const integerFormatter = new Intl.NumberFormat("it-IT", {

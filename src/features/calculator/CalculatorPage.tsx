@@ -233,31 +233,42 @@ export function CalculatorPage() {
           className={`${styles.intro} ${currentResult === null ? "" : styles.introCompact}`}
           aria-labelledby="page-title"
         >
-          <p className={styles.kicker}>Dalla RAL al netto</p>
-          <h1 id="page-title">
-            La RAL è l'inizio. <span>Netto la traduce.</span>
-          </h1>
-          <p className={styles.lead}>
-            Quanto ti rimane davvero — e quanto vale un cambiamento di stipendio
-            — nel profilo Milano 2026.
-          </p>
-          <SalaryForm
-            rawSalary={rawSalary}
-            issue={issue}
-            hasResult={currentResult !== null}
-            onRawSalaryChange={handleRawSalaryChange}
-            onSalaryBlur={handleSalaryBlur}
-            onSubmit={handleSubmit}
-          />
-          <details className={styles.scopePrimer}>
-            <summary>Questa stima è adatta al mio caso?</summary>
-            <p>
-              È pensata per un dipendente privato a tempo indeterminato, al
-              lavoro per tutto il 2026, con domicilio fiscale a Milano e nel
-              profilo contributivo industriale descritto nel metodo. Non
-              richiede dati personali e non sostituisce una busta paga.
+          <div className={styles.introCopy}>
+            <p className={styles.kicker}>Stipendio, tradotto</p>
+            <h1 id="page-title">Capire lo stipendio, prima di accettarlo.</h1>
+            <p className={styles.lead}>
+              Netto trasforma la RAL in denaro disponibile e spiega cosa vale
+              davvero un aumento o una nuova offerta.
             </p>
-          </details>
+            <div
+              className={styles.translationKey}
+              aria-label="Come funziona Netto"
+            >
+              <span>RAL nel contratto</span>
+              <b aria-hidden="true">→</b>
+              <span>Contributi, imposte e benefici</span>
+              <b aria-hidden="true">→</b>
+              <span>Netto disponibile</span>
+            </div>
+          </div>
+          <div className={styles.introAction}>
+            <SalaryForm
+              rawSalary={rawSalary}
+              issue={issue}
+              hasResult={currentResult !== null}
+              onRawSalaryChange={handleRawSalaryChange}
+              onSalaryBlur={handleSalaryBlur}
+              onSubmit={handleSubmit}
+            />
+            <details className={styles.scopePrimer}>
+              <summary>Questa stima è adatta al mio caso?</summary>
+              <p>
+                Dipendente privato a tempo indeterminato, intero 2026, domicilio
+                fiscale a Milano e profilo contributivo industriale descritto
+                nel metodo. È una stima, non una busta paga.
+              </p>
+            </details>
+          </div>
         </section>
 
         {unexpectedError ? (
@@ -270,11 +281,7 @@ export function CalculatorPage() {
           </section>
         ) : null}
 
-        {currentResult === null ? (
-          <p className={styles.initialNote}>
-            Un numero chiaro subito. Il perché resta disponibile, voce per voce.
-          </p>
-        ) : (
+        {currentResult === null ? null : (
           <div className={styles.results}>
             <CompensationExperience
               currentResult={currentResult}

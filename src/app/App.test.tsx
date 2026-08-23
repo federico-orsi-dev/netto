@@ -52,10 +52,12 @@ describe("Netto compensation translator", () => {
     render(<App />);
     expect(
       screen.getByRole("heading", {
-        name: "La RAL è l'inizio. Netto la traduce.",
+        name: "Capire lo stipendio, prima di accettarlo.",
       }),
     ).toBeInTheDocument();
-    expect(screen.getByText(/Un numero chiaro subito/)).toBeInTheDocument();
+    expect(screen.getByLabelText("Come funziona Netto")).toHaveTextContent(
+      "RAL nel contratto",
+    );
     expect(
       screen.queryByText("Cosa diventa la tua RAL"),
     ).not.toBeInTheDocument();
@@ -87,7 +89,7 @@ describe("Netto compensation translator", () => {
     await calculate();
     const expected = expectedResult(35_000);
     const resultHeading = screen.getByRole("heading", {
-      name: "Cosa diventa la tua RAL",
+      name: "La tua RAL, tradotta",
     });
     const section = resultHeading.closest("section");
     if (section === null) throw new Error("Missing result section.");
@@ -171,7 +173,9 @@ describe("Netto compensation translator", () => {
       expectedResult(40_000),
     );
     expect(
-      screen.getByRole("heading", { name: "Cosa diventa questo cambiamento" }),
+      screen.getByRole("heading", {
+        name: /Un aumento di .* vale .* netti all'anno/,
+      }),
     ).toHaveFocus();
     expectPageToContain(formatMoneyDelta(expected.grossRalDelta));
     expectPageToContain(formatMoneyDelta(expected.annualNetDelta));
@@ -195,7 +199,9 @@ describe("Netto compensation translator", () => {
     await user.click(
       screen.getByRole("button", { name: "Traduci la differenza" }),
     );
-    expect(screen.getByText(/Le due RAL coincidono/)).toBeVisible();
+    expect(
+      screen.getByText(/Le due RAL producono lo stesso risultato/),
+    ).toBeVisible();
     expect(
       screen.queryByText("Non è un'aliquota marginale."),
     ).not.toBeInTheDocument();
@@ -209,15 +215,13 @@ describe("Netto compensation translator", () => {
       expectedResult(25_000),
     );
     const changedLedger = screen.getByRole("list", {
-      name: "Voci cambiate nel confronto",
+      name: "Come si forma la variazione netta",
     });
     const benefitItem = changedLedger.querySelector<HTMLElement>(
       '[data-component-id="cuneoCashSum"]',
     );
     expect(benefitItem).not.toBeNull();
-    expect(
-      benefitItem?.querySelector(":scope > details > summary"),
-    ).toBeVisible();
+    expect(benefitItem).toBeVisible();
     const taxChange = expected.componentChanges.find(
       ({ id }) => id === "netIrpef",
     );
@@ -227,19 +231,20 @@ describe("Netto compensation translator", () => {
     if (taxChange === undefined || taxItem === null) {
       throw new Error("Expected the net IRPEF comparison row");
     }
-    const taxSummary = taxItem.querySelector("summary");
-    if (taxSummary === null) {
-      throw new Error("Expected the net IRPEF comparison summary");
+    const taxDetails = taxItem.querySelector("details");
+    if (taxDetails === null) {
+      throw new Error("Expected the net IRPEF comparison detail");
     }
-    expect(normalizedText(taxSummary.textContent)).toContain(
-      normalizedText(formatMoneyDelta(taxChange.annualNetEffect)),
-    );
-    expect(taxSummary).toHaveTextContent("Effetto sul netto");
-    await user.click(taxSummary);
     expect(normalizedText(taxItem.textContent)).toContain(
-      normalizedText(
-        `Variazione della voce: ${formatMoneyDelta(taxChange.amountDelta)}`,
-      ),
+      normalizedText(formatMoney(taxChange.currentAmount)),
+    );
+    expect(normalizedText(taxItem.textContent)).toContain(
+      normalizedText(formatMoney(taxChange.proposedAmount)),
+    );
+    expect(taxItem).toHaveTextContent(/La voce (aumenta|diminuisce) di/);
+    expect(taxItem).toHaveTextContent(/nel netto/);
+    await user.click(
+      within(taxItem).getByText("Capire e verificare questa voce"),
     );
     expect(
       screen.getByRole("heading", {
@@ -266,14 +271,14 @@ describe("Netto compensation translator", () => {
     expect(screen.getByRole("alert")).toHaveTextContent(
       "La stima supporta RAL fino a 120.000 €.",
     );
-    expect(screen.getByText("Cosa diventa la tua RAL")).toBeVisible();
+    expect(screen.getByText("La tua RAL, tradotta")).toBeVisible();
   });
 
   it("returns to the single translation and restores focus", async () => {
     const user = await calculate();
     await compare(user, "40.000");
     await user.click(screen.getByRole("button", { name: "Chiudi confronto" }));
-    expect(screen.getByText("Cosa diventa la tua RAL")).toBeVisible();
+    expect(screen.getByText("La tua RAL, tradotta")).toBeVisible();
     expect(
       screen.getByRole("button", { name: /Confronta una nuova RAL/ }),
     ).toHaveFocus();
@@ -299,9 +304,7 @@ describe("Netto compensation translator", () => {
 
   it("clears stale results as soon as the current RAL changes", async () => {
     const user = await calculate();
-    await user.type(screen.getByLabelText(/La tua RAL/), "0");
-    expect(
-      screen.queryByText("Cosa diventa la tua RAL"),
-    ).not.toBeInTheDocument();
+    await user.type(screen.getByRole("textbox", { name: /La tua RAL/ }), "0");
+    expect(screen.queryByText("La tua RAL, tradotta")).not.toBeInTheDocument();
   });
 });

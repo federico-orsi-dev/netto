@@ -104,47 +104,60 @@ function SingleTranslation({
   const isNetBenefit = modeledBurden.minorUnits < 0;
 
   return (
-    <div className={styles.translation} data-primary-result>
-      <p className={styles.eyebrow}>La tua compensazione, tradotta</p>
-      <h2 id="result-heading" ref={resultHeadingRef} tabIndex={-1}>
-        Cosa diventa la tua RAL
-      </h2>
-      <div className={styles.singleEquation}>
+    <div className={styles.translationSheet} data-primary-result>
+      <div className={styles.sheetHeading}>
+        <p>Traduzione personale · Milano 2026</p>
+        <h2 id="result-heading" ref={resultHeadingRef} tabIndex={-1}>
+          La tua RAL, tradotta
+        </h2>
+      </div>
+      <div className={styles.singleStatement}>
         <div className={styles.grossValue}>
-          <span>RAL</span>
+          <span>Nel contratto</span>
           <strong>{formatMoney(result.amounts.annualGrossSalary)}</strong>
-          <small>lordi all'anno</small>
+          <small>RAL lorda all'anno</small>
         </div>
-        <div className={styles.translationMark} aria-hidden="true">
-          <span>diventa</span>
-          <i>→</i>
+        <div className={styles.passageValue}>
+          <span aria-hidden="true">{isNetBenefit ? "+" : "−"}</span>
+          <strong>
+            {isNetBenefit
+              ? formatSignedMoney(modeledBurden, "add")
+              : formatMoney(modeledBurden)}
+          </strong>
+          <small>
+            {isNetBenefit
+              ? "beneficio netto modellato"
+              : "contributi e imposte, al netto dei benefici"}
+          </small>
         </div>
         <div className={styles.netValue}>
+          <span>Disponibile nell'anno</span>
           <strong>{formatMoney(result.amounts.annualNet)}</strong>
-          <span>netti stimati all'anno</span>
           <p>
             <b>{formatMoney(result.amounts.averageMonthlyNet)}</b>
-            <span> al mese, in media</span>
+            <span> netti al mese, in media</span>
           </p>
         </div>
       </div>
       <p className={isNetBenefit ? styles.benefitLine : styles.burdenLine}>
         <span aria-hidden="true">{isNetBenefit ? "+" : "−"}</span>
-        {isNetBenefit ? (
-          <>
-            I benefici fiscali monetari superano le uscite modellate: il
-            risultato include un beneficio netto di{" "}
-            <strong>{formatSignedMoney(modeledBurden, "add")}</strong>. Il
-            datore di lavoro non paga oltre la RAL.
-          </>
-        ) : (
-          <>
-            Contributi e imposte, al netto dei benefici inclusi, assorbono{" "}
-            <strong>{formatMoney(modeledBurden)}</strong>, pari al{" "}
-            {formatBasisPoints(result.summary.effectiveBurdenBasisPoints)} della
-            RAL.
-          </>
-        )}
+        <span>
+          {isNetBenefit ? (
+            <>
+              I benefici fiscali monetari superano le uscite modellate: il
+              risultato include un beneficio netto di{" "}
+              <strong>{formatSignedMoney(modeledBurden, "add")}</strong>. Il
+              datore di lavoro non paga oltre la RAL.
+            </>
+          ) : (
+            <>
+              Contributi e imposte, al netto dei benefici inclusi, assorbono{" "}
+              <strong>{formatMoney(modeledBurden)}</strong>, pari al{" "}
+              {formatBasisPoints(result.summary.effectiveBurdenBasisPoints)}{" "}
+              della RAL.
+            </>
+          )}
+        </span>
       </p>
     </div>
   );
@@ -160,43 +173,18 @@ function ComparisonTranslation({
   const ratio = comparison.modeledNetShareOfGrossChangeBasisPoints;
 
   return (
-    <div className={styles.translation} data-primary-result>
-      <p className={styles.eyebrow}>La differenza che conta</p>
-      <h2 id="result-heading" ref={resultHeadingRef} tabIndex={-1}>
-        Cosa diventa questo cambiamento
-      </h2>
-      <div className={styles.comparisonEquation}>
-        <div className={styles.deltaGross}>
-          <span>Variazione RAL</span>
-          <strong>{formatMoneyDelta(comparison.grossRalDelta)}</strong>
-        </div>
-        <div className={styles.translationMark} aria-hidden="true">
-          <span>si traduce in</span>
-          <i>→</i>
-        </div>
-        <div className={styles.deltaNet}>
-          <strong>{formatMoneyDelta(comparison.annualNetDelta)}</strong>
-          <span>netti all'anno</span>
-          <p>
-            <b>{formatMoneyDelta(comparison.averageMonthlyNetDelta)}</b>
-            <span> al mese, in media</span>
-          </p>
-        </div>
+    <div className={styles.translationSheet} data-primary-result>
+      <div className={styles.sheetHeading}>
+        <p>Traduzione del cambiamento · Milano 2026</p>
+        <h2 id="result-heading" ref={resultHeadingRef} tabIndex={-1}>
+          {comparisonHeadline(comparison)}
+        </h2>
       </div>
 
-      <p className={styles.decisionSentence}>
-        {comparisonSentence(comparison)}
+      <p className={styles.monthlyChange}>
+        <strong>{formatMoneyDelta(comparison.averageMonthlyNetDelta)}</strong>
+        <span> al mese, in media</span>
       </p>
-
-      {ratio === null ? null : (
-        <div className={styles.retainedShare}>
-          <span>
-            Quota modellata della variazione lorda che si riflette nel netto
-          </span>
-          <strong>{formatBasisPoints(ratio)}</strong>
-          <small>Non è un'aliquota marginale.</small>
-        </div>
-      )}
 
       <dl className={styles.referenceOutcomes}>
         <div>
@@ -207,6 +195,9 @@ function ComparisonTranslation({
             RAL
           </dd>
         </div>
+        <span className={styles.referenceArrow} aria-hidden="true">
+          →
+        </span>
         <div>
           <dt>RAL proposta</dt>
           <dd>{formatMoney(comparison.proposed.amounts.annualNet)}</dd>
@@ -216,6 +207,14 @@ function ComparisonTranslation({
           </dd>
         </div>
       </dl>
+
+      {ratio === null ? null : (
+        <div className={styles.retainedShare}>
+          <span>Della variazione lorda, si riflette nel netto</span>
+          <strong>{formatBasisPoints(ratio)}</strong>
+          <small>Non è un'aliquota marginale.</small>
+        </div>
+      )}
     </div>
   );
 }
@@ -341,23 +340,33 @@ function PaymentPresentation({
   );
 }
 
-function comparisonSentence(comparison: CompensationComparison): string {
-  const annual = formatMoneyDelta(comparison.annualNetDelta);
-  const monthly = formatMoneyDelta(comparison.averageMonthlyNetDelta);
+function comparisonHeadline(comparison: CompensationComparison): string {
+  const gross = formatMagnitude(comparison.grossRalDelta);
+  const annual = formatMagnitude(comparison.annualNetDelta);
   if (comparison.direction === "unchanged") {
-    return "Le due RAL coincidono: il modello non rileva alcuna variazione.";
+    return "Le due RAL producono lo stesso risultato.";
   }
   if (
     comparison.direction === "increase" &&
     comparison.netDirection === "increase"
   ) {
-    return `L'aumento si traduce in ${annual} netti all'anno, circa ${monthly} al mese.`;
+    return `Un aumento di ${gross} vale ${annual} netti all'anno.`;
   }
   if (
     comparison.direction === "decrease" &&
     comparison.netDirection === "decrease"
   ) {
-    return `La riduzione si traduce in ${annual} netti all'anno, circa ${monthly} al mese.`;
+    return `Una riduzione di ${gross} riduce il netto di ${annual} all'anno.`;
   }
-  return `La RAL e il netto si muovono in direzioni diverse: ${annual} all'anno, ${monthly} al mese.`;
+  return `La RAL e il netto si muovono in direzioni diverse: ${formatMoneyDelta(comparison.annualNetDelta)} all'anno.`;
+}
+
+function formatMagnitude(amount: {
+  readonly currency: "EUR";
+  readonly minorUnits: number;
+}) {
+  return formatMoney({
+    currency: "EUR",
+    minorUnits: Math.abs(amount.minorUnits),
+  });
 }

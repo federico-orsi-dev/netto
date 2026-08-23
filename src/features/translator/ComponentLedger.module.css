@@ -1,32 +1,29 @@
-.ledgerHeading > p,
-.ruleChanges > p {
-  margin-bottom: var(--space-2);
-  color: var(--accent);
-  font-size: 0.72rem;
-  font-weight: 820;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.ledgerHeading h2 {
-  margin-bottom: 0;
-  font-size: clamp(1.6rem, 4vw, 2.6rem);
-  letter-spacing: -0.04em;
-  line-height: 1.05;
-}
-
+.changeStory,
 .ledgerSection {
   display: grid;
-  grid-template-columns: minmax(13rem, 0.42fr) minmax(0, 1fr);
+  grid-template-columns: minmax(13rem, 0.38fr) minmax(0, 1fr);
   gap: clamp(2rem, 6vw, 6rem);
   align-items: start;
 }
 
-.ledgerHeading {
-  position: sticky;
-  top: var(--space-5);
+.changeHeading > p,
+.ledgerHeading > p,
+.ruleChanges > p {
+  margin-bottom: var(--space-2);
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 760;
 }
 
+.changeHeading h2,
+.ledgerHeading h2 {
+  margin-bottom: 0;
+  font-size: clamp(1.7rem, 4vw, 2.7rem);
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+}
+
+.changeHeading > span,
 .ledgerHeading > span {
   display: block;
   max-width: 28rem;
@@ -34,6 +31,12 @@
   color: var(--ink-650);
 }
 
+.ledgerHeading {
+  position: sticky;
+  top: var(--space-5);
+}
+
+.changeEquation,
 .ledger,
 .ruleChanges ul,
 .inlineSources {
@@ -42,8 +45,125 @@
   list-style: none;
 }
 
+.changeEquation {
+  grid-column: 2;
+  border-top: 2px solid var(--ink-950);
+}
+
+.changeEquation > li {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  gap: var(--space-4);
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.changeEquation > .grossChange {
+  padding-inline: var(--space-4);
+  background: var(--accent-soft);
+  border-bottom-color: var(--accent);
+}
+
+.changeEquation > .netChange {
+  margin-top: var(--space-3);
+  padding-inline: var(--space-4);
+  color: var(--surface);
+  background: var(--ink-950);
+  border-bottom: 0;
+}
+
+.addOperator,
+.subtractOperator,
+.equalsOperator {
+  padding-top: 0.05rem;
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.addOperator {
+  color: var(--benefit);
+}
+
+.subtractOperator {
+  color: var(--subtract);
+}
+
+.equalsOperator {
+  color: var(--surface);
+}
+
+.changeBody {
+  min-width: 0;
+}
+
+.changeTitle {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.changeTitle h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.changeTitle strong {
+  text-align: right;
+  font-size: 1.05rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.changeTitle strong span {
+  color: var(--ink-650);
+  font-size: 0.72rem;
+  font-weight: 650;
+}
+
+.netChange .changeTitle strong span,
+.netChange .changeBody > p {
+  color: color-mix(in srgb, var(--surface) 72%, transparent);
+}
+
+.changeBody > p {
+  margin: var(--space-2) 0 0;
+  color: var(--ink-650);
+}
+
+.amountMovement {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  font-variant-numeric: tabular-nums;
+}
+
+.amountMovement span {
+  padding-left: var(--space-4);
+  border-left: 1px solid var(--line-strong);
+}
+
+.changeReason {
+  max-width: 48rem;
+  font-size: 0.88rem;
+}
+
+.whyDetails {
+  margin-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.whyDetails > summary {
+  width: fit-content;
+  padding: var(--space-3) 0;
+  color: var(--accent-strong);
+  font-size: 0.78rem;
+  font-weight: 730;
+}
+
 .ledger {
-  border-top: 1px solid var(--line-strong);
+  border-top: 2px solid var(--ink-950);
 }
 
 .ledger li {
@@ -52,7 +172,7 @@
 
 .ledger summary {
   display: grid;
-  grid-template-columns: 1.6rem minmax(0, 1fr) auto;
+  grid-template-columns: 1.4rem minmax(0, 1fr) auto;
   gap: var(--space-3);
   align-items: center;
   min-height: 4.75rem;
@@ -71,35 +191,26 @@
 
 .subtractMarker,
 .addMarker {
-  display: grid;
-  width: 1.35rem;
-  height: 1.35rem;
-  place-items: center;
-  border-radius: 50%;
-  color: white;
-  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
   font-weight: 850;
 }
 
 .subtractMarker {
-  background: var(--subtract);
+  color: var(--subtract);
 }
 
 .addMarker {
-  background: var(--benefit);
+  color: var(--benefit);
 }
 
 .ledgerLabel {
   font-weight: 690;
 }
 
-.ledger summary strong,
-.comparisonImpact {
-  font-variant-numeric: tabular-nums;
-}
-
 .ledger summary strong {
   font-size: 1rem;
+  font-variant-numeric: tabular-nums;
 }
 
 .openHint {
@@ -109,26 +220,20 @@
 }
 
 .insight {
-  padding: 0 var(--space-6) var(--space-6) calc(1.6rem + var(--space-3));
+  padding: 0 var(--space-6) var(--space-6) calc(1.4rem + var(--space-3));
+}
+
+.whyDetails .insight {
+  padding: var(--space-3) 0 var(--space-4);
 }
 
 .insight h3 {
   margin-bottom: var(--space-2);
-  font-size: 1.25rem;
+  font-size: 1.2rem;
 }
 
-.insight > p:not(.comparisonImpact) {
+.insight > p {
   color: var(--ink-650);
-}
-
-.comparisonImpact {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: var(--space-3);
-  padding: var(--space-3) 0;
-  border-bottom: 1px solid var(--line);
-  color: var(--ink-800);
 }
 
 .conceptList {
@@ -176,8 +281,8 @@
 .evidenceDetails > div > code {
   display: block;
   padding: var(--space-3);
-  background: var(--surface-muted);
   color: var(--ink-950);
+  background: var(--surface-muted);
   overflow-wrap: anywhere;
 }
 
@@ -229,40 +334,64 @@
   color: var(--ink-650);
 }
 
-.noChanges {
-  margin: 0;
-  padding: var(--space-5) 0;
-  border-block: 1px solid var(--line);
-}
-
 @media (max-width: 52rem) {
+  .changeStory,
   .ledgerSection {
     grid-template-columns: 1fr;
+  }
+
+  .changeEquation,
+  .ruleChanges {
+    grid-column: auto;
   }
 
   .ledgerHeading {
     position: static;
   }
-
-  .ruleChanges {
-    grid-column: auto;
-  }
 }
 
 @media (max-width: 42rem) {
-  .insight {
-    padding-right: 0;
+  .changeEquation > li {
+    grid-template-columns: 1.7rem minmax(0, 1fr);
+    gap: var(--space-3);
+  }
+
+  .changeEquation > .grossChange,
+  .changeEquation > .netChange {
+    padding-inline: var(--space-3);
+  }
+
+  .changeTitle {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .changeTitle strong {
+    text-align: left;
+  }
+
+  .amountMovement {
+    display: grid;
+  }
+
+  .amountMovement span {
+    padding-left: 0;
+    border-left: 0;
   }
 
   .conceptList > div {
     grid-template-columns: 1fr;
     gap: 0.2rem;
   }
+
+  .insight {
+    padding-right: 0;
+  }
 }
 
 @media (max-width: 24rem) {
   .ledger summary {
-    grid-template-columns: 1.45rem minmax(0, 1fr);
+    grid-template-columns: 1.25rem minmax(0, 1fr);
   }
 
   .ledger summary strong,
@@ -272,10 +401,6 @@
   }
 
   .insight {
-    padding-left: calc(1.45rem + var(--space-3));
-  }
-
-  .comparisonImpact {
-    display: grid;
+    padding-left: calc(1.25rem + var(--space-3));
   }
 }
