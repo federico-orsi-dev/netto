@@ -72,3 +72,5 @@ Codex local filesystem/shell tools, Playwright browsers, the in-app browser, npm
 ## Remaining release gate
 
 Finish canonical-link and release-artifact validation, commit the coherent replacement, push `main`, require GitHub quality and Cloudflare Pages checks to pass, verify the public artifact and security/privacy behavior, then persist the deployment result in this same record and `PROJECT_STATE.md`.
+
+The first remote quality run passed clean install, type/lint/format, all 125 Vitest tests, both exhaustive executions, build, artifact inspection, and audit, but exposed a browser-platform assertion defect in two WebKit smoke journeys: current Linux WebKit groups four-digit Italian currency while the local engines may omit that separator. The application values were correct. The E2E assertions now accept only those two valid Italian grouping forms while preserving exact sign, cents, and currency; no product or fiscal calculation changed.

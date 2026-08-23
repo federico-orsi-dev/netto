@@ -58,7 +58,7 @@ test("translates one RAL and one compensation change without external requests",
     name: "Cosa diventa la tua RAL",
   });
   await expect(singleResult.getByText("25.973,45 €")).toBeVisible();
-  await expect(singleResult.getByText("2164,45 €")).toBeVisible();
+  await expect(singleResult.getByText(/^2\.?164,45\s*€$/)).toBeVisible();
   await expect(
     page.getByRole("list", { name: "Voci dal lordo al netto" }),
   ).toBeVisible();
@@ -67,10 +67,8 @@ test("translates one RAL and one compensation change without external requests",
   const comparison = page.getByRole("region", {
     name: "Cosa diventa questo cambiamento",
   });
-  await expect(comparison.getByText("+5000,00 €")).toBeVisible();
-  await expect(
-    comparison.getByText("+1934,66 €", { exact: true }),
-  ).toBeVisible();
+  await expect(comparison.getByText(/^\+5\.?000,00\s*€$/)).toBeVisible();
+  await expect(comparison.getByText(/^\+1\.?934,66\s*€$/)).toBeVisible();
   await expect(
     comparison.getByText("+161,23 €", { exact: true }),
   ).toBeVisible();
@@ -113,8 +111,8 @@ test("keeps comparison semantics valid for a reduction and equal values", async 
   await page.goto("/");
   await calculate(page, "40.000");
   await compare(page, "35.000");
-  await expect(page.getByText("−5000,00 €", { exact: true })).toBeVisible();
-  await expect(page.getByText("−1934,66 €", { exact: true })).toBeVisible();
+  await expect(page.getByText(/^−5\.?000,00\s*€$/)).toBeVisible();
+  await expect(page.getByText(/^−1\.?934,66\s*€$/)).toBeVisible();
 
   await page.getByLabel("RAL proposta").fill("40.000");
   await page.getByRole("button", { name: "Traduci la differenza" }).click();
