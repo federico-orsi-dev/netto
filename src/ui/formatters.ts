@@ -33,6 +33,14 @@ export function formatSignedMoney(
   return `${direction === "add" ? "+" : "−"}${formatted}`;
 }
 
+export function formatMoneyDelta(amount: MoneyAmount): string {
+  if (amount.minorUnits === 0) return formatMoney(amount);
+  return `${amount.minorUnits > 0 ? "+" : "−"}${formatMoney({
+    currency: "EUR",
+    minorUnits: Math.abs(amount.minorUnits),
+  })}`;
+}
+
 export function formatBasisPoints(basisPoints: number): string {
   return percentFormatter.format(basisPoints / 10_000);
 }

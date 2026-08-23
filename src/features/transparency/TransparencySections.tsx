@@ -5,9 +5,13 @@ import styles from "./TransparencySections.module.css";
 
 interface TransparencySectionsProps {
   readonly result: SalaryCalculationResult;
+  readonly currentResult: SalaryCalculationResult | null;
 }
 
-export function TransparencySections({ result }: TransparencySectionsProps) {
+export function TransparencySections({
+  result,
+  currentResult,
+}: TransparencySectionsProps) {
   const sourcesByIssuer = result.sources.reduce((groups, source) => {
     const current = groups.get(source.issuer) ?? [];
     current.push(source);
@@ -18,50 +22,33 @@ export function TransparencySections({ result }: TransparencySectionsProps) {
   return (
     <section aria-labelledby="method-heading" className={styles.section}>
       <div className={styles.heading}>
-        <p>Trasparenza, non una scatola nera</p>
-        <h2 id="method-heading">Come lo abbiamo calcolato?</h2>
+        <p>Fiducia prima, verifica quando serve</p>
+        <h2 id="method-heading">Il perimetro di questa stima</h2>
         <span>
-          Ipotesi esplicite, regole 2026 versionate e fonti istituzionali
-          consultabili.
+          Un risultato utile perché dichiara con precisione a chi si applica.
         </span>
       </div>
 
-      <div className={styles.methodGrid}>
-        <article>
-          <span className={styles.number}>01</span>
-          <h3>Profilo contributivo</h3>
-          <p>
-            Dipendente privato di un datore industriale in ambito CIGO/CIGS,
-            oltre 15 dipendenti e senza fondo settoriale aggiuntivo a suo
-            carico.
-          </p>
-        </article>
-        <article>
-          <span className={styles.number}>02</span>
-          <h3>Anno e domicilio</h3>
-          <p>
-            Lavoro ordinario per tutto il 2026 e domicilio fiscale a Milano, in
-            Lombardia, per l'intero periodo.
-          </p>
-        </article>
-        <article>
-          <span className={styles.number}>03</span>
-          <h3>Cosa rappresenta la RAL</h3>
-          <p>
-            Retribuzione ordinaria annuale interamente contributiva, senza altri
-            redditi, familiari a carico o circostanze speciali.
-          </p>
-        </article>
+      <div className={styles.scopeStatement}>
+        <strong>In parole semplici</strong>
+        <p>
+          Netto modella un dipendente privato a tempo indeterminato, al lavoro
+          per tutto il 2026 e fiscalmente domiciliato a Milano. La RAL è
+          retribuzione ordinaria interamente contributiva, senza altri redditi,
+          familiari a carico o agevolazioni personali.
+        </p>
+        <p>
+          È una stima annuale riconciliata ai centesimi: non una busta paga, una
+          dichiarazione fiscale o una verifica del tuo CCNL.
+        </p>
       </div>
 
       <div className={styles.disclosures}>
         <details>
           <summary>
             <span>
-              <strong>Ipotesi del calcolo</strong>
-              <small>
-                Le condizioni che rendono deterministica questa stima
-              </small>
+              <strong>Ipotesi complete</strong>
+              <small>{result.assumptions.length} condizioni dichiarate</small>
             </span>
             <span aria-hidden="true" className={styles.disclosureIcon}>
               +
@@ -78,7 +65,7 @@ export function TransparencySections({ result }: TransparencySectionsProps) {
           <summary>
             <span>
               <strong>Cosa non include</strong>
-              <small>Nove confini espliciti del profilo V1</small>
+              <small>Nove confini espliciti del modello</small>
             </span>
             <span aria-hidden="true" className={styles.disclosureIcon}>
               +
@@ -97,10 +84,8 @@ export function TransparencySections({ result }: TransparencySectionsProps) {
         <details>
           <summary>
             <span>
-              <strong>Fonti autorevoli</strong>
-              <small>
-                {result.sources.length} riferimenti ufficiali versionati
-              </small>
+              <strong>Fonti ufficiali</strong>
+              <small>{result.sources.length} riferimenti versionati</small>
             </span>
             <span aria-hidden="true" className={styles.disclosureIcon}>
               +
@@ -136,7 +121,14 @@ export function TransparencySections({ result }: TransparencySectionsProps) {
           </div>
         </details>
 
-        <CalculationTrace result={result} />
+        {currentResult === null ? (
+          <CalculationTrace result={result} />
+        ) : (
+          <div className={styles.comparisonTraces}>
+            <CalculationTrace result={currentResult} label="RAL attuale" />
+            <CalculationTrace result={result} label="RAL proposta" />
+          </div>
+        )}
       </div>
     </section>
   );

@@ -3,6 +3,7 @@ import type {
   CalculationAmountId,
   CalculationComponentId,
   ExcludedRuleId,
+  VerifiedRuleId,
 } from "../domain";
 import type { SalaryInputIssueCode } from "../features/calculator/input-parser";
 
@@ -294,3 +295,44 @@ export const TRACE_STATUS_COPY = {
   not_applicable: "Non applicabile",
   inactive_in_supported_range: "Inattiva nell'intervallo V1",
 } as const;
+
+interface RuleChangeCopy {
+  readonly activated: string;
+  readonly deactivated: string;
+}
+
+export const RULE_CHANGE_COPY: Partial<Record<VerifiedRuleId, RuleChangeCopy>> =
+  {
+    "RULE-INPS-2026-003": {
+      activated:
+        "Si attiva il contributo IVS aggiuntivo sulla quota oltre la soglia 2026.",
+      deactivated:
+        "La nuova RAL non raggiunge più la soglia del contributo IVS aggiuntivo.",
+    },
+    "RULE-NAT-EMPLOYMENT-DEDUCTION-2026": {
+      activated: "Torna applicabile la detrazione per lavoro dipendente.",
+      deactivated:
+        "La detrazione per lavoro dipendente si azzera oltre questa fascia.",
+    },
+    "RULE-NAT-CUNEO-SUM-2026": {
+      activated: "Si attiva il beneficio fiscale non imponibile modellato.",
+      deactivated:
+        "Il beneficio fiscale non imponibile termina oltre questa fascia.",
+    },
+    "RULE-NAT-CUNEO-DEDUCTION-2026": {
+      activated: "Si attiva l'ulteriore detrazione sul cuneo fiscale.",
+      deactivated:
+        "L'ulteriore detrazione sul cuneo fiscale non si applica più.",
+    },
+    "RULE-NAT-TREATMENT-INTEGRATIVO-LOW-2026": {
+      activated:
+        "Si attiva il trattamento integrativo per la fascia supportata.",
+      deactivated: "Il trattamento integrativo termina oltre questa fascia.",
+    },
+    "RULE-MILAN-2026-001": {
+      activated:
+        "Si supera la soglia modellata dell'addizionale comunale Milano.",
+      deactivated:
+        "La nuova RAL rientra sotto la soglia modellata dell'addizionale comunale.",
+    },
+  };

@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 
+import { compareCompensationResults } from "../../application";
 import {
   calculateSalary2026,
   type SalaryCalculationResult,
   type SalaryPaymentsPerYear,
 } from "../../domain";
-import { GrossToNetSection } from "../breakdown/GrossToNetSection";
-import { ResultSummary } from "../results/ResultSummary";
+import { CompensationExperience } from "../translator/CompensationExperience";
 import { TransparencySections } from "../transparency/TransparencySections";
 import {
   formatSalaryInput,
@@ -18,66 +18,67 @@ import { SalaryForm } from "./SalaryForm";
 
 export function CalculatorPage() {
   const [rawSalary, setRawSalary] = useState("");
+  const [rawProposedSalary, setRawProposedSalary] = useState("");
   const [salaryPayments, setSalaryPayments] =
     useState<SalaryPaymentsPerYear>(13);
   const [issue, setIssue] = useState<SalaryInputIssueCode | null>(null);
-  const [result, setResult] = useState<SalaryCalculationResult | null>(null);
+  const [proposedIssue, setProposedIssue] =
+    useState<SalaryInputIssueCode | null>(null);
+  const [currentResult, setCurrentResult] =
+    useState<SalaryCalculationResult | null>(null);
+  const [proposedResult, setProposedResult] =
+    useState<SalaryCalculationResult | null>(null);
+  const [comparisonActive, setComparisonActive] = useState(false);
   const [unexpectedError, setUnexpectedError] = useState(false);
-  const shouldFocusResultRef = useRef(false);
-  const resultRegionRef = useRef<HTMLDivElement>(null);
+
+  const resultHeadingRef = useRef<HTMLHeadingElement>(null);
+  const proposedInputRef = useRef<HTMLInputElement>(null);
+  const comparisonButtonRef = useRef<HTMLButtonElement>(null);
+  const pendingResultFocusRef = useRef(false);
+  const pendingProposedFocusRef = useRef(false);
+  const pendingComparisonButtonFocusRef = useRef(false);
+
+  const comparison = useMemo(
+    () =>
+      currentResult === null || proposedResult === null
+        ? null
+        : compareCompensationResults(currentResult, proposedResult),
+    [currentResult, proposedResult],
+  );
 
   useEffect(() => {
-    if (!shouldFocusResultRef.current || result === null) return;
-    const resultRegion = resultRegionRef.current;
-    const heading = resultRegion?.querySelector<HTMLElement>("#result-heading");
-    const primaryResult = resultRegion?.querySelector<HTMLElement>(
-      "[data-primary-result]",
-    );
-    if (heading === undefined || heading === null) return;
-
-    const primaryBounds = primaryResult?.getBoundingClientRect();
-    const primaryIsVisible =
-      primaryBounds !== undefined &&
-      primaryBounds.top >= 0 &&
-      primaryBounds.bottom <= window.innerHeight;
-    if (!primaryIsVisible) {
-      heading.closest("section")?.scrollIntoView({ block: "start" });
+    if (!pendingResultFocusRef.current || currentResult === null) return;
+    const heading = resultHeadingRef.current;
+    if (heading === null) return;
+    if (typeof heading.scrollIntoView === "function") {
+      heading.scrollIntoView({ block: "start" });
     }
     heading.focus({ preventScroll: true });
-    shouldFocusResultRef.current = false;
-  }, [result]);
+    pendingResultFocusRef.current = false;
+  }, [currentResult, proposedResult]);
 
-  const runCalculation = (
+  useEffect(() => {
+    if (!pendingProposedFocusRef.current || !comparisonActive) return;
+    proposedInputRef.current?.focus();
+    pendingProposedFocusRef.current = false;
+  }, [comparisonActive]);
+
+  useEffect(() => {
+    if (!pendingComparisonButtonFocusRef.current || comparisonActive) return;
+    comparisonButtonRef.current?.focus();
+    pendingComparisonButtonFocusRef.current = false;
+  }, [comparisonActive]);
+
+  const calculateResult = (
     annualGrossSalaryEuro: number,
     payments: SalaryPaymentsPerYear,
-  ) => {
-    try {
-      const outcome = calculateSalary2026({
-        annualGrossSalaryEuro,
-        salaryPaymentsPerYear: payments,
-      });
-      if (!outcome.ok) {
-        const salaryIssue = outcome.issues.find(
-          ({ field }) => field === "annualGrossSalaryEuro",
-        );
-        setIssue(
-          salaryIssue?.code === "unsupported_annual_gross_salary"
-            ? annualGrossSalaryEuro < 10_000
-              ? "below_supported_range"
-              : "above_supported_range"
-            : "invalid_format",
-        );
-        setResult(null);
-        return;
-      }
-      setUnexpectedError(false);
-      setIssue(null);
-      setResult(outcome.result);
-    } catch (error) {
-      if (import.meta.env.DEV) console.error(error);
-      setUnexpectedError(true);
-      setResult(null);
-    }
+  ): SalaryCalculationResult | null => {
+    const outcome = calculateSalary2026({
+      annualGrossSalaryEuro,
+      salaryPaymentsPerYear: payments,
+    });
+    if (!outcome.ok) return null;
+    return outcome.result;
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -85,34 +86,127 @@ export function CalculatorPage() {
     const parsed = parseItalianSalaryInput(rawSalary);
     if (!parsed.ok) {
       setIssue(parsed.code);
-      setResult(null);
+      setCurrentResult(null);
+      setProposedResult(null);
       return;
     }
-    setRawSalary(formatSalaryInput(parsed.value));
-    shouldFocusResultRef.current = true;
-    runCalculation(parsed.value, salaryPayments);
+
+    try {
+      const nextCurrent = calculateResult(parsed.value, salaryPayments);
+      if (nextCurrent === null) {
+        setIssue(issueForDomainValue(parsed.value));
+        setCurrentResult(null);
+        setProposedResult(null);
+        return;
+      }
+      setRawSalary(formatSalaryInput(parsed.value));
+      setIssue(null);
+      setUnexpectedError(false);
+      setCurrentResult(nextCurrent);
+
+      const parsedProposed = parseItalianSalaryInput(rawProposedSalary);
+      if (comparisonActive && parsedProposed.ok) {
+        setProposedResult(
+          calculateResult(parsedProposed.value, salaryPayments),
+        );
+      } else {
+        setProposedResult(null);
+      }
+      pendingResultFocusRef.current = true;
+    } catch (error) {
+      handleUnexpectedError(error);
+    }
+  };
+
+  const handleComparisonSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const parsed = parseItalianSalaryInput(rawProposedSalary);
+    if (!parsed.ok) {
+      setProposedIssue(parsed.code);
+      setProposedResult(null);
+      return;
+    }
+    try {
+      const nextProposed = calculateResult(parsed.value, salaryPayments);
+      if (nextProposed === null) {
+        setProposedIssue(issueForDomainValue(parsed.value));
+        setProposedResult(null);
+        return;
+      }
+      setRawProposedSalary(formatSalaryInput(parsed.value));
+      setProposedIssue(null);
+      setUnexpectedError(false);
+      setProposedResult(nextProposed);
+      pendingResultFocusRef.current = true;
+    } catch (error) {
+      handleUnexpectedError(error);
+    }
   };
 
   const handleRawSalaryChange = (value: string) => {
     setRawSalary(value);
     setIssue(null);
     setUnexpectedError(false);
-    setResult(null);
+    setCurrentResult(null);
+    setProposedResult(null);
+  };
+
+  const handleRawProposedSalaryChange = (value: string) => {
+    setRawProposedSalary(value);
+    setProposedIssue(null);
+    setUnexpectedError(false);
+    setProposedResult(null);
   };
 
   const handleSalaryBlur = () => {
-    if (rawSalary.trim().length === 0) return;
     const parsed = parseItalianSalaryInput(rawSalary);
-    if (parsed.ok) {
+    if (rawSalary.trim().length > 0 && parsed.ok) {
       setRawSalary(formatSalaryInput(parsed.value));
       setIssue(null);
     }
   };
 
+  const handleProposedSalaryBlur = () => {
+    const parsed = parseItalianSalaryInput(rawProposedSalary);
+    if (rawProposedSalary.trim().length > 0 && parsed.ok) {
+      setRawProposedSalary(formatSalaryInput(parsed.value));
+      setProposedIssue(null);
+    }
+  };
+
   const handleSalaryPaymentsChange = (value: SalaryPaymentsPerYear) => {
     setSalaryPayments(value);
-    const parsed = parseItalianSalaryInput(rawSalary);
-    if (result !== null && parsed.ok) runCalculation(parsed.value, value);
+    const parsedCurrent = parseItalianSalaryInput(rawSalary);
+    if (!parsedCurrent.ok || currentResult === null) return;
+    try {
+      setCurrentResult(calculateResult(parsedCurrent.value, value));
+      const parsedProposed = parseItalianSalaryInput(rawProposedSalary);
+      if (comparisonActive && parsedProposed.ok) {
+        setProposedResult(calculateResult(parsedProposed.value, value));
+      }
+    } catch (error) {
+      handleUnexpectedError(error);
+    }
+  };
+
+  const activateComparison = () => {
+    pendingProposedFocusRef.current = true;
+    setComparisonActive(true);
+  };
+
+  const closeComparison = () => {
+    pendingComparisonButtonFocusRef.current = true;
+    setComparisonActive(false);
+    setRawProposedSalary("");
+    setProposedIssue(null);
+    setProposedResult(null);
+  };
+
+  const handleUnexpectedError = (error: unknown) => {
+    if (import.meta.env.DEV) console.error(error);
+    setUnexpectedError(true);
+    setCurrentResult(null);
+    setProposedResult(null);
   };
 
   return (
@@ -123,87 +217,87 @@ export function CalculatorPage() {
           href="#top"
           aria-label="Netto, torna all'inizio"
         >
-          <span aria-hidden="true">N</span>
+          <span aria-hidden="true">N/</span>
           Netto
         </a>
         <div className={styles.headerMeta}>
-          <span>Italia · 2026</span>
-          {result !== null ? <a href="#metodo">Metodo e fonti</a> : null}
+          <span>Milano · 2026</span>
+          {currentResult === null ? null : (
+            <a href="#metodo">Perimetro e metodo</a>
+          )}
         </div>
       </header>
 
       <main id="top">
-        <section className={styles.intro} aria-labelledby="page-title">
-          <div className={styles.introCopy}>
-            <p className={styles.kicker}>RAL → netto, senza scatole nere</p>
-            <h1 id="page-title">
-              Quanto vale davvero <span>la tua RAL?</span>
-            </h1>
-            <p className={styles.lead}>
-              Stima il netto 2026 per un dipendente a Milano e scopri, voce per
-              voce, come il lordo diventa ciò che ti rimane.
-            </p>
-            <ul
-              className={styles.trustList}
-              aria-label="Caratteristiche della stima"
-            >
-              <li>Calcolo locale</li>
-              <li>Fonti ufficiali</li>
-              <li>Passaggi verificabili</li>
-            </ul>
-          </div>
-
+        <section
+          className={`${styles.intro} ${currentResult === null ? "" : styles.introCompact}`}
+          aria-labelledby="page-title"
+        >
+          <p className={styles.kicker}>Compensation translator</p>
+          <h1 id="page-title">
+            La RAL è l'inizio. <span>Netto la traduce.</span>
+          </h1>
+          <p className={styles.lead}>
+            Quanto ti rimane davvero — e quanto vale un cambiamento di stipendio
+            — nel profilo Milano 2026.
+          </p>
           <SalaryForm
             rawSalary={rawSalary}
-            salaryPayments={salaryPayments}
             issue={issue}
-            hasResult={result !== null}
+            hasResult={currentResult !== null}
             onRawSalaryChange={handleRawSalaryChange}
             onSalaryBlur={handleSalaryBlur}
-            onSalaryPaymentsChange={handleSalaryPaymentsChange}
             onSubmit={handleSubmit}
           />
+          <details className={styles.scopePrimer}>
+            <summary>Questa stima è adatta al mio caso?</summary>
+            <p>
+              È pensata per un dipendente privato a tempo indeterminato, al
+              lavoro per tutto il 2026, con domicilio fiscale a Milano e nel
+              profilo contributivo industriale descritto nel metodo. Non
+              richiede dati personali e non sostituisce una busta paga.
+            </p>
+          </details>
         </section>
 
         {unexpectedError ? (
           <section className={styles.fatalError} role="alert">
-            <h2>Non riusciamo a completare la stima.</h2>
+            <h2>Non riusciamo a completare la traduzione.</h2>
             <p>
-              Il calcolo non è stato mostrato perché un controllo interno non è
-              andato a buon fine. Ricarica la pagina e riprova.
+              Un controllo interno ha fermato il calcolo. Nessun risultato
+              parziale è stato mostrato: ricarica la pagina e riprova.
             </p>
           </section>
         ) : null}
 
-        {result === null ? (
-          <section
-            className={styles.emptyState}
-            aria-label="Come funziona Netto"
-          >
-            <p>
-              Una risposta immediata, con il ragionamento sempre disponibile.
-            </p>
-            <ol>
-              <li>
-                <span>01</span>
-                Inserisci la RAL
-              </li>
-              <li>
-                <span>02</span>
-                Leggi il netto
-              </li>
-              <li>
-                <span>03</span>
-                Esplora ogni voce
-              </li>
-            </ol>
-          </section>
+        {currentResult === null ? (
+          <p className={styles.initialNote}>
+            Un numero chiaro subito. Il perché resta disponibile, voce per voce.
+          </p>
         ) : (
-          <div className={styles.results} ref={resultRegionRef}>
-            <ResultSummary result={result} />
-            <GrossToNetSection result={result} />
+          <div className={styles.results}>
+            <CompensationExperience
+              currentResult={currentResult}
+              comparison={comparison}
+              comparisonActive={comparisonActive}
+              rawProposedSalary={rawProposedSalary}
+              proposedIssue={proposedIssue}
+              salaryPayments={salaryPayments}
+              resultHeadingRef={resultHeadingRef}
+              proposedInputRef={proposedInputRef}
+              comparisonButtonRef={comparisonButtonRef}
+              onActivateComparison={activateComparison}
+              onCloseComparison={closeComparison}
+              onRawProposedSalaryChange={handleRawProposedSalaryChange}
+              onProposedSalaryBlur={handleProposedSalaryBlur}
+              onComparisonSubmit={handleComparisonSubmit}
+              onSalaryPaymentsChange={handleSalaryPaymentsChange}
+            />
             <div id="metodo">
-              <TransparencySections result={result} />
+              <TransparencySections
+                result={comparison?.proposed ?? currentResult}
+                currentResult={comparison === null ? null : currentResult}
+              />
             </div>
           </div>
         )}
@@ -212,13 +306,19 @@ export function CalculatorPage() {
       <footer className={styles.footer}>
         <div>
           <strong>Netto</strong>
-          <span>Stima trasparente del lordo-netto italiano.</span>
+          <span>Il lordo, tradotto in conseguenze disponibili.</span>
         </div>
         <p>
-          Non è una busta paga né una consulenza fiscale. Nessun dato salariale
-          lascia il browser.
+          Stima locale e trasparente, non una busta paga o consulenza fiscale.
+          Nessun dato salariale lascia il browser.
         </p>
       </footer>
     </div>
   );
+}
+
+function issueForDomainValue(value: number): SalaryInputIssueCode {
+  if (value < 10_000) return "below_supported_range";
+  if (value > 120_000) return "above_supported_range";
+  return "invalid_format";
 }

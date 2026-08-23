@@ -1,12 +1,15 @@
 ---
 id: ADR-0006
-status: accepted
+status: superseded
 date: 2026-08-22
 decision_authority: human-authorized M2 architecture mandate
 recorded_by: codex
+superseded_by: ADR-0008
 ---
 
 # ADR-0006 — Direct React SVG and semantic HTML waterfall
+
+> Superseded for the post-V1 Compensation Translator by [ADR-0008](ADR-0008-compensation-translator-presentation.md). This record remains the accepted rationale for the released V1 implementation.
 
 ## Context
 

@@ -5,14 +5,18 @@ import styles from "./TransparencySections.module.css";
 
 interface CalculationTraceProps {
   readonly result: SalaryCalculationResult;
+  readonly label?: string;
 }
 
-export function CalculationTrace({ result }: CalculationTraceProps) {
+export function CalculationTrace({ result, label }: CalculationTraceProps) {
   return (
     <details className={styles.traceDisclosure}>
       <summary>
         <span>
-          <strong>Dettagli tecnici del calcolo</strong>
+          <strong>
+            Dettagli tecnici del calcolo
+            {label === undefined ? "" : ` — ${label}`}
+          </strong>
           <small>
             {result.trace.length} passaggi deterministici e verificabili
           </small>

@@ -2,11 +2,11 @@
 
 ## Thesis and user
 
-Netto helps an Italian employee or candidate understand: “If my RAL is €X, approximately how much will I receive, and where does the difference go?” The product favors immediate clarity and progressively disclosed, source-backed reasoning.
+Netto is a focused compensation translator for an Italian employee or candidate. It answers both “What does my RAL become?” and, optionally, “What does this change in RAL become?” The product translates gross compensation into modeled disposable consequences, then progressively exposes the fiscal changes and evidence that materially matter.
 
 The hiring team is the evaluation audience, not the product persona.
 
-## V1 scenario
+## Supported scenario
 
 - Fiscal year 2026
 - Private-sector, non-executive, permanent employee working for an article 10 CIGO industrial employer with more than 15 employees, within CIGS scope, and not subject to any mandatory sector solidarity/supplemental fund carrying an employee contribution
@@ -31,20 +31,22 @@ The product must expose separately:
 
 The instalment value is a presentation estimate and does not simulate individual thirteenth- or fourteenth-month payslips.
 
-It also exposes effective modeled burden, final gross-to-net deduction categories, a semantic breakdown, an accessible waterfall, explanations, calculation trace, assumptions, limitations, methodology, sources, and local-calculation privacy disclosure.
+It also exposes effective modeled burden, final gross-to-net deduction categories, an interactive semantic component ledger, explanations, calculation trace, assumptions, limitations, methodology, sources, and local-calculation privacy disclosure.
+
+After a valid single calculation, the user may compare exactly one current RAL with one proposed RAL under the same fiscal year, profile, assumptions, and money policy. Comparison owns the signed gross, annual-net, and average-monthly-net changes; the modeled share of the gross change reflected in net; materially changed canonical fiscal components; and relevant verified rule-applicability changes. It is not a marginal tax rate, generic scenario engine, or second fiscal calculator.
 
 ## Experience
 
-Primary flow: enter RAL → calculate → understand the result.
+Primary flow: enter RAL → calculate → understand the result → optionally translate one proposed change.
 
 Information hierarchy:
 
 1. “Quanto mi rimane?”
-2. “Dove è andato il resto?”
-3. How was each value calculated?
-4. Which assumptions and authoritative sources support it?
+2. “What does this proposed change become?”
+3. Which components explain the result or change?
+4. Which assumptions, rules, and authoritative sources support it?
 
-The Italian UI uses employee-friendly terminology. Fiscal detail is progressively disclosed. Desktop presentation is polished; mobile transforms the visualization into an intentional vertical breakdown.
+The Italian UI uses employee-friendly terminology. Fiscal detail is progressively disclosed. Desktop and mobile use the same semantic compensation model with intentional responsive composition rather than separate calculation representations.
 
 Explanations use three levels: the canonical amount and what happened; a concise description of what the component is, its institutional reference, and what it means for the estimate; then optional formulas, Rule IDs, sources, and trace evidence. A successful calculation deliberately reveals the primary result while preserving keyboard focus context. On narrow viewports, selecting a breakdown item brings its shared explanation into the current reading context.
 
@@ -54,7 +56,7 @@ When modeled monetary benefits exceed modeled outflows, the result explicitly di
 
 ## Fidelity and non-goals
 
-This is a transparent annual estimate, not a payslip simulator, tax filing tool, minimum-remuneration/CCNL compliance validator, or official payroll result. Its contribution estimate applies only to the named industrial-employer/CIGS archetype and is not universal across private employers, sectors, headcounts, or bilateral funds. V1 excludes partial-year work, employer cost, CCNL/level/hours/pay-period inputs, other fiscal years, personal circumstances, persistence, accounts, analytics, sharing URLs, comparisons, marginal simulators, and exports. The contribution-base assumption must be reopened if V1 later accepts part-year work, non-cash or exceptional pay, actual payroll reconciliation, or employment-compliance claims.
+This is a transparent annual estimate, not a payslip simulator, tax filing tool, minimum-remuneration/CCNL compliance validator, or official payroll result. Its contribution estimate applies only to the named industrial-employer/CIGS archetype and is not universal across private employers, sectors, headcounts, or bilateral funds. The product excludes partial-year work, employer cost, CCNL/level/hours/pay-period inputs, other fiscal years, personal circumstances, persistence, accounts, analytics, sharing URLs, multi-scenario comparison, negotiation advice, marginal simulators, and exports. The contribution-base assumption must be reopened if the product later accepts part-year work, non-cash or exceptional pay, actual payroll reconciliation, or employment-compliance claims.
 
 ## Deferred product scope
 
@@ -62,4 +64,4 @@ Extending the supported RAL maximum from EUR 120,000 toward EUR 200,000 is a pos
 
 ## Privacy
 
-Calculation occurs locally in the browser. Salary input is not persisted, transmitted, placed in URLs, or collected as telemetry.
+Calculation and comparison occur locally in the browser. Current and proposed salary inputs are not persisted, transmitted, placed in URLs, or collected as telemetry.

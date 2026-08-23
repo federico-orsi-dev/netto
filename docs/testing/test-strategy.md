@@ -8,8 +8,10 @@ This is the canonical testing policy. M1 defines evidence-backed fixtures; M2 ma
 - Boundary tests use EUR 1 below, at, and above each whole-euro input threshold, with more precise units where the applicable tax base requires them.
 - Invariant/property tests cover determinism, finite non-negative components, reconciliation of totals, serialization, monotonic expectations only where legally valid, and absence of `Decimal` at public boundaries.
 - Integration tests prove that the UI consumes the single domain result rather than recalculating values.
+- Application comparison tests cover increase, decrease, equal values, signed component effects, low-income benefits, Rule-ID applicability changes, exact canonical reconciliation, and rejection of mixed fiscal contexts.
 - Component tests cover validation, progressive disclosure, keyboard operation, accessible names, and semantic fallback content.
 - Playwright smoke tests cover the primary journey and representative viewport/interaction states.
+- Post-V1 browser coverage includes optional comparison activation/closure, current and proposed validation, retained-share wording, in-context evidence, 320-pixel reflow, deliberate focus, reduced motion, and zero external salary-data requests.
 
 ## Fiscal evidence gate
 

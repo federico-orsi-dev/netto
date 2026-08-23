@@ -1,29 +1,24 @@
 import type { FormEvent } from "react";
 
 import { INPUT_ERROR_COPY } from "../../content/it";
-import type { SalaryPaymentsPerYear } from "../../domain";
 import type { SalaryInputIssueCode } from "./input-parser";
 import styles from "./SalaryForm.module.css";
 
 interface SalaryFormProps {
   readonly rawSalary: string;
-  readonly salaryPayments: SalaryPaymentsPerYear;
   readonly issue: SalaryInputIssueCode | null;
   readonly hasResult: boolean;
   readonly onRawSalaryChange: (value: string) => void;
   readonly onSalaryBlur: () => void;
-  readonly onSalaryPaymentsChange: (value: SalaryPaymentsPerYear) => void;
   readonly onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 }
 
 export function SalaryForm({
   rawSalary,
-  salaryPayments,
   issue,
   hasResult,
   onRawSalaryChange,
   onSalaryBlur,
-  onSalaryPaymentsChange,
   onSubmit,
 }: SalaryFormProps) {
   const supportingTextId = issue === null ? "ral-help" : "ral-error";
@@ -32,7 +27,8 @@ export function SalaryForm({
     <form className={styles.form} onSubmit={onSubmit} noValidate>
       <div className={styles.fieldGroup}>
         <label className={styles.label} htmlFor="annual-gross-salary">
-          La tua RAL
+          <span>La tua RAL</span>
+          <small>Retribuzione annua lorda</small>
         </label>
         <div className={styles.inputShell}>
           <span aria-hidden="true" className={styles.currency}>
@@ -42,7 +38,7 @@ export function SalaryForm({
             id="annual-gross-salary"
             name="annualGrossSalary"
             type="text"
-            inputMode="decimal"
+            inputMode="numeric"
             autoComplete="off"
             placeholder="35.000"
             value={rawSalary}
@@ -57,11 +53,7 @@ export function SalaryForm({
         </div>
         {issue === null ? (
           <p className={styles.help} id="ral-help">
-            <span>Da 10.000 € a 120.000 €. Solo euro interi.</span>
-            <small>
-              Il limite mantiene verificato il perimetro V1; ampliarlo richiede
-              validare nuove soglie contributive.
-            </small>
+            Da 10.000 € a 120.000 €, in euro interi.
           </p>
         ) : (
           <p className={styles.error} id="ral-error" role="alert">
@@ -70,35 +62,13 @@ export function SalaryForm({
         )}
       </div>
 
-      <fieldset className={styles.paymentFieldset}>
-        <legend>Mensilità contrattuali</legend>
-        <div className={styles.segmented}>
-          {([12, 13, 14] as const).map((count) => (
-            <label key={count}>
-              <input
-                type="radio"
-                name="salaryPayments"
-                value={count}
-                checked={salaryPayments === count}
-                onChange={() => onSalaryPaymentsChange(count)}
-              />
-              <span>{count}</span>
-            </label>
-          ))}
-        </div>
-        <p>
-          Cambia solo la media per rata contrattuale, non il calcolo annuale.
-        </p>
-      </fieldset>
-
       <button className={styles.submit} type="submit">
-        {hasResult ? "Ricalcola" : "Calcola il netto"}
+        {hasResult ? "Aggiorna la traduzione" : "Traduci la RAL"}
         <span aria-hidden="true">→</span>
       </button>
 
       <p className={styles.privacy}>
-        <span aria-hidden="true">●</span> Il calcolo avviene solo nel tuo
-        browser.
+        <span aria-hidden="true">●</span> Resta tutto nel tuo browser.
       </p>
     </form>
   );

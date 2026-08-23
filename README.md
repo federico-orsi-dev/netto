@@ -1,8 +1,8 @@
 # Netto
 
-> Inserisci la tua RAL e scopri quanto ti rimane — e dove va il resto.
+> La RAL è l'inizio. Netto la traduce in ciò che ti rimane davvero.
 
-Netto is a transparent Italian gross-to-net salary estimator built as a production-minded product prototype. It gives an immediate annual and monthly answer, then lets the user inspect every modeled contribution, tax, relief, assumption, and authoritative source.
+Netto is a focused Italian compensation translator. It turns one RAL into modeled annual and monthly disposable income, then optionally translates one proposed compensation change into the net consequence and the fiscal components that explain it.
 
 **Live demo:** [netto-c2o.pages.dev](https://netto-c2o.pages.dev/)
 
@@ -10,9 +10,9 @@ Netto is a transparent Italian gross-to-net salary estimator built as a producti
 
 ## Review Netto in three minutes
 
-1. **Get the answer (30 seconds).** Open the live demo, enter `35.000`, and compare annual net, average monthly net, and the selected 12/13/14-instalment presentation.
-2. **Inspect one number (90 seconds).** Select `IRPEF netta` in the breakdown. Read the plain-language explanation, then expand its calculation evidence to follow the same amount into formulas, Rule IDs, and official sources.
-3. **Try the difficult state (60 seconds).** Enter `10.000` to see why modeled annual disposable value can exceed RAL without implying that the employer paid more. Finish with the three decisive assumptions and, only if useful, the exclusions and 30-step trace.
+1. **Translate one salary (30 seconds).** Enter `35.000` and read the single typographic relationship from RAL to annual and average monthly net.
+2. **Translate a change (90 seconds).** Compare it with `40.000`. The gross delta becomes annual/monthly net deltas, a clearly scoped modeled retained share, and the exact canonical components that changed.
+3. **Inspect the difficult states (60 seconds).** Reverse the comparison, try equal values, or enter `10.000` to see verified fiscal benefits represented without implying that the employer paid above RAL. Open one component for plain-language meaning, then reveal Rule IDs, sources, and trace only if useful.
 
 For implementation evidence, start with the [architecture](docs/architecture/architecture.md), [independent product review](docs/ai-engineering/runs/2026-08-23-020-m4-independent-product-accessibility-review.md), and [finding-by-finding correction record](docs/ai-engineering/runs/2026-08-23-021-m4-product-polish-reconciliation.md).
 
@@ -32,7 +32,7 @@ The interface is in Italian. Code and engineering documentation are in English.
 ## Why the result is inspectable
 
 - One pure, year-bound `calculateSalary2026` domain facade owns every fiscal value.
-- The UI, waterfall, explanations, accessibility fallback, and technical trace all consume the same canonical amount registry.
+- The UI, comparison, component explanations, and technical trace consume the same canonical amount registry and result contracts.
 - `decimal.js` is contained behind a domain-owned adapter; public money is serialized as safe integer euro cents.
 - The engine implements 15 human-approved and independently reviewed fiscal rules. Nine unsupported rules remain explicit exclusions rather than silent zeroes.
 - Every applied rule links to stable Rule IDs and a source register grounded in official institutions and legislation.
@@ -40,11 +40,11 @@ The interface is in Italian. Code and engineering documentation are in English.
 
 ## Product experience
 
-- Annual net, average monthly net, and average amount across 12/13/14 contractual instalments
+- One authored `RAL → annual net → monthly net` translation, plus the 12/13/14 contractual-instalment presentation after calculation
+- One optional current/proposed comparison centered on gross delta, net delta, modeled retained share, and materially changed fiscal components
 - Effective modeled burden or, at low RAL, a truthfully labeled modeled net benefit
-- Direct SVG gross-to-net waterfall with a semantic HTML counterpart
-- Shared “explain this number” interactions across chart, breakdown, sources, and trace
-- Progressive disclosure for assumptions, exclusions, methodology, and technical calculation evidence
+- In-context native disclosures that connect each canonical component directly to meaning, formula, Rule IDs, and sources
+- Progressive disclosure for applicability, assumptions, exclusions, methodology, and technical calculation evidence
 - Keyboard-first interactions, visible focus, narrow-screen semantic reflow, reduced-motion support, and automated axe coverage
 
 ## Architecture
@@ -61,10 +61,10 @@ Fiscal truth lives in the [2026 Fiscal Rule Catalog](docs/domain/fiscal-rules-20
 
 The test architecture covers rule formulas, statutory boundaries, independently established fixtures, full-pipeline golden results, monetary reconciliation, result/trace identity, UI behavior, accessibility, and the full supported domain. See the [test strategy](docs/testing/test-strategy.md).
 
-Current release baseline:
+Current local differentiation baseline:
 
-- 118 Vitest tests
-- 10 Playwright journeys across desktop Chromium and mobile WebKit
+- 125 Vitest tests
+- 14 Playwright journeys across desktop Chromium and mobile WebKit
 - zero axe violations in covered states
 - all 110,001 supported whole-euro RAL values validated
 - zero known production dependency vulnerabilities

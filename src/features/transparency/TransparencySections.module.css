@@ -1,79 +1,67 @@
 .section {
-  padding: clamp(1.4rem, 4vw, 2.6rem);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-  box-shadow: var(--shadow-sm);
-}
-
-.heading {
-  max-width: 46rem;
+  display: grid;
+  grid-template-columns: minmax(13rem, 0.42fr) minmax(0, 1fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  padding-top: clamp(2rem, 5vw, 4rem);
+  border-top: 1px solid var(--line-strong);
 }
 
 .heading > p {
-  margin-bottom: 0.35rem;
+  margin-bottom: var(--space-2);
   color: var(--accent);
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
+  font-size: 0.72rem;
+  font-weight: 820;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .heading h2 {
-  margin-bottom: var(--space-3);
-  font-size: clamp(1.65rem, 4vw, 2.5rem);
-  line-height: 1.1;
+  margin-bottom: var(--space-4);
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  letter-spacing: -0.04em;
+  line-height: 1.05;
 }
 
 .heading > span {
   color: var(--ink-650);
 }
 
-.methodGrid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--space-4);
-  margin: var(--space-6) 0;
+.scopeStatement {
+  padding: 0 0 var(--space-6) var(--space-5);
+  border-left: 3px solid var(--accent);
 }
 
-.methodGrid article {
-  padding: var(--space-4);
-  border-top: 2px solid var(--ink-950);
-  background: var(--surface-muted);
+.scopeStatement > strong {
+  display: block;
+  margin-bottom: var(--space-3);
+  font-size: 1.1rem;
 }
 
-.methodGrid h3 {
-  margin: var(--space-3) 0 var(--space-2);
-  font-size: 1rem;
-}
-
-.methodGrid p {
-  margin: 0;
+.scopeStatement p {
   color: var(--ink-650);
-  font-size: 0.87rem;
 }
 
-.number {
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 800;
+.scopeStatement p:last-child {
+  margin-bottom: 0;
 }
 
 .disclosures {
-  border-top: 1px solid var(--line);
+  grid-column: 2;
+  border-top: 1px solid var(--line-strong);
 }
 
-.disclosures details {
+.disclosures > details,
+.comparisonTraces > details {
   border-bottom: 1px solid var(--line);
 }
 
-.disclosures summary {
+.disclosures > details > summary,
+.comparisonTraces > details > summary {
   display: flex;
+  min-height: 4.75rem;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
-  padding: var(--space-5) 0;
   list-style: none;
 }
 
@@ -83,11 +71,7 @@
 
 .disclosures summary > span:first-child {
   display: grid;
-  gap: 0.2rem;
-}
-
-.disclosures summary strong {
-  font-size: 1rem;
+  gap: 0.15rem;
 }
 
 .disclosures summary small {
@@ -97,54 +81,53 @@
 .disclosureIcon {
   display: grid;
   flex: 0 0 auto;
-  width: 2rem;
-  height: 2rem;
+  width: 1.65rem;
+  height: 1.65rem;
   place-items: center;
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   border-radius: 50%;
-  font-size: 1.2rem;
   transition: transform 150ms ease;
 }
 
-details[open] > summary .disclosureIcon {
+.disclosures details[open] > summary .disclosureIcon {
   transform: rotate(45deg);
+}
+
+.assumptionList,
+.exclusionList,
+.sourceGroups ul,
+.traceList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.assumptionList,
+.exclusionList,
+.sourceGroups {
+  padding: 0 0 var(--space-6);
 }
 
 .assumptionList,
 .exclusionList {
   display: grid;
   gap: var(--space-3);
-  margin: 0;
-  padding: 0 0 var(--space-5);
-  list-style: none;
 }
 
-.assumptionList li {
-  position: relative;
-  padding-left: 1.7rem;
-  color: var(--ink-800);
-}
-
-.assumptionList li::before {
-  position: absolute;
-  left: 0;
-  color: var(--benefit);
-  font-weight: 900;
-  content: "✓";
+.assumptionList li,
+.exclusionList li {
+  padding-left: var(--space-4);
+  border-left: 2px solid var(--line-strong);
 }
 
 .exclusionList li {
   display: flex;
   justify-content: space-between;
   gap: var(--space-4);
-  padding: var(--space-3);
-  border-radius: var(--radius-sm);
-  background: var(--surface-muted);
 }
 
 .exclusionList code,
-.sourceGroups code,
-.traceRules {
+.sourceGroups code {
   color: var(--ink-650);
   font-family: var(--font-mono);
   font-size: 0.68rem;
@@ -154,14 +137,7 @@ details[open] > summary .disclosureIcon {
 .sourceGroups {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-5);
-  padding-bottom: var(--space-5);
-}
-
-.sourceGroups section {
-  padding: var(--space-4);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
+  gap: var(--space-6);
 }
 
 .sourceGroups h3 {
@@ -169,100 +145,74 @@ details[open] > summary .disclosureIcon {
   font-size: 0.9rem;
 }
 
-.sourceGroups ul {
-  display: grid;
-  gap: var(--space-3);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
 .sourceGroups li {
   display: grid;
   gap: 0.2rem;
+  margin-bottom: var(--space-3);
 }
 
 .sourceGroups a {
   font-size: 0.82rem;
+  overflow-wrap: anywhere;
+}
+
+.comparisonTraces {
+  display: grid;
+}
+
+.traceDisclosure > div,
+.traceDisclosure > ol {
+  margin-bottom: var(--space-6);
 }
 
 .traceIntro {
-  padding-bottom: var(--space-5);
+  padding: var(--space-4);
+  background: var(--surface-muted);
 }
 
-.traceIntro > p {
-  max-width: 48rem;
+.traceIntro p {
   color: var(--ink-650);
 }
 
 .traceIntro dl {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--space-3);
+  gap: var(--space-4);
   margin: 0;
 }
 
 .traceIntro dl > div {
   display: grid;
-  gap: 0.2rem;
-  padding: var(--space-3);
-  border-radius: var(--radius-sm);
-  background: var(--surface-muted);
 }
 
 .traceIntro dt {
   color: var(--ink-650);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
 }
 
 .traceIntro dd {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   overflow-wrap: anywhere;
 }
 
 .traceList {
-  display: grid;
-  gap: 0;
-  margin: 0;
-  padding: 0 0 var(--space-5);
-  list-style: none;
+  counter-reset: trace;
 }
 
 .traceList > li {
   display: grid;
-  grid-template-columns: 2.4rem minmax(0, 1fr);
+  grid-template-columns: 2rem minmax(0, 1fr);
   gap: var(--space-3);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--line);
 }
 
 .traceIndex {
-  position: relative;
-  padding-top: 0.9rem;
   color: var(--accent);
   font-family: var(--font-mono);
-  font-size: 0.7rem;
-  font-weight: 750;
-  text-align: center;
-}
-
-.traceIndex::after {
-  position: absolute;
-  top: 2.1rem;
-  bottom: 0;
-  left: 50%;
-  width: 1px;
-  background: var(--line);
-  content: "";
-}
-
-.traceList > li:last-child .traceIndex::after {
-  display: none;
-}
-
-.traceBody {
-  padding: var(--space-3) 0 var(--space-5);
-  border-top: 1px solid var(--line);
+  font-size: 0.72rem;
 }
 
 .traceHeading {
@@ -274,13 +224,13 @@ details[open] > summary .disclosureIcon {
 
 .traceHeading h3 {
   margin: 0;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
 }
 
 .traceHeading > span {
-  padding: 0.2rem 0.5rem;
+  padding: 0.15rem 0.4rem;
   border-radius: var(--radius-pill);
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   font-weight: 750;
 }
 
@@ -299,14 +249,15 @@ details[open] > summary .disclosureIcon {
   margin: var(--space-2) 0;
   color: var(--ink-650);
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.75rem;
+  overflow-wrap: anywhere;
 }
 
 .traceValues {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3) var(--space-5);
-  font-size: 0.78rem;
+  font-size: 0.75rem;
 }
 
 .traceValues span {
@@ -321,29 +272,37 @@ details[open] > summary .disclosureIcon {
 .traceInputs,
 .traceRules {
   margin: var(--space-2) 0 0;
-}
-
-.traceInputs {
   color: var(--ink-650);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
+  overflow-wrap: anywhere;
 }
 
-@media (max-width: 44rem) {
-  .methodGrid,
+@media (max-width: 52rem) {
+  .section {
+    grid-template-columns: 1fr;
+  }
+
+  .disclosures {
+    grid-column: auto;
+  }
+
+  .scopeStatement {
+    padding-bottom: var(--space-4);
+  }
+}
+
+@media (max-width: 42rem) {
   .sourceGroups,
   .traceIntro dl {
     grid-template-columns: 1fr;
   }
 
-  .exclusionList li {
+  .exclusionList li,
+  .traceValues {
     display: grid;
   }
 
   .traceHeading {
     align-items: flex-start;
-  }
-
-  .traceValues {
-    display: grid;
   }
 }

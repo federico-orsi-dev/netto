@@ -1,14 +1,14 @@
 # Project State
 
-- **Phase:** Post-V1 presentation follow-up
-- **Milestone status:** reviewer-presentation improvements complete locally; released V1 production remains unchanged
+- **Phase:** Post-V1 Compensation Translator differentiation release
+- **Milestone status:** implementation and local validation complete; released V1 production remains unchanged until the approved push/deployment gate completes
 - **Architecture:** approved through M2; Phase 0 closed
 - **Fiscal foundation:** 15 verified, 9 excluded, 0 candidate, and 0 blocked rules; bounded assumptions and product money policy approved
-- **Current task:** none; RUN-024 presentation improvements are complete in the local working tree and are not deployed
-- **Next permitted milestone:** none; product-scope additions such as marginal comparison require a separately authorized goal
-- **Pending human gate:** none for local completion; remote commit/push/deployment remains an explicit human action
+- **Current task:** commit and push the validated Compensation Translator, then verify GitHub CI, Cloudflare Pages, production security/privacy, and public product behavior
+- **Next permitted milestone:** complete, commit, push, deploy, and production-verify this bounded differentiation release; no further scope expansion is authorized
+- **Pending human gate:** none; the active post-V1 mandate explicitly authorizes the normal push and Cloudflare Pages Git deployment after local validation
 - **Release:** Netto V1 remains released at [netto-c2o.pages.dev](https://netto-c2o.pages.dev/) from the successful RUN-023 closure lineage; RUN-024 has not changed production
-- **Last meaningful run:** `RUN-2026-08-23-024` — post-V1 reviewer presentation
+- **Last meaningful run:** `RUN-2026-08-23-025` — post-V1 Compensation Translator implementation (in progress)
 - **Last updated:** 2026-08-23
 
 ## M1 closure
@@ -86,12 +86,19 @@ Production verification returned HTTPS 200, loaded the expected hashed CSS and J
 
 The documentation-only commit containing RUN-023 advances `main` without changing application code, fiscal logic, configuration, dependencies, or the built application artifact. Netto V1 is formally released only when the Cloudflare Pages check attached to that exact closure commit completes successfully; this makes the final Git/Pages association durable without embedding an impossible self-referential commit SHA inside the commit itself.
 
+## Post-V1 Compensation Translator
+
+The human-approved differentiation scope preserves the complete single-RAL estimator and adds exactly one optional current/proposed RAL comparison under the same verified context. An application-level comparison contract derives signed gross, annual-net, monthly-net, component, and Rule-ID applicability differences exclusively from two canonical `SalaryCalculationResult` values. It contains no fiscal formula and introduces no new runtime dependency.
+
+The product presentation is replacement-oriented: semantic HTML/CSS compensation translation and in-context component disclosures supersede the V1 SVG waterfall, duplicated breakdown, and detached explanation surface. Decision and understanding remain primary; assumptions, sources, Rule IDs, and traces remain progressively discoverable. The supported EUR 10,000–120,000 range, fiscal lifecycle, static client-only privacy model, and all domain arithmetic remain unchanged.
+
 ## Canonical orientation
 
 - [Product specification](docs/product/product-spec.md)
 - [Architecture](docs/architecture/architecture.md)
 - [Implementation plan](docs/architecture/implementation-plan.md)
-- [Waterfall decision](docs/architecture/decisions/ADR-0006-direct-svg-and-semantic-html-waterfall.md)
+- [Compensation Translator decision](docs/architecture/decisions/ADR-0008-compensation-translator-presentation.md)
+- [Historical V1 waterfall decision](docs/architecture/decisions/ADR-0006-direct-svg-and-semantic-html-waterfall.md)
 - [Cloudflare deployment decision](docs/architecture/decisions/ADR-0007-cloudflare-pages-static-deployment.md)
 - [Fiscal Rule Catalog](docs/domain/fiscal-rules-2026.md)
 - [Source Register](docs/domain/source-register-2026.md)
@@ -112,5 +119,6 @@ The documentation-only commit containing RUN-023 advances `main` without changin
 - [M5 release hardening run](docs/ai-engineering/runs/2026-08-23-022-m5-release-hardening.md)
 - [Production deployment closure](docs/ai-engineering/runs/2026-08-23-023-production-deployment-closure.md)
 - [Post-V1 reviewer presentation](docs/ai-engineering/runs/2026-08-23-024-post-v1-reviewer-presentation.md)
+- [Post-V1 Compensation Translator](docs/ai-engineering/runs/2026-08-23-025-post-v1-compensation-translator.md)
 
 This file is a snapshot, not a diary. It describes authority recorded in canonical artifacts; it does not create authority.

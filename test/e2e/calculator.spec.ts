@@ -19,7 +19,25 @@ async function expectNoHorizontalPageScroll(page: Page) {
     .toBeLessThanOrEqual(1);
 }
 
-test("completes the transparent salary journey without critical accessibility violations", async ({
+async function calculate(page: Page, ral: string) {
+  await page.getByLabel(/La tua RAL/).fill(ral);
+  await page.getByRole("button", { name: "Traduci la RAL" }).click();
+  await expect(
+    page.getByRole("heading", { name: "Cosa diventa la tua RAL" }),
+  ).toBeFocused();
+}
+
+async function compare(page: Page, proposedRal: string) {
+  await page.getByRole("button", { name: /Confronta una nuova RAL/ }).click();
+  await expect(page.getByLabel("RAL proposta")).toBeFocused();
+  await page.getByLabel("RAL proposta").fill(proposedRal);
+  await page.getByRole("button", { name: "Traduci la differenza" }).click();
+  await expect(
+    page.getByRole("heading", { name: "Cosa diventa questo cambiamento" }),
+  ).toBeFocused();
+}
+
+test("translates one RAL and one compensation change without external requests", async ({
   page,
 }) => {
   const externalRequests: string[] = [];
@@ -30,164 +48,169 @@ test("completes the transparent salary journey without critical accessibility vi
 
   await page.goto("/");
   await expect(
-    page.getByRole("heading", { name: "Quanto vale davvero la tua RAL?" }),
+    page.getByRole("heading", {
+      name: "La RAL è l'inizio. Netto la traduce.",
+    }),
   ).toBeVisible();
+  await calculate(page, "35.000");
 
-  await page.getByLabel("La tua RAL", { exact: true }).fill("35.000");
-  await page.getByRole("button", { name: "Calcola il netto" }).click();
-
-  await expect(
-    page.getByRole("heading", { name: "Quanto mi rimane?" }),
-  ).toBeFocused();
-  const resultSummary = page.getByRole("region", { name: "Quanto mi rimane?" });
-  await expect(
-    resultSummary.getByText("Netto annuale stimato", { exact: true }),
-  ).toBeVisible();
-  await expect(
-    resultSummary.getByText("Netto mensile medio", { exact: true }),
-  ).toBeVisible();
-  await expect
-    .poll(() =>
-      resultSummary.locator("[data-primary-result]").evaluate((element) => {
-        const bounds = element.getBoundingClientRect();
-        const viewport = globalThis as unknown as { innerHeight: number };
-        return bounds.top >= 0 && bounds.bottom <= viewport.innerHeight;
-      }),
-    )
-    .toBe(true);
-  await expect(
-    page.getByRole("heading", { name: "Dove è andato il resto?" }),
-  ).toBeVisible();
-
-  await page
-    .getByRole("list", { name: "Voci dal lordo al netto" })
-    .getByRole("button", { name: /IRPEF netta/ })
-    .click();
-  await expect(
-    page.getByRole("heading", { name: "IRPEF dopo le detrazioni" }),
-  ).toBeVisible();
-  const explanation = page.getByRole("complementary", {
-    name: "IRPEF dopo le detrazioni",
+  const singleResult = page.getByRole("region", {
+    name: "Cosa diventa la tua RAL",
   });
-  await expect(explanation.getByText("Cos'è?")).toBeVisible();
-  await expect(explanation.getByText("A chi va?")).toBeVisible();
+  await expect(singleResult.getByText("25.973,45 €")).toBeVisible();
+  await expect(singleResult.getByText("2164,45 €")).toBeVisible();
   await expect(
-    explanation.getByText("Allo Stato, come entrata fiscale nazionale."),
+    page.getByRole("list", { name: "Voci dal lordo al netto" }),
   ).toBeVisible();
-  await explanation.getByText("Come è stato calcolato?").click();
-  await expect(explanation.getByText("RULE-NAT-NET-IRPEF-2026")).toBeVisible();
 
+  await compare(page, "40.000");
+  const comparison = page.getByRole("region", {
+    name: "Cosa diventa questo cambiamento",
+  });
+  await expect(comparison.getByText("+5000,00 €")).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "Come lo abbiamo calcolato?" }),
+    comparison.getByText("+1934,66 €", { exact: true }),
   ).toBeVisible();
-  await page.getByText("Dettagli tecnici del calcolo").click();
-  await expect(page.getByText("it-2026-v1")).toBeVisible();
+  await expect(
+    comparison.getByText("+161,23 €", { exact: true }),
+  ).toBeVisible();
+  await expect(comparison.getByText("38,69%")).toBeVisible();
+  await expect(
+    comparison.getByText("Non è un'aliquota marginale."),
+  ).toBeVisible();
+
+  const irpefItem = page.locator('[data-component-id="netIrpef"]');
+  await irpefItem.locator(":scope > details > summary").click();
+  await expect(
+    irpefItem.getByRole("heading", { name: "IRPEF dopo le detrazioni" }),
+  ).toBeVisible();
+  await irpefItem.getByText("Verifica formula, regole e fonti").click();
+  await expect(irpefItem.getByText("RULE-NAT-NET-IRPEF-2026")).toBeVisible();
 
   const accessibility = await new AxeBuilder({ page }).analyze();
   expect(accessibility.violations).toEqual([]);
   expect(externalRequests).toEqual([]);
 });
 
-test("renders the low-RAL net-benefit state without treating it as an error", async ({
+test("represents low-RAL benefits without implying employer overpayment", async ({
   page,
 }) => {
   await page.goto("/");
-  await page.getByLabel("La tua RAL", { exact: true }).fill("10.000");
-  await page.getByRole("button", { name: "Calcola il netto" }).click();
-  await expect(page.getByText("Beneficio netto modellato")).toBeVisible();
-  await expect(page.getByText("+492,64 €")).toBeVisible();
-  const benefitExplanation = page.getByRole("complementary", {
-    name: "Perché il risultato supera la RAL?",
-  });
-  await expect(benefitExplanation).toContainText(
-    "Il datore di lavoro non paga più della RAL",
-  );
-  await expect(benefitExplanation).toContainText(/1\.?679,70\s*€/);
+  await calculate(page, "10.000");
+  await expect(page.getByText(/beneficio netto di/)).toContainText("+492,64 €");
+  await expect(
+    page.getByText(/Il datore di lavoro non paga oltre la RAL/),
+  ).toBeVisible();
+  await expect(
+    page.locator('[data-component-id="cuneoCashSum"] > details > summary'),
+  ).toBeVisible();
   await expect(page.getByRole("alert")).toHaveCount(0);
 });
 
-test("supports the core journey and explanation selection from the keyboard", async ({
+test("keeps comparison semantics valid for a reduction and equal values", async ({
   page,
 }) => {
   await page.goto("/");
-  await expect(page.getByRole("link", { name: "Metodo e fonti" })).toHaveCount(
-    0,
-  );
+  await calculate(page, "40.000");
+  await compare(page, "35.000");
+  await expect(page.getByText("−5000,00 €", { exact: true })).toBeVisible();
+  await expect(page.getByText("−1934,66 €", { exact: true })).toBeVisible();
 
-  const salary = page.getByLabel("La tua RAL", { exact: true });
+  await page.getByLabel("RAL proposta").fill("40.000");
+  await page.getByRole("button", { name: "Traduci la differenza" }).click();
+  await expect(page.getByText(/Le due RAL coincidono/)).toBeVisible();
+  await expect(page.getByText("Non è un'aliquota marginale.")).toHaveCount(0);
+});
+
+test("maintains deliberate keyboard focus through calculate, compare, and close", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const salary = page.getByLabel(/La tua RAL/);
   await salary.focus();
   await salary.fill("35.000");
   await page.keyboard.press("Enter");
-
   await expect(
-    page.getByRole("heading", { name: "Quanto mi rimane?" }),
+    page.getByRole("heading", { name: "Cosa diventa la tua RAL" }),
   ).toBeFocused();
-  await expect(
-    page.getByRole("link", { name: "Metodo e fonti" }),
-  ).toBeVisible();
 
-  await page.keyboard.press("Tab");
-  const grossButton = page
-    .getByRole("list", { name: "Voci dal lordo al netto" })
-    .getByRole("button", { name: /RAL annuale/ });
-  await expect(grossButton).toBeFocused();
-  await page.keyboard.press("Tab");
-  const contributionButton = page
-    .getByRole("list", { name: "Voci dal lordo al netto" })
-    .getByRole("button", { name: /Contributi a carico del dipendente/ });
-  await expect(contributionButton).toBeFocused();
+  const comparisonButton = page.getByRole("button", {
+    name: /Confronta una nuova RAL/,
+  });
+  await comparisonButton.click();
+  await expect(page.getByLabel("RAL proposta")).toBeFocused();
+  await page.getByLabel("RAL proposta").fill("40.000");
   await page.keyboard.press("Enter");
-  await expect(contributionButton).toBeFocused();
   await expect(
-    page.getByRole("heading", { name: "Contributi a tuo carico" }),
+    page.getByRole("heading", { name: "Cosa diventa questo cambiamento" }),
+  ).toBeFocused();
+
+  await page.getByRole("button", { name: "Chiudi confronto" }).click();
+  await expect(
+    page.getByRole("button", { name: /Confronta una nuova RAL/ }),
+  ).toBeFocused();
+});
+
+test("validates the proposed RAL without losing the current translation", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await calculate(page, "35.000");
+  await page.getByRole("button", { name: /Confronta una nuova RAL/ }).click();
+  await page.getByLabel("RAL proposta").fill("200.000");
+  await page.getByRole("button", { name: "Traduci la differenza" }).click();
+  await expect(page.getByRole("alert")).toContainText(
+    "La stima supporta RAL fino a 120.000 €.",
+  );
+  await expect(
+    page.getByRole("heading", { name: "Cosa diventa la tua RAL" }),
   ).toBeVisible();
 });
 
-test("reveals the selected explanation in the mobile reading context", async ({
-  page,
-}) => {
-  await page.setViewportSize({ width: 360, height: 640 });
+test("reflows the full comparison at 320 CSS pixels", async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 700 });
   await page.goto("/");
-  await page.getByLabel("La tua RAL", { exact: true }).fill("35.000");
-  await page.getByRole("button", { name: "Calcola il netto" }).click();
+  await expectNoHorizontalPageScroll(page);
+  await calculate(page, "35.000");
+  await compare(page, "120.000");
+  await expectNoHorizontalPageScroll(page);
 
-  const irpefButton = page
-    .getByRole("list", { name: "Voci dal lordo al netto" })
-    .getByRole("button", { name: /IRPEF netta/ });
-  await irpefButton.click();
-  await expect(irpefButton).toHaveAttribute("aria-pressed", "true");
-  const explanation = page.getByRole("complementary", {
-    name: "IRPEF dopo le detrazioni",
+  const heading = page.getByRole("heading", {
+    name: "Cosa diventa questo cambiamento",
   });
-  await expect(explanation).toHaveAttribute("data-component-id", "netIrpef");
   await expect
     .poll(() =>
-      explanation.evaluate((element) => {
+      heading.evaluate((element) => {
         const bounds = element.getBoundingClientRect();
         const viewport = globalThis as unknown as { innerHeight: number };
         return bounds.top >= 0 && bounds.top < viewport.innerHeight;
       }),
     )
     .toBe(true);
-});
 
-test("reflows the complete product journey at 320 CSS pixels", async ({
-  page,
-}) => {
-  await page.setViewportSize({ width: 320, height: 700 });
-  await page.goto("/");
-  await expectNoHorizontalPageScroll(page);
+  const firstChange = page
+    .getByRole("list", { name: "Voci cambiate nel confronto" })
+    .locator(":scope > li")
+    .first();
+  await firstChange.locator(":scope > details > summary").click();
+  await expect(firstChange.getByRole("heading")).toBeVisible();
 
-  await page.getByLabel("La tua RAL", { exact: true }).fill("120.000");
-  await page.getByRole("button", { name: "Calcola il netto" }).click();
-  await expectNoHorizontalPageScroll(page);
-
+  await page.getByText("Ipotesi complete").click();
   await page.getByText("Cosa non include").click();
-  await page.getByText("Fonti autorevoli").click();
-  await page.getByText("Dettagli tecnici del calcolo").click();
-  await expect(page.getByText("RULE-INPS-2026-001")).toBeVisible();
+  await page.getByText("Fonti ufficiali").click();
   await expectNoHorizontalPageScroll(page);
 
   const accessibility = await new AxeBuilder({ page }).analyze();
   expect(accessibility.violations).toEqual([]);
+});
+
+test("remains complete for reduced-motion users", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  await calculate(page, "35.000");
+  await compare(page, "40.000");
+  await expect(page.getByText("38,69%")).toBeVisible();
+  await expect(
+    page.getByRole("list", { name: "Voci cambiate nel confronto" }),
+  ).toBeVisible();
 });

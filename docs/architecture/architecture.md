@@ -17,7 +17,7 @@ phase_0: closed
 - Library-independent serializable public monetary values; no `Decimal` instances across public boundaries
 - Typed `FiscalRuleset2026`; no generic fiscal DSL
 - Local React state and no router
-- Direct React SVG waterfall for desktop plus an always-available semantic HTML representation and intentional mobile transformation
+- Semantic HTML/CSS Compensation Translator with one application-level current/proposed comparison projection
 - CSS custom properties and CSS Modules
 - npm and committed lockfile
 - Vitest, React Testing Library, Playwright, and one GitHub Actions quality workflow
@@ -25,7 +25,7 @@ phase_0: closed
 
 ## System boundary
 
-Authoritative evidence is interpreted into human-approved fiscal rules. M2 defines the typed 2026 ruleset and pure-stage contracts; M3 will implement them. One calculation result plus structured evidence will feed annual, monthly, instalment, breakdown, visualization, and explanation outputs.
+Authoritative evidence is interpreted into human-approved fiscal rules. The typed 2026 ruleset and pure-stage contracts produce one canonical calculation result plus structured evidence for annual, monthly, instalment, component, and explanation outputs. The optional comparison capability accepts two complete canonical results under the same context and derives only signed public-value differences and Rule-ID applicability changes.
 
 No presentation component may independently calculate a fiscal value.
 
@@ -41,9 +41,9 @@ V1 exports one typed 2026 ruleset. Rates and thresholds are derived from verifie
 
 Inspect production bundles, dependency cost, runtime network activity, layout stability, and interaction latency. Use Lighthouse and Web Vitals diagnostically. Do not reverse-engineer toward arbitrary vanity budgets.
 
-## Visualization policy
+## Product projection policy
 
-The primary waterfall represents final amounts that change take-home pay. Intermediate bases, gross taxes, deductions, and relief belong to the trace. The SVG is a presentation projection over canonical result component IDs and never calculates fiscal values. Semantic HTML owns keyboard/screen-reader access and the mobile vertical form. If custom visualization complexity threatens correctness, accessibility, or release time, simplify it without sacrificing the semantic breakdown or explanation contract. See [ADR-0006](decisions/ADR-0006-direct-svg-and-semantic-html-waterfall.md).
+The primary presentation translates gross compensation into annual and monthly disposable outcomes. Optional comparison makes the change itself primary: gross delta, net deltas, modeled retained share, changed canonical components, and relevant verified rule-applicability changes. Semantic HTML owns meaning, keyboard access, and responsive reading order; CSS owns composition only. Component disclosures use canonical amount identities and trace evidence without recalculating fiscal values. See [ADR-0008](decisions/ADR-0008-compensation-translator-presentation.md); [ADR-0006](decisions/ADR-0006-direct-svg-and-semantic-html-waterfall.md) remains the historical V1 decision.
 
 ## Deployment policy
 
@@ -64,5 +64,6 @@ Accepted decisions are recorded in [ADRs](decisions/). Changes to architecture, 
 3. M3 — Deterministic Domain Engine
 4. M4 — Product Experience and Explainability
 5. M5 — Release Hardening and Submission
+6. Post-V1 — Compensation Translator differentiation release
 
 M1 and M2 contain documentation/research/planning only. They must not create executable fiscal logic or product UI.
