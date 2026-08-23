@@ -82,6 +82,16 @@
   font-weight: 650;
 }
 
+.help {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.help small {
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
 .paymentFieldset {
   display: grid;
   gap: var(--space-2);

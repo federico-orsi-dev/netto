@@ -6,6 +6,16 @@ Netto is a transparent Italian gross-to-net salary estimator built as a producti
 
 **Live demo:** [netto-c2o.pages.dev](https://netto-c2o.pages.dev/)
 
+![Netto showing the annual and monthly result for a 35,000 euro RAL](docs/assets/netto-overview.png)
+
+## Review Netto in three minutes
+
+1. **Get the answer (30 seconds).** Open the live demo, enter `35.000`, and compare annual net, average monthly net, and the selected 12/13/14-instalment presentation.
+2. **Inspect one number (90 seconds).** Select `IRPEF netta` in the breakdown. Read the plain-language explanation, then expand its calculation evidence to follow the same amount into formulas, Rule IDs, and official sources.
+3. **Try the difficult state (60 seconds).** Enter `10.000` to see why modeled annual disposable value can exceed RAL without implying that the employer paid more. Finish with the three decisive assumptions and, only if useful, the exclusions and 30-step trace.
+
+For implementation evidence, start with the [architecture](docs/architecture/architecture.md), [independent product review](docs/ai-engineering/runs/2026-08-23-020-m4-independent-product-accessibility-review.md), and [finding-by-finding correction record](docs/ai-engineering/runs/2026-08-23-021-m4-product-polish-reconciliation.md).
+
 ## The supported estimate
 
 | Contract | V1 boundary |
@@ -116,6 +126,12 @@ The root `.node-version` selects the build Node release. `public/_headers` is co
 ## AI-assisted engineering
 
 Codex and Claude Code were used as bounded engineering collaborators. Repository-owned instructions, task contracts, independent review roles, human approval gates, and concise durable run records make the work inspectable without publishing conversational transcripts. See the [AI engineering workflow](docs/ai-engineering/workflow.md) and [run records](docs/ai-engineering/runs/).
+
+### Where the AI-assisted implementation was wrong
+
+The first complete product pass was numerically faithful and visually coherent, but independent review still found five major product defects: the answer could remain below the viewport, the low-RAL result lacked its causal explanation, ordinary users met technical evidence too early, mobile selection updated content off-screen, and 320-pixel reflow broke. The review was preserved as a separate artifact before implementation changed.
+
+The correction pass accepted all five findings, fixed them without changing fiscal logic or adding a dependency, and added focused component and browser regressions. The useful signal is the correction loop—not a claim that the first AI-generated pass was right. Read [the independent findings](docs/ai-engineering/runs/2026-08-23-020-m4-independent-product-accessibility-review.md#15-findings-by-severity) and [their reconciliation](docs/ai-engineering/runs/2026-08-23-021-m4-product-polish-reconciliation.md#finding-by-finding-reconciliation).
 
 ## Important limitations
 

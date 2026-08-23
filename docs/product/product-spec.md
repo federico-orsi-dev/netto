@@ -48,6 +48,8 @@ The Italian UI uses employee-friendly terminology. Fiscal detail is progressivel
 
 Explanations use three levels: the canonical amount and what happened; a concise description of what the component is, its institutional reference, and what it means for the estimate; then optional formulas, Rule IDs, sources, and trace evidence. A successful calculation deliberately reveals the primary result while preserving keyboard focus context. On narrow viewports, selecting a breakdown item brings its shared explanation into the current reading context.
 
+The methodology default view surfaces the three assumptions most likely to change applicability: the fixed contribution profile, full-year Milan/Lombardy context, and the ordinary fully contributable RAL/personal-circumstances boundary. Complete assumptions, exclusions, sources, and the technical trace remain available through closed progressive disclosures.
+
 When modeled monetary benefits exceed modeled outflows, the result explicitly distinguishes contractual RAL from State fiscal cash benefits. It explains that the employer is not paying above RAL and that the signed difference is a modeled net benefit; the underlying monetary values remain owned by the canonical calculation result.
 
 ## Fidelity and non-goals

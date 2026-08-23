@@ -1,14 +1,14 @@
 # Project State
 
-- **Phase:** M5 — Production Deployment Closure
-- **Milestone status:** complete under the final Git-integrated deployment condition recorded below
+- **Phase:** Post-V1 presentation follow-up
+- **Milestone status:** reviewer-presentation improvements complete locally; released V1 production remains unchanged
 - **Architecture:** approved through M2; Phase 0 closed
 - **Fiscal foundation:** 15 verified, 9 excluded, 0 candidate, and 0 blocked rules; bounded assumptions and product money policy approved
-- **Current task:** none; Netto V1 production closure is complete when the Cloudflare Pages check attached to the commit containing RUN-023 succeeds
-- **Next permitted milestone:** none within V1; any post-V1 work requires a separately authorized goal
-- **Pending human gate:** none
-- **Release:** Netto V1 released at [netto-c2o.pages.dev](https://netto-c2o.pages.dev/); this status is valid only with a successful final Cloudflare Pages check on the RUN-023 closure commit
-- **Last meaningful run:** `RUN-2026-08-23-023` — production deployment closure
+- **Current task:** none; RUN-024 presentation improvements are complete in the local working tree and are not deployed
+- **Next permitted milestone:** none; product-scope additions such as marginal comparison require a separately authorized goal
+- **Pending human gate:** none for local completion; remote commit/push/deployment remains an explicit human action
+- **Release:** Netto V1 remains released at [netto-c2o.pages.dev](https://netto-c2o.pages.dev/) from the successful RUN-023 closure lineage; RUN-024 has not changed production
+- **Last meaningful run:** `RUN-2026-08-23-024` — post-V1 reviewer presentation
 - **Last updated:** 2026-08-23
 
 ## M1 closure
@@ -111,5 +111,6 @@ The documentation-only commit containing RUN-023 advances `main` without changin
 - [M4.1 polish and reconciliation run](docs/ai-engineering/runs/2026-08-23-021-m4-product-polish-reconciliation.md)
 - [M5 release hardening run](docs/ai-engineering/runs/2026-08-23-022-m5-release-hardening.md)
 - [Production deployment closure](docs/ai-engineering/runs/2026-08-23-023-production-deployment-closure.md)
+- [Post-V1 reviewer presentation](docs/ai-engineering/runs/2026-08-23-024-post-v1-reviewer-presentation.md)
 
 This file is a snapshot, not a diary. It describes authority recorded in canonical artifacts; it does not create authority.

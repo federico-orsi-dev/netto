@@ -57,7 +57,11 @@ export function SalaryForm({
         </div>
         {issue === null ? (
           <p className={styles.help} id="ral-help">
-            Da 10.000 € a 120.000 €. Solo euro interi.
+            <span>Da 10.000 € a 120.000 €. Solo euro interi.</span>
+            <small>
+              Il limite mantiene verificato il perimetro V1; ampliarlo richiede
+              validare nuove soglie contributive.
+            </small>
           </p>
         ) : (
           <p className={styles.error} id="ral-error" role="alert">

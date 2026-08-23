@@ -29,32 +29,33 @@ export function TransparencySections({ result }: TransparencySectionsProps) {
       <div className={styles.methodGrid}>
         <article>
           <span className={styles.number}>01</span>
-          <h3>Profilo definito</h3>
+          <h3>Profilo contributivo</h3>
           <p>
-            Dipendente privato nel profilo industriale CIGS approvato, lavoro
-            ordinario per tutto il 2026, domicilio fiscale a Milano.
+            Dipendente privato di un datore industriale in ambito CIGO/CIGS,
+            oltre 15 dipendenti e senza fondo settoriale aggiuntivo a suo
+            carico.
           </p>
         </article>
         <article>
           <span className={styles.number}>02</span>
-          <h3>Calcolo locale</h3>
+          <h3>Anno e domicilio</h3>
           <p>
-            La RAL resta nel browser: nessuna API remota, account, salvataggio,
-            URL condiviso o telemetria.
+            Lavoro ordinario per tutto il 2026 e domicilio fiscale a Milano, in
+            Lombardia, per l'intero periodo.
           </p>
         </article>
         <article>
           <span className={styles.number}>03</span>
-          <h3>Metodo e limiti</h3>
+          <h3>Cosa rappresenta la RAL</h3>
           <p>
-            È una stima annuale riconciliata ai centesimi, non una busta paga,
-            una dichiarazione o una verifica CCNL.
+            Retribuzione ordinaria annuale interamente contributiva, senza altri
+            redditi, familiari a carico o circostanze speciali.
           </p>
         </article>
       </div>
 
       <div className={styles.disclosures}>
-        <details open>
+        <details>
           <summary>
             <span>
               <strong>Ipotesi del calcolo</strong>

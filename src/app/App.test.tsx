@@ -150,8 +150,13 @@ describe("Netto product flow", () => {
       screen.getByRole("heading", { name: "Come lo abbiamo calcolato?" }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: "Calcolo locale" }),
+      screen.getByRole("heading", { name: "Profilo contributivo" }),
     ).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /La RAL inserita rappresenta retribuzione ordinaria annuale/,
+      ),
+    ).not.toBeVisible();
     const traceSummary = screen.getByText("Dettagli tecnici del calcolo");
     await user.click(traceSummary);
     expect(screen.getByText("it-2026-v1")).toBeVisible();
