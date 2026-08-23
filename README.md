@@ -61,7 +61,7 @@ Fiscal truth lives in the [2026 Fiscal Rule Catalog](docs/domain/fiscal-rules-20
 
 The test architecture covers rule formulas, statutory boundaries, independently established fixtures, full-pipeline golden results, monetary reconciliation, result/trace identity, UI behavior, accessibility, and the full supported domain. See the [test strategy](docs/testing/test-strategy.md).
 
-Current local differentiation baseline:
+Current release baseline:
 
 - 125 Vitest tests
 - 14 Playwright journeys across desktop Chromium and mobile WebKit

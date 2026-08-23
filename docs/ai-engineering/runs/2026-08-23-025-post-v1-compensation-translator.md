@@ -4,14 +4,14 @@ date: 2026-08-23
 tool: codex
 role: principal-product-engineer
 task: post-v1-compensation-translator
-status: in_progress
+status: completed
 owner: codex
 reviewer: human
 related_rules: []
 related_adrs:
   - ADR-0004
   - ADR-0008
-commit: null
+commit: 8cce278cfa961940efdd5637f21463842806d985
 ---
 
 # Post-V1 Compensation Translator differentiation release
@@ -69,8 +69,16 @@ Added product modules: the compensation comparison contract/tests, `Compensation
 
 Codex local filesystem/shell tools, Playwright browsers, the in-app browser, npm registry access for reproducible installation/audit, GitHub, and the existing Cloudflare Pages Git integration are relevant to this release. So far, salary scenarios were exercised only in local browsers and were not transmitted. No runtime service, analytics, persistence, secret, fiscal API, or dependency was introduced.
 
-## Remaining release gate
-
-Finish canonical-link and release-artifact validation, commit the coherent replacement, push `main`, require GitHub quality and Cloudflare Pages checks to pass, verify the public artifact and security/privacy behavior, then persist the deployment result in this same record and `PROJECT_STATE.md`.
+## Release outcome
 
 The first remote quality run passed clean install, type/lint/format, all 125 Vitest tests, both exhaustive executions, build, artifact inspection, and audit, but exposed a browser-platform assertion defect in two WebKit smoke journeys: current Linux WebKit groups four-digit Italian currency while the local engines may omit that separator. The application values were correct. The E2E assertions now accept only those two valid Italian grouping forms while preserving exact sign, cents, and currency; no product or fiscal calculation changed.
+
+The isolated test correction is commit `8cce278cfa961940efdd5637f21463842806d985`, tree `4234d1503b316e5a2e04c4301d322a9d3590682f`. Its clean GitHub quality run passed every step, including all 14 Chromium/WebKit product and axe journeys. Cloudflare Pages deployed the same commit successfully through the existing Git integration.
+
+Production at [netto-c2o.pages.dev](https://netto-c2o.pages.dev/) returned HTTPS 200 and the expected first-party CSP, Permissions Policy, referrer, MIME, and frame headers. SHA-256 comparison confirmed that deployed `index.html`, JavaScript, and CSS are byte-identical to the locally validated artifact. A public-browser smoke check reproduced the EUR 35,000 → EUR 40,000 translation, including the EUR 1,934.66 annual-net delta, and observed no external runtime resource origin.
+
+The final documentation-only closure commit changes no product source, dependency, configuration, or deployable artifact. Its Cloudflare deployment is expected to produce the identical six-file artifact and exists to attach durable final project state to the released lineage.
+
+## Final assessment
+
+The release is materially more useful and recognizable than V1: it converts the verified engine into a real compensation decision tool, makes the disposable consequence of change immediately legible, and connects causes to amounts in place. It does so while deleting specialized visualization/result layers, reducing authored and production CSS, adding no runtime dependency, and leaving fiscal semantics untouched.

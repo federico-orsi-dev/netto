@@ -1,14 +1,14 @@
 # Project State
 
-- **Phase:** Post-V1 Compensation Translator differentiation release
-- **Milestone status:** implementation and local validation complete; released V1 production remains unchanged until the approved push/deployment gate completes
+- **Phase:** Post-V1 Compensation Translator differentiation release complete
+- **Milestone status:** implemented, independently validated by GitHub CI, deployed through Cloudflare Pages, and production verified
 - **Architecture:** approved through M2; Phase 0 closed
 - **Fiscal foundation:** 15 verified, 9 excluded, 0 candidate, and 0 blocked rules; bounded assumptions and product money policy approved
-- **Current task:** commit and push the validated Compensation Translator, then verify GitHub CI, Cloudflare Pages, production security/privacy, and public product behavior
-- **Next permitted milestone:** complete, commit, push, deploy, and production-verify this bounded differentiation release; no further scope expansion is authorized
+- **Current task:** none
+- **Next permitted milestone:** none; any further product or domain expansion requires a separately authorized goal
 - **Pending human gate:** none; the active post-V1 mandate explicitly authorizes the normal push and Cloudflare Pages Git deployment after local validation
-- **Release:** Netto V1 remains released at [netto-c2o.pages.dev](https://netto-c2o.pages.dev/) from the successful RUN-023 closure lineage; RUN-024 has not changed production
-- **Last meaningful run:** `RUN-2026-08-23-025` — post-V1 Compensation Translator implementation (in progress)
+- **Release:** the post-V1 Compensation Translator is released at [netto-c2o.pages.dev](https://netto-c2o.pages.dev/); latest code-bearing commit `8cce278cfa961940efdd5637f21463842806d985` passed GitHub quality and Cloudflare Pages checks
+- **Last meaningful run:** `RUN-2026-08-23-025` — post-V1 Compensation Translator implementation and release
 - **Last updated:** 2026-08-23
 
 ## M1 closure
@@ -91,6 +91,10 @@ The documentation-only commit containing RUN-023 advances `main` without changin
 The human-approved differentiation scope preserves the complete single-RAL estimator and adds exactly one optional current/proposed RAL comparison under the same verified context. An application-level comparison contract derives signed gross, annual-net, monthly-net, component, and Rule-ID applicability differences exclusively from two canonical `SalaryCalculationResult` values. It contains no fiscal formula and introduces no new runtime dependency.
 
 The product presentation is replacement-oriented: semantic HTML/CSS compensation translation and in-context component disclosures supersede the V1 SVG waterfall, duplicated breakdown, and detached explanation surface. Decision and understanding remain primary; assumptions, sources, Rule IDs, and traces remain progressively discoverable. The supported EUR 10,000–120,000 range, fiscal lifecycle, static client-only privacy model, and all domain arithmetic remain unchanged.
+
+Local and remote validation pass 125 Vitest tests, the explicit 110,001-value exhaustive fiscal gate, 14 Playwright journeys across Chromium desktop and mobile WebKit, covered axe checks, build/artifact validation, and a zero-finding production dependency audit. The first CI attempt exposed only locale-dependent four-digit grouping in WebKit test assertions; the isolated `8cce278` correction accepts both valid Italian renderings without changing the product calculation.
+
+Cloudflare production verification returned HTTPS 200 with the repository-owned CSP, Permissions Policy, referrer, MIME, and frame protections. The deployed HTML, JavaScript, and CSS match the local release artifact byte-for-byte. The public browser reproduced the single and current/proposed journeys without any third-party runtime resource; current and proposed salary values remain browser-local.
 
 ## Canonical orientation
 
