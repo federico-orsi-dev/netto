@@ -45,7 +45,7 @@ This independent review is not release approval and does not authorize fiscal li
 
 ## Baseline and pre-flight
 
-- Repository root: `C:/Users/feder/Documents/Netto`.
+- Repository root: the isolated M3 review worktree.
 - Branch: `m1/verified-fiscal-foundation`.
 - Reviewed HEAD: `3af0da8cc3ba7d86d6f74121900f62a04d4ef897`.
 - Reviewed tree: `b132d58c4083a037a3b5e4a8d97fecbff546767f`.

@@ -27,7 +27,7 @@ Acceptance required all five MAJOR findings to close, all three MINOR findings t
 The independent review was performed against M4 commit `e93243bfa2d67a667267f621664adaf6a714ba8a`, tree `bfe82bfb4dfce55a5239908dda40dac6fc1d38b9`. RUN-020 was the only change in its review commit:
 
 - review branch: `review/m4-product-accessibility`;
-- review worktree: `C:\Users\feder\Documents\Netto-m4-independent-product-review`;
+- review worktree: isolated M4 product-review worktree;
 - review commit: `fee28f62bd7143f0e3ae0734d96d82afa4b5aeaa`;
 - parent: `e93243bfa2d67a667267f621664adaf6a714ba8a`;
 - review tree: `e28bb471d2693e60661eb97aea699f198e69ac28`;

@@ -39,7 +39,7 @@ Implement M3 from the accepted [Implementation Architecture & Execution Plan](..
 
 ## Pre-flight evidence
 
-- Repository root: `C:/Users/feder/Documents/Netto`.
+- Repository root: the primary project worktree.
 - Starting branch: `m1/verified-fiscal-foundation`.
 - Starting HEAD: `c3c079787bdf5804a4f6d63cb6e248e9421a4a9c`; tree `457678f35939e1ec9b9f6f0edcb3a7a9874eef1a`.
 - Worktree: clean; M2 commit reachable because it was the exact starting HEAD.

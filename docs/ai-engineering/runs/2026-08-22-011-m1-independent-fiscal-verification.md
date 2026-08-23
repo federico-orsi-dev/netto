@@ -26,7 +26,7 @@ tree: 58106004374b1de19c60fc3d12ae51e373d40a95
 ## A. Verification metadata and progression boundary
 
 - **Verifier identity:** Independent Codex fiscal verification pass.
-- **Repository:** `C:\Users\feder\Documents\Netto-m1-independent-review`.
+- **Repository:** isolated independent-review worktree.
 - **Branch:** `review/m1-independent-fiscal`.
 - **Checkpoint commit:** `661e844a4ea8b8d58f4577dd8e0b8b0e6e8a074d`.
 - **Checkpoint tree:** `58106004374b1de19c60fc3d12ae51e373d40a95`.

@@ -1,14 +1,14 @@
 # Project State
 
-- **Phase:** M4.1 — Product Polish & Review Reconciliation
-- **Milestone status:** complete and locally validated; all RUN-020 release-significant findings reconciled
+- **Phase:** M5 — Release Hardening & Cloudflare Release
+- **Milestone status:** release-ready and locally validated; external GitHub/Cloudflare authorization is unavailable
 - **Architecture:** approved through M2; Phase 0 closed
 - **Fiscal foundation:** 15 verified, 9 excluded, 0 candidate, and 0 blocked rules; bounded assumptions and product money policy approved
-- **Current task:** none; M4.1 polish is closed
-- **Next permitted milestone:** M5 release hardening; it must not start automatically
-- **Pending human gate:** M5/release authorization remains separate
-- **Release:** not eligible
-- **Last meaningful run:** `RUN-2026-08-23-021` — M4.1 product polish and review reconciliation
+- **Current task:** none; local M5 hardening is closed at the external deployment boundary
+- **Next permitted milestone:** one-time GitHub remote and Cloudflare Pages Git-integration setup for this reviewed `main` lineage
+- **Pending human gate:** authenticate GitHub and Cloudflare, connect the repository, then validate the deployed artifact
+- **Release:** locally release-ready; not pushed or deployed
+- **Last meaningful run:** `RUN-2026-08-23-022` — M5 release hardening and deployment readiness
 - **Last updated:** 2026-08-23
 
 ## M1 closure
@@ -70,6 +70,14 @@ M4.1 closes all five major and all three minor findings: successful submission r
 
 Validation preserves 118 Vitest tests, all 110,001 supported whole-euro RAL inputs, 10 Playwright journeys across Chromium desktop and WebKit mobile, zero axe violations in covered states, keyboard and no-external-request behavior, strict type/lint/format checks, reproducible installation, a production build, and zero production dependency vulnerabilities. Runtime dependencies and M3 fiscal behavior are unchanged. M4.1 is ready for M5 release hardening but is not deployed or release approved.
 
+## M5 release-hardening closure
+
+The approved lineage now has a conventional local `main` branch without squashing or rewriting any M1–M4.1 provenance. Node.js `22.23.2` and npm `10.9.8` are repository-owned release intent. One read-only GitHub Actions workflow reproduces strict types, lint, formatting, Vitest, the explicit exhaustive gate, production build/artifact validation, production dependency audit, and Playwright/axe smoke coverage.
+
+The Vite artifact remains static and client-only. Repository-owned Cloudflare Pages headers apply a first-party-only CSP, restrictive Permissions Policy, referrer and MIME protections, clickjacking protection, and immutable caching for hashed assets. No HSTS, redirect, custom 404, Worker, Function, runtime environment variable, telemetry, persistence, or third-party runtime request was added. Release validation confirms six expected deployable files, no source maps, all 110,001 supported inputs, 118 Vitest tests, 10 production-preview Playwright journeys, zero covered axe violations, zero production vulnerabilities, zero third-party load requests, and unchanged JavaScript/CSS bundle sizes. Lighthouse diagnostics against the production artifact returned 100 in performance, accessibility, best practices, and SEO with zero layout shift and zero blocking time.
+
+No Git remote exists, GitHub CLI is not authenticated, and no authorized Cloudflare Pages project is available in the environment. The repository therefore stops at the external Git-integrated deployment boundary: add the correct remote, push `main`, connect that repository to Pages with `npm run build` and `dist`, then verify the actual HTTPS deployment and headers. Direct Upload is not an approved substitute.
+
 ## Canonical orientation
 
 - [Product specification](docs/product/product-spec.md)
@@ -93,5 +101,6 @@ Validation preserves 118 Vitest tests, all 110,001 supported whole-euro RAL inpu
 - [M4 product experience run](docs/ai-engineering/runs/2026-08-23-019-m4-product-experience.md)
 - [Independent M4 product/accessibility review](docs/ai-engineering/runs/2026-08-23-020-m4-independent-product-accessibility-review.md)
 - [M4.1 polish and reconciliation run](docs/ai-engineering/runs/2026-08-23-021-m4-product-polish-reconciliation.md)
+- [M5 release hardening run](docs/ai-engineering/runs/2026-08-23-022-m5-release-hardening.md)
 
 This file is a snapshot, not a diary. It describes authority recorded in canonical artifacts; it does not create authority.

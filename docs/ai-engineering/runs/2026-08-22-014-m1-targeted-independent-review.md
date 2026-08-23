@@ -45,7 +45,7 @@ This record does not restart broad fiscal research, verify or promote fiscal rul
 
 Pre-flight passed before any write:
 
-- repository location and Git root: `C:\Users\feder\Documents\Netto-m1-targeted-review`;
+- repository location and Git root: isolated targeted-review worktree;
 - branch: `review/m1-targeted-policy`;
 - HEAD: `29c4232679ff51c3279c8ae5e653fb8037d1052b`;
 - HEAD tree: `2169ce834d613be69d26c2338a488cd807f41c76`;
