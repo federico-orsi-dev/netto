@@ -29,6 +29,10 @@
   scroll-margin-top: var(--space-4);
 }
 
+.translation h2:focus-visible {
+  outline: none;
+}
+
 .singleEquation,
 .comparisonEquation {
   display: grid;

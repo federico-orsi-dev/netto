@@ -47,34 +47,42 @@ export function ComponentLedger({ result, comparison }: ComponentLedgerProps) {
             className={styles.ledger}
             aria-label="Voci cambiate nel confronto"
           >
-            {changes.map((change) => (
-              <li key={change.id} data-component-id={change.id}>
-                <details>
-                  <summary>
-                    <span
-                      className={
-                        change.direction === "add"
-                          ? styles.addMarker
-                          : styles.subtractMarker
-                      }
-                      aria-hidden="true"
-                    >
-                      {change.direction === "add" ? "+" : "−"}
-                    </span>
-                    <span className={styles.ledgerLabel}>
-                      {AMOUNT_COPY[change.amountId].label}
-                    </span>
-                    <strong>{formatMoneyDelta(change.amountDelta)}</strong>
-                    <span className={styles.openHint}>Apri il perché</span>
-                  </summary>
-                  <ComponentInsight
-                    result={comparison.proposed}
-                    componentId={change.id}
-                    comparison={comparison}
-                  />
-                </details>
-              </li>
-            ))}
+            {changes.map((change) => {
+              const netEffectDirection =
+                change.annualNetEffect.minorUnits >= 0 ? "add" : "subtract";
+              return (
+                <li key={change.id} data-component-id={change.id}>
+                  <details>
+                    <summary>
+                      <span
+                        className={
+                          netEffectDirection === "add"
+                            ? styles.addMarker
+                            : styles.subtractMarker
+                        }
+                        aria-hidden="true"
+                      >
+                        {netEffectDirection === "add" ? "+" : "−"}
+                      </span>
+                      <span className={styles.ledgerLabel}>
+                        {AMOUNT_COPY[change.amountId].label}
+                      </span>
+                      <strong>
+                        {formatMoneyDelta(change.annualNetEffect)}
+                      </strong>
+                      <span className={styles.openHint}>
+                        Effetto sul netto · apri il perché
+                      </span>
+                    </summary>
+                    <ComponentInsight
+                      result={comparison.proposed}
+                      componentId={change.id}
+                      comparison={comparison}
+                    />
+                  </details>
+                </li>
+              );
+            })}
           </ol>
         )}
         <RuleChanges comparison={comparison} />
@@ -163,8 +171,8 @@ function ComponentInsight({
             {formatMoney(comparisonChange.proposedAmount)}
           </span>
           <strong>
-            Effetto sul netto:{" "}
-            {formatMoneyDelta(comparisonChange.annualNetEffect)}
+            Variazione della voce:{" "}
+            {formatMoneyDelta(comparisonChange.amountDelta)}
           </strong>
         </p>
       )}

@@ -253,7 +253,7 @@ function ComparisonEditor({
           <span>Scopri quanto vale davvero la differenza.</span>
         </div>
         <button ref={comparisonButtonRef} type="button" onClick={onActivate}>
-          Confronta una nuova RAL <span aria-hidden="true">↗</span>
+          Confronta una nuova RAL <span aria-hidden="true">→</span>
         </button>
       </div>
     );

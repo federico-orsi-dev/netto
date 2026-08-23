@@ -204,6 +204,10 @@ describe("Netto compensation translator", () => {
   it("shows changed fiscal components and relevant rule applicability", async () => {
     const user = await calculate("20.000");
     await compare(user, "25.000");
+    const expected = compareCompensationResults(
+      expectedResult(20_000),
+      expectedResult(25_000),
+    );
     const changedLedger = screen.getByRole("list", {
       name: "Voci cambiate nel confronto",
     });
@@ -214,6 +218,29 @@ describe("Netto compensation translator", () => {
     expect(
       benefitItem?.querySelector(":scope > details > summary"),
     ).toBeVisible();
+    const taxChange = expected.componentChanges.find(
+      ({ id }) => id === "netIrpef",
+    );
+    const taxItem = changedLedger.querySelector<HTMLElement>(
+      '[data-component-id="netIrpef"]',
+    );
+    if (taxChange === undefined || taxItem === null) {
+      throw new Error("Expected the net IRPEF comparison row");
+    }
+    const taxSummary = taxItem.querySelector("summary");
+    if (taxSummary === null) {
+      throw new Error("Expected the net IRPEF comparison summary");
+    }
+    expect(normalizedText(taxSummary.textContent)).toContain(
+      normalizedText(formatMoneyDelta(taxChange.annualNetEffect)),
+    );
+    expect(taxSummary).toHaveTextContent("Effetto sul netto");
+    await user.click(taxSummary);
+    expect(normalizedText(taxItem.textContent)).toContain(
+      normalizedText(
+        `Variazione della voce: ${formatMoneyDelta(taxChange.amountDelta)}`,
+      ),
+    );
     expect(
       screen.getByRole("heading", {
         name: "Cambia l'applicabilità di una regola",

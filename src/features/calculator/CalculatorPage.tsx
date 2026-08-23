@@ -233,7 +233,7 @@ export function CalculatorPage() {
           className={`${styles.intro} ${currentResult === null ? "" : styles.introCompact}`}
           aria-labelledby="page-title"
         >
-          <p className={styles.kicker}>Compensation translator</p>
+          <p className={styles.kicker}>Dalla RAL al netto</p>
           <h1 id="page-title">
             La RAL è l'inizio. <span>Netto la traduce.</span>
           </h1>
@@ -306,7 +306,7 @@ export function CalculatorPage() {
       <footer className={styles.footer}>
         <div>
           <strong>Netto</strong>
-          <span>Il lordo, tradotto in conseguenze disponibili.</span>
+          <span>Il lordo, tradotto in ciò che ti rimane.</span>
         </div>
         <p>
           Stima locale e trasparente, non una busta paga o consulenza fiscale.
