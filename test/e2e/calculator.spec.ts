@@ -1,5 +1,23 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
+
+async function expectNoHorizontalPageScroll(page: Page) {
+  await expect
+    .poll(() =>
+      page.evaluate(() => {
+        const root = globalThis as unknown as {
+          document: {
+            documentElement: { scrollWidth: number; clientWidth: number };
+          };
+        };
+        return (
+          root.document.documentElement.scrollWidth -
+          root.document.documentElement.clientWidth
+        );
+      }),
+    )
+    .toBeLessThanOrEqual(1);
+}
 
 test("completes the transparent salary journey without critical accessibility violations", async ({
   page,
@@ -28,6 +46,15 @@ test("completes the transparent salary journey without critical accessibility vi
   await expect(
     resultSummary.getByText("Netto mensile medio", { exact: true }),
   ).toBeVisible();
+  await expect
+    .poll(() =>
+      resultSummary.locator("[data-primary-result]").evaluate((element) => {
+        const bounds = element.getBoundingClientRect();
+        const viewport = globalThis as unknown as { innerHeight: number };
+        return bounds.top >= 0 && bounds.bottom <= viewport.innerHeight;
+      }),
+    )
+    .toBe(true);
   await expect(
     page.getByRole("heading", { name: "Dove è andato il resto?" }),
   ).toBeVisible();
@@ -37,13 +64,23 @@ test("completes the transparent salary journey without critical accessibility vi
     .getByRole("button", { name: /IRPEF netta/ })
     .click();
   await expect(
-    page.getByRole("heading", { name: "IRPEF effettivamente modellata" }),
+    page.getByRole("heading", { name: "IRPEF dopo le detrazioni" }),
   ).toBeVisible();
+  const explanation = page.getByRole("complementary", {
+    name: "IRPEF dopo le detrazioni",
+  });
+  await expect(explanation.getByText("Cos'è?")).toBeVisible();
+  await expect(explanation.getByText("A chi va?")).toBeVisible();
+  await expect(
+    explanation.getByText("Allo Stato, come entrata fiscale nazionale."),
+  ).toBeVisible();
+  await explanation.getByText("Come è stato calcolato?").click();
+  await expect(explanation.getByText("RULE-NAT-NET-IRPEF-2026")).toBeVisible();
 
   await expect(
     page.getByRole("heading", { name: "Come lo abbiamo calcolato?" }),
   ).toBeVisible();
-  await page.getByText("Traccia di calcolo").click();
+  await page.getByText("Dettagli tecnici del calcolo").click();
   await expect(page.getByText("it-2026-v1")).toBeVisible();
 
   const accessibility = await new AxeBuilder({ page }).analyze();
@@ -59,6 +96,13 @@ test("renders the low-RAL net-benefit state without treating it as an error", as
   await page.getByRole("button", { name: "Calcola il netto" }).click();
   await expect(page.getByText("Beneficio netto modellato")).toBeVisible();
   await expect(page.getByText("+492,64 €")).toBeVisible();
+  const benefitExplanation = page.getByRole("complementary", {
+    name: "Perché il risultato supera la RAL?",
+  });
+  await expect(benefitExplanation).toContainText(
+    "Il datore di lavoro non paga più della RAL",
+  );
+  await expect(benefitExplanation).toContainText(/1\.?679,70\s*€/);
   await expect(page.getByRole("alert")).toHaveCount(0);
 });
 
@@ -88,8 +132,62 @@ test("supports the core journey and explanation selection from the keyboard", as
     .getByRole("button", { name: /RAL annuale/ });
   await expect(grossButton).toBeFocused();
   await page.keyboard.press("Tab");
+  const contributionButton = page
+    .getByRole("list", { name: "Voci dal lordo al netto" })
+    .getByRole("button", { name: /Contributi a carico del dipendente/ });
+  await expect(contributionButton).toBeFocused();
   await page.keyboard.press("Enter");
+  await expect(contributionButton).toBeFocused();
   await expect(
     page.getByRole("heading", { name: "Contributi a tuo carico" }),
   ).toBeVisible();
+});
+
+test("reveals the selected explanation in the mobile reading context", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 360, height: 640 });
+  await page.goto("/");
+  await page.getByLabel("La tua RAL", { exact: true }).fill("35.000");
+  await page.getByRole("button", { name: "Calcola il netto" }).click();
+
+  const irpefButton = page
+    .getByRole("list", { name: "Voci dal lordo al netto" })
+    .getByRole("button", { name: /IRPEF netta/ });
+  await irpefButton.click();
+  await expect(irpefButton).toHaveAttribute("aria-pressed", "true");
+  const explanation = page.getByRole("complementary", {
+    name: "IRPEF dopo le detrazioni",
+  });
+  await expect(explanation).toHaveAttribute("data-component-id", "netIrpef");
+  await expect
+    .poll(() =>
+      explanation.evaluate((element) => {
+        const bounds = element.getBoundingClientRect();
+        const viewport = globalThis as unknown as { innerHeight: number };
+        return bounds.top >= 0 && bounds.top < viewport.innerHeight;
+      }),
+    )
+    .toBe(true);
+});
+
+test("reflows the complete product journey at 320 CSS pixels", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 320, height: 700 });
+  await page.goto("/");
+  await expectNoHorizontalPageScroll(page);
+
+  await page.getByLabel("La tua RAL", { exact: true }).fill("120.000");
+  await page.getByRole("button", { name: "Calcola il netto" }).click();
+  await expectNoHorizontalPageScroll(page);
+
+  await page.getByText("Cosa non include").click();
+  await page.getByText("Fonti autorevoli").click();
+  await page.getByText("Dettagli tecnici del calcolo").click();
+  await expect(page.getByText("RULE-INPS-2026-001")).toBeVisible();
+  await expectNoHorizontalPageScroll(page);
+
+  const accessibility = await new AxeBuilder({ page }).analyze();
+  expect(accessibility.violations).toEqual([]);
 });

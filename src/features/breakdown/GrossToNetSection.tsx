@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import type {
   CalculationComponentId,
@@ -21,9 +21,30 @@ export function GrossToNetSection({ result }: GrossToNetSectionProps) {
   )
     ? "employeeContributions"
     : result.breakdownOrder[0];
-  const [selectedId, setSelectedId] = useState<CalculationComponentId>(
-    initialSelection ?? "grossSalary",
-  );
+  const [selection, setSelection] = useState<{
+    readonly id: CalculationComponentId;
+    readonly request: number;
+  }>({ id: initialSelection ?? "grossSalary", request: 0 });
+  const explanationRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (selection.request === 0) return;
+    if (typeof window.matchMedia !== "function") return;
+    if (!window.matchMedia("(max-width: 52rem)").matches) return;
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    explanationRef.current?.scrollIntoView({
+      behavior: reduceMotion ? "auto" : "smooth",
+      block: "start",
+    });
+  }, [selection.request]);
+
+  const handleSelection = (id: CalculationComponentId) => {
+    setSelection(({ request }) => ({ id, request: request + 1 }));
+  };
+
+  const selectedId = selection.id;
 
   return (
     <section aria-labelledby="breakdown-heading" className={styles.section}>
@@ -48,7 +69,7 @@ export function GrossToNetSection({ result }: GrossToNetSectionProps) {
           <WaterfallChart
             items={items}
             selectedId={selectedId}
-            onSelect={setSelectedId}
+            onSelect={handleSelection}
           />
         </div>
       </div>
@@ -57,9 +78,13 @@ export function GrossToNetSection({ result }: GrossToNetSectionProps) {
         <BreakdownList
           items={items}
           selectedId={selectedId}
-          onSelect={setSelectedId}
+          onSelect={handleSelection}
         />
-        <ComponentExplanation result={result} selectedId={selectedId} />
+        <ComponentExplanation
+          result={result}
+          selectedId={selectedId}
+          explanationRef={explanationRef}
+        />
       </div>
     </section>
   );

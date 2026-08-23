@@ -46,9 +46,17 @@ Information hierarchy:
 
 The Italian UI uses employee-friendly terminology. Fiscal detail is progressively disclosed. Desktop presentation is polished; mobile transforms the visualization into an intentional vertical breakdown.
 
+Explanations use three levels: the canonical amount and what happened; a concise description of what the component is, its institutional reference, and what it means for the estimate; then optional formulas, Rule IDs, sources, and trace evidence. A successful calculation deliberately reveals the primary result while preserving keyboard focus context. On narrow viewports, selecting a breakdown item brings its shared explanation into the current reading context.
+
+When modeled monetary benefits exceed modeled outflows, the result explicitly distinguishes contractual RAL from State fiscal cash benefits. It explains that the employer is not paying above RAL and that the signed difference is a modeled net benefit; the underlying monetary values remain owned by the canonical calculation result.
+
 ## Fidelity and non-goals
 
 This is a transparent annual estimate, not a payslip simulator, tax filing tool, minimum-remuneration/CCNL compliance validator, or official payroll result. Its contribution estimate applies only to the named industrial-employer/CIGS archetype and is not universal across private employers, sectors, headcounts, or bilateral funds. V1 excludes partial-year work, employer cost, CCNL/level/hours/pay-period inputs, other fiscal years, personal circumstances, persistence, accounts, analytics, sharing URLs, comparisons, marginal simulators, and exports. The contribution-base assumption must be reopened if V1 later accepts part-year work, non-cash or exceptional pay, actual payroll reconciliation, or employment-compliance claims.
+
+## Deferred product scope
+
+Extending the supported RAL maximum from EUR 120,000 toward EUR 200,000 is a post-V1 domain enhancement, not a UI-only change. It requires targeted revalidation of the pension contribution ceiling and additional-contribution interaction, high-income rule and exclusion boundaries, assumptions, fixtures, and exhaustive-range invariants before the input contract or copy may change.
 
 ## Privacy
 

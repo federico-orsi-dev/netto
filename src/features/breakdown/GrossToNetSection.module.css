@@ -161,6 +161,7 @@
 .explanation {
   position: sticky;
   top: var(--space-4);
+  scroll-margin-top: var(--space-3);
   padding: clamp(1.2rem, 3vw, 2rem);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
@@ -170,6 +171,7 @@
 
 .explanationHeader {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-3);
@@ -199,9 +201,80 @@
   color: var(--ink-650);
 }
 
-.summary {
-  color: var(--ink-950) !important;
-  font-weight: 650;
+.conceptGrid {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.conceptGrid section {
+  padding: var(--space-3) var(--space-4);
+  border-left: 2px solid var(--line-strong);
+  background: var(--surface-muted);
+}
+
+.conceptGrid h4 {
+  margin: 0 0 0.25rem;
+  color: var(--ink-950);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.conceptGrid p {
+  margin: 0;
+  color: var(--ink-800);
+  font-size: 0.9rem;
+}
+
+.technicalDetails {
+  margin-top: var(--space-5);
+  border-top: 1px solid var(--line);
+}
+
+.technicalDetails > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4) 0;
+  list-style: none;
+}
+
+.technicalDetails > summary::-webkit-details-marker {
+  display: none;
+}
+
+.technicalDetails > summary > span:first-child {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.technicalDetails > summary small {
+  color: var(--ink-650);
+}
+
+.technicalIcon {
+  display: grid;
+  flex: 0 0 auto;
+  width: 1.8rem;
+  height: 1.8rem;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  transition: transform 150ms ease;
+}
+
+.technicalDetails[open] > summary .technicalIcon {
+  transform: rotate(45deg);
+}
+
+.technicalBody {
+  padding-bottom: var(--space-2);
+}
+
+.traceStatus {
+  margin-bottom: var(--space-3);
+  font-size: 0.82rem;
 }
 
 .childAmounts,
@@ -251,9 +324,11 @@
 }
 
 .formula > code {
+  display: block;
   color: var(--ink-950);
   font-family: var(--font-mono);
   font-size: 0.82rem;
+  overflow-wrap: anywhere;
 }
 
 .ruleIds code {
@@ -271,6 +346,7 @@
 
 .sourcePreview a {
   font-size: 0.82rem;
+  overflow-wrap: anywhere;
 }
 
 .sourcePreview small {
@@ -305,5 +381,26 @@
 
   .explainHint {
     opacity: 1;
+  }
+}
+
+@media (max-width: 24rem) {
+  .breakdownList button {
+    grid-template-columns: 1.5rem minmax(0, 1fr);
+  }
+
+  .breakdownList strong {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .explainHint {
+    grid-column: 2;
+  }
+
+  .childAmounts > div,
+  .formula dl > div {
+    display: grid;
+    gap: 0.15rem;
   }
 }

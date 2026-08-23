@@ -28,7 +28,7 @@ export function ResultSummary({ result }: ResultSummaryProps) {
       </div>
 
       <div className={styles.heroGrid}>
-        <div className={styles.primaryResult}>
+        <div className={styles.primaryResult} data-primary-result>
           <span>Netto annuale stimato</span>
           <strong>{formatMoney(amounts[summary.annualNetAmountId])}</strong>
           <small>su {formatMoney(amounts.annualGrossSalary)} di RAL</small>
@@ -57,7 +57,7 @@ export function ResultSummary({ result }: ResultSummaryProps) {
           <span>
             {isNetBenefit
               ? "Beneficio netto modellato"
-              : "Prelievo complessivo modellato"}
+              : "Impatto complessivo modellato"}
           </span>
           <strong>
             {formatSignedMoney(
@@ -71,6 +71,29 @@ export function ResultSummary({ result }: ResultSummaryProps) {
           </small>
         </div>
       </div>
+
+      {isNetBenefit ? (
+        <aside
+          className={styles.netBenefitExplanation}
+          aria-labelledby="net-benefit-explanation-title"
+        >
+          <div aria-hidden="true" className={styles.benefitMark}>
+            +
+          </div>
+          <div>
+            <strong id="net-benefit-explanation-title">
+              Perché il risultato supera la RAL?
+            </strong>
+            <p>
+              Il datore di lavoro non paga più della RAL. Questa stima include{" "}
+              {formatMoney(amounts.totalCashBenefits)} di benefici fiscali
+              monetari previsti dal modello 2026. In questo caso superano
+              contributi e imposte modellati: la differenza è mostrata come
+              beneficio netto.
+            </p>
+          </div>
+        </aside>
+      ) : null}
     </section>
   );
 }

@@ -28,9 +28,22 @@ export function CalculatorPage() {
 
   useEffect(() => {
     if (!shouldFocusResultRef.current || result === null) return;
-    resultRegionRef.current
-      ?.querySelector<HTMLElement>("#result-heading")
-      ?.focus();
+    const resultRegion = resultRegionRef.current;
+    const heading = resultRegion?.querySelector<HTMLElement>("#result-heading");
+    const primaryResult = resultRegion?.querySelector<HTMLElement>(
+      "[data-primary-result]",
+    );
+    if (heading === undefined || heading === null) return;
+
+    const primaryBounds = primaryResult?.getBoundingClientRect();
+    const primaryIsVisible =
+      primaryBounds !== undefined &&
+      primaryBounds.top >= 0 &&
+      primaryBounds.bottom <= window.innerHeight;
+    if (!primaryIsVisible) {
+      heading.closest("section")?.scrollIntoView({ block: "start" });
+    }
+    heading.focus({ preventScroll: true });
     shouldFocusResultRef.current = false;
   }, [result]);
 

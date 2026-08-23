@@ -1,14 +1,14 @@
 # Project State
 
-- **Phase:** M4 — Product UI & Experience
-- **Milestone status:** implementation complete and locally validated; awaiting independent product/accessibility review
+- **Phase:** M4.1 — Product Polish & Review Reconciliation
+- **Milestone status:** complete and locally validated; all RUN-020 release-significant findings reconciled
 - **Architecture:** approved through M2; Phase 0 closed
 - **Fiscal foundation:** 15 verified, 9 excluded, 0 candidate, and 0 blocked rules; bounded assumptions and product money policy approved
-- **Current task:** none; M4 implementation is closed pending independent product, accessibility, and numeric-ownership review
-- **Next permitted milestone:** independent M4 product/accessibility review; M5 must not start automatically
-- **Pending human gate:** acceptance of the independently reviewed M4 product experience; release approval remains separate
+- **Current task:** none; M4.1 polish is closed
+- **Next permitted milestone:** M5 release hardening; it must not start automatically
+- **Pending human gate:** M5/release authorization remains separate
 - **Release:** not eligible
-- **Last meaningful run:** `RUN-2026-08-23-019` — M4 product UI and experience implementation
+- **Last meaningful run:** `RUN-2026-08-23-021` — M4.1 product polish and review reconciliation
 - **Last updated:** 2026-08-23
 
 ## M1 closure
@@ -62,6 +62,14 @@ The visual foundation uses a native system UI font stack with tabular numerals, 
 
 Validation passes the unchanged M3 domain and exhaustive gates plus component/product tests, desktop Chromium and mobile WebKit smoke journeys, automated axe checks, manual keyboard/semantic review, breakpoint visual QA, production build inspection, and production dependency audit. M4 is not deployed and is not release approved; an independent product/accessibility review is the next gate.
 
+## M4.1 review reconciliation closure
+
+Independent M4 review record `RUN-2026-08-23-020` was committed separately as `fee28f62bd7143f0e3ae0734d96d82afa4b5aeaa` and imported into the primary history as `163d1a30be00c1cf1f2fee39043ed163b8c6f982` before implementation changed. The review found 0 blocker, 5 major, 3 minor, and 3 note items while confirming numeric ownership.
+
+M4.1 closes all five major and all three minor findings: successful submission reveals the primary result with deliberate focus; low-RAL results distinguish employer-paid RAL from canonical State fiscal cash benefits; component explanations now progress from amount to plain-language institutional meaning to optional formula/rule/source evidence; narrow-screen selection reveals the shared explanation; 320 CSS-pixel/high-zoom reflow is clean; the trace is explicitly technical and optional; copy is plainer; and the tablet waterfall has no incidental horizontal overflow. Source/exclusion semantics required no change, the visual identity remains intentionally restrained, and a possible EUR 200,000 range remains deferred behind targeted domain revalidation.
+
+Validation preserves 118 Vitest tests, all 110,001 supported whole-euro RAL inputs, 10 Playwright journeys across Chromium desktop and WebKit mobile, zero axe violations in covered states, keyboard and no-external-request behavior, strict type/lint/format checks, reproducible installation, a production build, and zero production dependency vulnerabilities. Runtime dependencies and M3 fiscal behavior are unchanged. M4.1 is ready for M5 release hardening but is not deployed or release approved.
+
 ## Canonical orientation
 
 - [Product specification](docs/product/product-spec.md)
@@ -83,5 +91,7 @@ Validation passes the unchanged M3 domain and exhaustive gates plus component/pr
 - [M3 implementation run](docs/ai-engineering/runs/2026-08-23-017-m3-deterministic-domain-engine.md)
 - [Independent M3 domain review](docs/ai-engineering/runs/2026-08-23-018-m3-independent-domain-review.md)
 - [M4 product experience run](docs/ai-engineering/runs/2026-08-23-019-m4-product-experience.md)
+- [Independent M4 product/accessibility review](docs/ai-engineering/runs/2026-08-23-020-m4-independent-product-accessibility-review.md)
+- [M4.1 polish and reconciliation run](docs/ai-engineering/runs/2026-08-23-021-m4-product-polish-reconciliation.md)
 
 This file is a snapshot, not a diary. It describes authority recorded in canonical artifacts; it does not create authority.

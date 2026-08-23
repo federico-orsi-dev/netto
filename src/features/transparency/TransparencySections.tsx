@@ -45,7 +45,7 @@ export function TransparencySections({ result }: TransparencySectionsProps) {
         </article>
         <article>
           <span className={styles.number}>03</span>
-          <h3>Precisione dichiarata</h3>
+          <h3>Metodo e limiti</h3>
           <p>
             È una stima annuale riconciliata ai centesimi, non una busta paga,
             una dichiarazione o una verifica CCNL.
@@ -77,9 +77,7 @@ export function TransparencySections({ result }: TransparencySectionsProps) {
           <summary>
             <span>
               <strong>Cosa non include</strong>
-              <small>
-                Nove confini espliciti, mai trattati come importi zero
-              </small>
+              <small>Nove confini espliciti del profilo V1</small>
             </span>
             <span aria-hidden="true" className={styles.disclosureIcon}>
               +

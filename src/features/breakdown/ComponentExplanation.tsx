@@ -3,6 +3,7 @@ import {
   COMPONENT_COPY,
   TRACE_STATUS_COPY,
 } from "../../content/it";
+import type { RefObject } from "react";
 import type {
   CalculationComponentId,
   SalaryCalculationResult,
@@ -18,11 +19,13 @@ import styles from "./GrossToNetSection.module.css";
 interface ComponentExplanationProps {
   readonly result: SalaryCalculationResult;
   readonly selectedId: CalculationComponentId;
+  readonly explanationRef: RefObject<HTMLElement | null>;
 }
 
 export function ComponentExplanation({
   result,
   selectedId,
+  explanationRef,
 }: ComponentExplanationProps) {
   const component = result.components[selectedId];
   const copy = COMPONENT_COPY[selectedId];
@@ -41,72 +44,113 @@ export function ComponentExplanation({
 
   return (
     <aside
+      ref={explanationRef}
       className={styles.explanation}
       id="component-explanation"
       aria-live="polite"
       aria-labelledby="explanation-title"
+      data-component-id={selectedId}
     >
       <div className={styles.explanationHeader}>
-        <span>{TRACE_STATUS_COPY[trace.status]}</span>
+        <span>Nel tuo calcolo</span>
         <strong>{formatSignedMoney(amount, direction)}</strong>
       </div>
       <h3 id="explanation-title">{copy.title}</h3>
-      <p className={styles.summary}>{copy.summary}</p>
-      <p>{copy.detail}</p>
-
-      {component.childComponentIds.length === 0 ? null : (
-        <dl className={styles.childAmounts}>
-          {component.childComponentIds.map((childId) => {
-            const child = result.components[childId];
-            return (
-              <div key={childId}>
-                <dt>{AMOUNT_COPY[child.amountId].label}</dt>
-                <dd>{formatMoney(result.amounts[child.amountId])}</dd>
-              </div>
-            );
-          })}
-        </dl>
-      )}
-
-      <div className={styles.formula}>
-        <span>Logica applicata</span>
-        <code>{trace.formula.expression}</code>
-        {trace.formula.parameters.length === 0 ? null : (
-          <dl>
-            {trace.formula.parameters.map((parameter) => (
-              <div key={parameter.name}>
-                <dt>{parameter.name}</dt>
-                <dd>{formatTraceParameter(parameter, result)}</dd>
-              </div>
-            ))}
-          </dl>
-        )}
+      <div className={styles.conceptGrid}>
+        <section>
+          <h4>Cos'è?</h4>
+          <p>{copy.summary}</p>
+        </section>
+        <section>
+          <h4>{copy.institutionLabel}</h4>
+          <p>{copy.institution}</p>
+        </section>
+        <section>
+          <h4>Cosa significa qui?</h4>
+          <p>{copy.meaning}</p>
+        </section>
       </div>
 
-      {trace.ruleIds.length === 0 ? null : (
-        <p className={styles.ruleIds}>
-          Regole: <code>{trace.ruleIds.join(" · ")}</code>
-        </p>
-      )}
+      <details className={styles.technicalDetails}>
+        <summary>
+          <span>
+            <strong>Come è stato calcolato?</strong>
+            <small>Formula, regole e fonti ufficiali</small>
+          </span>
+          <span aria-hidden="true" className={styles.technicalIcon}>
+            +
+          </span>
+        </summary>
+        <div className={styles.technicalBody}>
+          <p className={styles.traceStatus}>
+            Stato del passaggio:{" "}
+            <strong>{TRACE_STATUS_COPY[trace.status]}</strong>
+          </p>
 
-      {sources.length === 0 ? null : (
-        <div className={styles.sourcePreview}>
-          <span>Fonti principali</span>
-          <ul>
-            {sources.slice(0, 3).map((source) => (
-              <li key={source.id}>
-                <a href={source.officialUrl} target="_blank" rel="noreferrer">
-                  {source.issuer} — {source.title}
-                  <span className="srOnly"> (si apre in una nuova scheda)</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-          {sources.length > 3 ? (
-            <small>Altre {sources.length - 3} fonti nel metodo completo.</small>
-          ) : null}
+          {component.childComponentIds.length === 0 ? null : (
+            <dl className={styles.childAmounts}>
+              {component.childComponentIds.map((childId) => {
+                const child = result.components[childId];
+                return (
+                  <div key={childId}>
+                    <dt>{AMOUNT_COPY[child.amountId].label}</dt>
+                    <dd>{formatMoney(result.amounts[child.amountId])}</dd>
+                  </div>
+                );
+              })}
+            </dl>
+          )}
+
+          <div className={styles.formula}>
+            <span>Logica applicata</span>
+            <code>{trace.formula.expression}</code>
+            {trace.formula.parameters.length === 0 ? null : (
+              <dl>
+                {trace.formula.parameters.map((parameter) => (
+                  <div key={parameter.name}>
+                    <dt>{parameter.name}</dt>
+                    <dd>{formatTraceParameter(parameter, result)}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
+          </div>
+
+          {trace.ruleIds.length === 0 ? null : (
+            <p className={styles.ruleIds}>
+              Regole: <code>{trace.ruleIds.join(" · ")}</code>
+            </p>
+          )}
+
+          {sources.length === 0 ? null : (
+            <div className={styles.sourcePreview}>
+              <span>Fonti principali</span>
+              <ul>
+                {sources.slice(0, 3).map((source) => (
+                  <li key={source.id}>
+                    <a
+                      href={source.officialUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {source.issuer} — {source.title}
+                      <span className="srOnly">
+                        {" "}
+                        (si apre in una nuova scheda)
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              {sources.length > 3 ? (
+                <small>
+                  Altre {sources.length - 3} fonti nel metodo completo.
+                </small>
+              ) : null}
+            </div>
+          )}
         </div>
-      )}
+      </details>
     </aside>
   );
 }

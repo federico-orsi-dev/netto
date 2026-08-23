@@ -14,7 +14,9 @@ interface AmountCopy {
 interface ComponentCopy {
   readonly title: string;
   readonly summary: string;
-  readonly detail: string;
+  readonly institutionLabel: string;
+  readonly institution: string;
+  readonly meaning: string;
 }
 
 export const INPUT_ERROR_COPY: Record<SalaryInputIssueCode, string> = {
@@ -80,8 +82,8 @@ export const AMOUNT_COPY = {
   },
   netIrpef: { label: "IRPEF netta", shortLabel: "IRPEF" },
   cuneoCashSum: {
-    label: "Somma non imponibile sul cuneo fiscale",
-    shortLabel: "Somma cuneo",
+    label: "Beneficio fiscale non imponibile",
+    shortLabel: "Beneficio",
   },
   treatmentIntegrativo: {
     label: "Trattamento integrativo",
@@ -136,89 +138,119 @@ export const COMPONENT_COPY = {
   grossSalary: {
     title: "La RAL da cui partiamo",
     summary: "È la retribuzione annua lorda inserita nel calcolatore.",
-    detail:
+    institutionLabel: "Da chi proviene?",
+    institution: "Dal datore di lavoro, secondo il contratto.",
+    meaning:
       "Netto la tratta come retribuzione ordinaria annuale interamente soggetta ai contributi del profilo V1.",
   },
   employeeIvs: {
     title: "Contributi pensionistici IVS",
     summary: "La quota pensionistica ordinaria a carico del dipendente.",
-    detail:
-      "Si applica alla base contributiva del profilo FPLD selezionato. È distinta dagli altri contributi.",
+    institutionLabel: "Chi li gestisce?",
+    institution: "INPS, nel sistema previdenziale dei lavoratori dipendenti.",
+    meaning:
+      "Riducono il lordo disponibile e sono distinti dalle imposte sul reddito.",
   },
   additionalIvs: {
     title: "Contributo IVS aggiuntivo",
     summary:
-      "Una quota aggiuntiva sulla parte di base oltre la soglia annuale.",
-    detail:
-      "Compare solo quando la base pensionistica supera la soglia verificata per il 2026.",
+      "Una quota pensionistica aggiuntiva sulla parte di reddito oltre la soglia annuale.",
+    institutionLabel: "Chi lo gestisce?",
+    institution: "INPS, insieme alla contribuzione pensionistica ordinaria.",
+    meaning:
+      "Compare nel calcolo solo quando la base pensionistica supera la soglia prevista per il 2026.",
   },
   employeeCigs: {
     title: "Contributo CIGS",
     summary:
-      "La quota dipendente per il sostegno al reddito del profilo scelto.",
-    detail:
-      "Dipende dall'archetipo di datore industriale approvato per V1 e non vale per ogni rapporto privato.",
+      "La quota a carico del dipendente prevista dal profilo industriale CIGS di Netto.",
+    institutionLabel: "Chi lo gestisce?",
+    institution:
+      "INPS, nell'ambito della Cassa Integrazione Guadagni Straordinaria.",
+    meaning:
+      "Contribuisce al sistema CIGS e non si applica allo stesso modo a ogni rapporto di lavoro privato.",
   },
   employeeContributions: {
     title: "Contributi a tuo carico",
     summary:
-      "La somma riconciliata delle componenti IVS, IVS aggiuntiva e CIGS.",
-    detail:
-      "Ogni componente viene calcolata e arrotondata ai centesimi prima della somma, secondo la politica monetaria di Netto.",
+      "L'insieme delle quote previdenziali e CIGS trattenute al dipendente nel profilo V1.",
+    institutionLabel: "Chi li gestisce?",
+    institution: "INPS.",
+    meaning:
+      "Vengono sottratti dalla RAL prima di determinare il reddito su cui calcolare l'IRPEF.",
   },
   grossIrpef: {
     title: "IRPEF lorda",
     summary: "L'imposta progressiva prima delle detrazioni applicabili.",
-    detail:
+    institutionLabel: "A chi fa riferimento?",
+    institution: "Allo Stato, come imposta nazionale sul reddito.",
+    meaning:
       "È un valore intermedio: serve a capire l'imposta, ma non viene sottratto direttamente dal netto finale.",
   },
   employmentDeduction: {
     title: "Detrazione da lavoro dipendente",
     summary: "Riduce l'IRPEF lorda in base al reddito imponibile.",
-    detail:
-      "Netto applica le fasce e la troncatura prevista dall'articolo 13 prima dell'arrotondamento monetario.",
+    institutionLabel: "Da dove deriva?",
+    institution: "Dalla disciplina nazionale dell'IRPEF.",
+    meaning:
+      "Abbassa l'imposta dovuta nel modello; non è un pagamento separato del datore di lavoro.",
   },
   cuneoDeduction: {
     title: "Ulteriore detrazione sul cuneo fiscale",
     summary: "Un'ulteriore riduzione dell'IRPEF nelle fasce previste.",
-    detail:
+    institutionLabel: "Da dove deriva?",
+    institution: "Dalla disciplina fiscale nazionale.",
+    meaning:
       "È distinta dalle somme erogate in denaro e non può trasformare l'IRPEF netta in un valore negativo.",
   },
   netIrpef: {
-    title: "IRPEF effettivamente modellata",
-    summary: "L'IRPEF lorda dopo le detrazioni incluse nel profilo V1.",
-    detail:
-      "È questa componente netta, non l'IRPEF lorda, che entra nella trasformazione finale dal lordo al netto.",
+    title: "IRPEF dopo le detrazioni",
+    summary:
+      "L'imposta nazionale sul reddito dopo le detrazioni incluse in V1.",
+    institutionLabel: "A chi va?",
+    institution: "Allo Stato, come entrata fiscale nazionale.",
+    meaning:
+      "È questa componente, non l'IRPEF lorda, che viene sottratta nel passaggio finale dal lordo al netto.",
   },
   regionalTax: {
     title: "Addizionale regionale Lombardia",
-    summary: "L'imposta regionale progressiva calcolata sull'imponibile IRPEF.",
-    detail:
-      "Le fasce regionali sono calcolate separatamente e poi riconciliate nella componente pubblica.",
+    summary: "L'imposta regionale calcolata sul reddito imponibile IRPEF.",
+    institutionLabel: "A chi va?",
+    institution: "Alla Regione Lombardia, come entrata fiscale regionale.",
+    meaning:
+      "Si aggiunge all'IRPEF nazionale secondo le fasce regionali previste per il profilo 2026.",
   },
   municipalTax: {
     title: "Addizionale comunale Milano",
     summary: "L'imposta comunale applicata oltre la soglia di esenzione.",
-    detail:
-      "Per il profilo Milano 2026, una volta superata la soglia verificata l'aliquota si applica all'intera base.",
+    institutionLabel: "A chi va?",
+    institution: "Al Comune di Milano, come entrata fiscale comunale.",
+    meaning:
+      "Si aggiunge alle imposte nazionali e regionali quando il reddito supera la soglia del profilo V1.",
   },
   cuneoCashSum: {
-    title: "Somma sul cuneo fiscale",
+    title: "Beneficio fiscale non imponibile",
     summary: "Un beneficio non imponibile che aumenta il netto stimato.",
-    detail:
-      "È un'aggiunta in denaro separata dalle detrazioni IRPEF e può coesistere con il trattamento integrativo.",
+    institutionLabel: "Da chi deriva?",
+    institution: "Dalla disciplina fiscale nazionale.",
+    meaning:
+      "È un'aggiunta in denaro separata dalle detrazioni IRPEF e può aumentare il risultato oltre la sola RAL.",
   },
   treatmentIntegrativo: {
     title: "Trattamento integrativo",
     summary:
       "Un beneficio in denaro riconosciuto quando ricorrono le condizioni modellate.",
-    detail:
-      "V1 include il ramo ordinario per redditi bassi e non simula il ramo condizionale legato a circostanze personali.",
+    institutionLabel: "Da chi deriva?",
+    institution: "Dalla disciplina fiscale nazionale.",
+    meaning:
+      "Aumenta il risultato annuale stimato; V1 include solo il ramo ordinario supportato dal profilo.",
   },
   annualNet: {
     title: "Il netto annuale stimato",
     summary: "Il risultato finale dopo uscite e benefici inclusi nel modello.",
-    detail:
+    institutionLabel: "Cosa rappresenta?",
+    institution: "La sintesi annuale prodotta da Netto per il profilo V1.",
+    meaning:
       "È una stima annuale trasparente, non la replica di singole buste paga o di un conguaglio ufficiale.",
   },
 } as const satisfies Record<CalculationComponentId, ComponentCopy>;

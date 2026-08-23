@@ -106,20 +106,41 @@ describe("Netto product flow", () => {
     await user.click(irpefButton);
     expect(irpefButton).toHaveAttribute("aria-pressed", "true");
     expect(
-      screen.getByRole("heading", { name: "IRPEF effettivamente modellata" }),
+      screen.getByRole("heading", { name: "IRPEF dopo le detrazioni" }),
     ).toBeInTheDocument();
     const explanation = screen.getByRole("complementary", {
-      name: "IRPEF effettivamente modellata",
+      name: "IRPEF dopo le detrazioni",
     });
+    expect(within(explanation).getByText("Cos'è?")).toBeVisible();
+    expect(within(explanation).getByText("A chi va?")).toBeVisible();
+    expect(
+      within(explanation).getByText(
+        "Allo Stato, come entrata fiscale nazionale.",
+      ),
+    ).toBeVisible();
     expect(
       within(explanation).getByText("RULE-NAT-NET-IRPEF-2026"),
-    ).toBeInTheDocument();
+    ).not.toBeVisible();
+    await user.click(within(explanation).getByText("Come è stato calcolato?"));
+    expect(
+      within(explanation).getByText("RULE-NAT-NET-IRPEF-2026"),
+    ).toBeVisible();
   });
 
   it("presents a negative modeled burden as a valid net benefit", async () => {
     await calculate("10.000");
+    const expected = expectedResult(10_000);
     expect(screen.getByText("Beneficio netto modellato")).toBeInTheDocument();
     expect(screen.getByText("+492,64 €")).toBeInTheDocument();
+    const benefitExplanation = screen.getByRole("complementary", {
+      name: "Perché il risultato supera la RAL?",
+    });
+    expect(benefitExplanation.textContent?.replace(/\s/g, " ")).toContain(
+      formatMoney(expected.amounts.totalCashBenefits).replace(/\s/g, " "),
+    );
+    expect(
+      screen.getByText(/Il datore di lavoro non paga più della RAL/),
+    ).toBeInTheDocument();
     expect(screen.queryByText(/negative tax rate/i)).not.toBeInTheDocument();
   });
 
@@ -131,7 +152,7 @@ describe("Netto product flow", () => {
     expect(
       screen.getByRole("heading", { name: "Calcolo locale" }),
     ).toBeInTheDocument();
-    const traceSummary = screen.getByText("Traccia di calcolo");
+    const traceSummary = screen.getByText("Dettagli tecnici del calcolo");
     await user.click(traceSummary);
     expect(screen.getByText("it-2026-v1")).toBeVisible();
     expect(screen.getByText("RULE-INPS-2026-001")).toBeVisible();

@@ -12,7 +12,7 @@ export function CalculationTrace({ result }: CalculationTraceProps) {
     <details className={styles.traceDisclosure}>
       <summary>
         <span>
-          <strong>Traccia di calcolo</strong>
+          <strong>Dettagli tecnici del calcolo</strong>
           <small>
             {result.trace.length} passaggi deterministici e verificabili
           </small>
@@ -23,7 +23,7 @@ export function CalculationTrace({ result }: CalculationTraceProps) {
       </summary>
       <div className={styles.traceIntro}>
         <p>
-          Questa è la vista tecnica: mostra ordine, basi, regole e risultati
+          Questa vista facoltativa mostra ordine, basi, regole e risultati
           pubblici senza ricostruire i calcoli nell'interfaccia.
         </p>
         <dl>
