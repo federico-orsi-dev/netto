@@ -4,14 +4,14 @@ date: 2026-08-24
 tool: codex
 role: principal-product-engineer-product-designer
 task: final-visual-authorship-and-compensation-causality
-status: locally-validated
+status: completed
 owner: codex
 reviewer: human
 related_rules: []
 related_adrs:
   - ADR-0004
   - ADR-0008
-commit: pending
+commit: d60208fad58b64c51031020a48e0b7f042571e3e
 ---
 
 # Final visual authorship and compensation causality

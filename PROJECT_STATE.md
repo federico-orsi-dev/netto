@@ -1,14 +1,14 @@
 # Project State
 
-- **Phase:** Netto final visual-authorship and compensation-causality pass
-- **Milestone status:** final product and repository redesign validated locally; production release verification pending
+- **Phase:** Netto final submission artifact complete
+- **Milestone status:** final product and repository redesign validated locally and remotely, deployed through Cloudflare Pages, and accepted for Jet HR submission
 - **Architecture:** approved through M2; Phase 0 closed
 - **Fiscal foundation:** 15 verified, 9 excluded, 0 candidate, and 0 blocked rules; bounded assumptions and product money policy approved
-- **Current task:** publish the validated final submission artifact and verify GitHub Quality plus Cloudflare Pages
-- **Next permitted milestone:** none; after production verification, submit rather than extend
+- **Current task:** none
+- **Next permitted milestone:** none; submit the current artifact rather than extend it
 - **Pending human gate:** none
-- **Release:** the preceding accepted artifact remains live at [netto-c2o.pages.dev](https://netto-c2o.pages.dev/); the locally validated final authorship pass awaits its normal `main` release
-- **Last meaningful run:** `RUN-2026-08-24-027` — final visual authorship and compensation causality
+- **Release:** the final submission artifact is live at [netto-c2o.pages.dev](https://netto-c2o.pages.dev/); code-bearing commit `d60208fad58b64c51031020a48e0b7f042571e3e` passed GitHub Quality and Cloudflare Pages with byte-identical JavaScript and CSS
+- **Last meaningful run:** `RUN-2026-08-24-028` — final production submission closure
 - **Last updated:** 2026-08-24
 
 ## M1 closure
@@ -112,7 +112,7 @@ For every material changed component, the interface keeps distinct: current and 
 
 The landing composition, ink/paper/cobalt palette, square document-like controls, and asymmetric explanation layout derive from the salary transformation rather than a reusable fintech dashboard. The Italian product remains intentionally paired with a concise English-first hiring README. Fiscal rules, calculation engine, supported scope, dependencies, privacy, and deployment architecture are unchanged.
 
-Local release validation passes 125 Vitest tests, the explicit 110,001-input exhaustive gate, 14 Chromium/WebKit Playwright and covered axe journeys, strict type/lint/format checks, the production build and artifact inspection, and a zero-finding production dependency audit. Production publication and remote acceptance remain the only open work.
+Local release validation passes 125 Vitest tests, the explicit 110,001-input exhaustive gate, 14 Chromium/WebKit Playwright and covered axe journeys, strict type/lint/format checks, the production build and artifact inspection, and a zero-finding production dependency audit. GitHub Quality and Cloudflare Pages passed code-bearing commit `d60208fad58b64c51031020a48e0b7f042571e3e`; the public JavaScript and CSS are byte-identical to the local release build and the final product journey passed production smoke testing. No submission blocker remains.
 
 ## Canonical orientation
 
@@ -144,5 +144,6 @@ Local release validation passes 125 Vitest tests, the explicit 110,001-input exh
 - [Post-V1 Compensation Translator](docs/ai-engineering/runs/2026-08-23-025-post-v1-compensation-translator.md)
 - [Final submission acceptance](docs/ai-engineering/runs/2026-08-23-026-final-submission-acceptance.md)
 - [Final visual authorship and compensation causality](docs/ai-engineering/runs/2026-08-24-027-final-visual-authorship.md)
+- [Final production submission closure](docs/ai-engineering/runs/2026-08-24-028-final-production-submission-closure.md)
 
 This file is a snapshot, not a diary. It describes authority recorded in canonical artifacts; it does not create authority.
