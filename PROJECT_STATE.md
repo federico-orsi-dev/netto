@@ -1,14 +1,14 @@
 # Project State
 
-- **Phase:** M5 — Release Hardening & Cloudflare Release
-- **Milestone status:** release-ready and locally validated; external GitHub/Cloudflare authorization is unavailable
+- **Phase:** M5 — Production Deployment Closure
+- **Milestone status:** complete under the final Git-integrated deployment condition recorded below
 - **Architecture:** approved through M2; Phase 0 closed
 - **Fiscal foundation:** 15 verified, 9 excluded, 0 candidate, and 0 blocked rules; bounded assumptions and product money policy approved
-- **Current task:** none; local M5 hardening is closed at the external deployment boundary
-- **Next permitted milestone:** one-time GitHub remote and Cloudflare Pages Git-integration setup for this reviewed `main` lineage
-- **Pending human gate:** authenticate GitHub and Cloudflare, connect the repository, then validate the deployed artifact
-- **Release:** locally release-ready; not pushed or deployed
-- **Last meaningful run:** `RUN-2026-08-23-022` — M5 release hardening and deployment readiness
+- **Current task:** none; Netto V1 production closure is complete when the Cloudflare Pages check attached to the commit containing RUN-023 succeeds
+- **Next permitted milestone:** none within V1; any post-V1 work requires a separately authorized goal
+- **Pending human gate:** none
+- **Release:** Netto V1 released at [netto-c2o.pages.dev](https://netto-c2o.pages.dev/); this status is valid only with a successful final Cloudflare Pages check on the RUN-023 closure commit
+- **Last meaningful run:** `RUN-2026-08-23-023` — production deployment closure
 - **Last updated:** 2026-08-23
 
 ## M1 closure
@@ -76,7 +76,15 @@ The approved lineage now has a conventional local `main` branch without squashin
 
 The Vite artifact remains static and client-only. Repository-owned Cloudflare Pages headers apply a first-party-only CSP, restrictive Permissions Policy, referrer and MIME protections, clickjacking protection, and immutable caching for hashed assets. No HSTS, redirect, custom 404, Worker, Function, runtime environment variable, telemetry, persistence, or third-party runtime request was added. Release validation confirms six expected deployable files, no source maps, all 110,001 supported inputs, 118 Vitest tests, 10 production-preview Playwright journeys, zero covered axe violations, zero production vulnerabilities, zero third-party load requests, and unchanged JavaScript/CSS bundle sizes. Lighthouse diagnostics against the production artifact returned 100 in performance, accessibility, best practices, and SEO with zero layout shift and zero blocking time.
 
-No Git remote exists, GitHub CLI is not authenticated, and no authorized Cloudflare Pages project is available in the environment. The repository therefore stops at the external Git-integrated deployment boundary: add the correct remote, push `main`, connect that repository to Pages with `npm run build` and `dist`, then verify the actual HTTPS deployment and headers. Direct Upload is not an approved substitute.
+At local M5 closure no Git remote or authorized Cloudflare project was available. That external boundary was subsequently crossed by connecting the public `federico-orsi-dev/netto` repository to Cloudflare Pages through the approved Git integration; Direct Upload was not used.
+
+## Production deployment closure
+
+The initial production deployment cloned reviewed M5 application commit `6554cb237f30ad65982c89c6daaef93172882f47`, used Node.js `22.23.2` and npm `10.9.8`, passed the Cloudflare build, parsed `_headers`, and published the static Vite artifact at [https://netto-c2o.pages.dev/](https://netto-c2o.pages.dev/). The public GitHub repository uses `main` as its default and production branch; the Quality workflow and Cloudflare Pages checks both completed successfully for that baseline.
+
+Production verification returned HTTPS 200, loaded the expected hashed CSS and JavaScript, applied the repository CSP and companion security headers, and reproduced byte-for-byte the local M5 HTML/CSS/JavaScript. Targeted browser checks passed the initial state, RAL EUR 10,000, EUR 35,000, EUR 100,000, EUR 120,000, out-of-range validation, low-RAL benefit explanation, component evidence, assumptions, exclusions, official sources, and technical trace with no console error or layout overflow. Because the deployed bytes are identical to the locally reviewed artifact whose complete calculator journey observed zero external request, the browser-local salary/privacy invariant remains satisfied.
+
+The documentation-only commit containing RUN-023 advances `main` without changing application code, fiscal logic, configuration, dependencies, or the built application artifact. Netto V1 is formally released only when the Cloudflare Pages check attached to that exact closure commit completes successfully; this makes the final Git/Pages association durable without embedding an impossible self-referential commit SHA inside the commit itself.
 
 ## Canonical orientation
 
@@ -102,5 +110,6 @@ No Git remote exists, GitHub CLI is not authenticated, and no authorized Cloudfl
 - [Independent M4 product/accessibility review](docs/ai-engineering/runs/2026-08-23-020-m4-independent-product-accessibility-review.md)
 - [M4.1 polish and reconciliation run](docs/ai-engineering/runs/2026-08-23-021-m4-product-polish-reconciliation.md)
 - [M5 release hardening run](docs/ai-engineering/runs/2026-08-23-022-m5-release-hardening.md)
+- [Production deployment closure](docs/ai-engineering/runs/2026-08-23-023-production-deployment-closure.md)
 
 This file is a snapshot, not a diary. It describes authority recorded in canonical artifacts; it does not create authority.

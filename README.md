@@ -4,7 +4,7 @@
 
 Netto is a transparent Italian gross-to-net salary estimator built as a production-minded product prototype. It gives an immediate annual and monthly answer, then lets the user inspect every modeled contribution, tax, relief, assumption, and authoritative source.
 
-**Live demo:** awaiting the one-time GitHub and Cloudflare Pages Git-integration step. The reviewed release artifact is reproducible locally from `main`.
+**Live demo:** [netto-c2o.pages.dev](https://netto-c2o.pages.dev/)
 
 ## The supported estimate
 
