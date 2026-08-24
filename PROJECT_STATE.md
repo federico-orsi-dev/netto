@@ -7,8 +7,8 @@
 - **Current task:** none
 - **Next permitted milestone:** none; submit the current artifact rather than extend it
 - **Pending human gate:** none
-- **Release:** the final submission artifact is live at [netto-c2o.pages.dev](https://netto-c2o.pages.dev/); code-bearing commit `d60208fad58b64c51031020a48e0b7f042571e3e` passed GitHub Quality and Cloudflare Pages with byte-identical JavaScript and CSS
-- **Last meaningful run:** `RUN-2026-08-24-028` — final production submission closure
+- **Release:** the final submission artifact is live at [netto-c2o.pages.dev](https://netto-c2o.pages.dev/); code-bearing commit `53df1de25bbf43905186ada48a1dced95ef0531c` passed GitHub Quality and Cloudflare Pages with byte-identical JavaScript and CSS
+- **Last meaningful run:** `RUN-2026-08-24-029` — hero headline typography correction
 - **Last updated:** 2026-08-24
 
 ## M1 closure
@@ -113,6 +113,12 @@ For every material changed component, the interface keeps distinct: current and 
 The landing composition, ink/paper/cobalt palette, square document-like controls, and asymmetric explanation layout derive from the salary transformation rather than a reusable fintech dashboard. The Italian product remains intentionally paired with a concise English-first hiring README. Fiscal rules, calculation engine, supported scope, dependencies, privacy, and deployment architecture are unchanged.
 
 Local release validation passes 125 Vitest tests, the explicit 110,001-input exhaustive gate, 14 Chromium/WebKit Playwright and covered axe journeys, strict type/lint/format checks, the production build and artifact inspection, and a zero-finding production dependency audit. GitHub Quality and Cloudflare Pages passed code-bearing commit `d60208fad58b64c51031020a48e0b7f042571e3e`; the public JavaScript and CSS are byte-identical to the local release build and the final product journey passed production smoke testing. No submission blocker remains.
+
+## Hero headline typography correction
+
+Code-bearing commit `53df1de25bbf43905186ada48a1dced95ef0531c` corrects the hero headline's only remaining glyph collision without changing its wording, scale, four-line composition, product hierarchy, fiscal behavior, or dependencies. Desktop line-height is `0.98` with `-0.045em` tracking; narrow layouts use `1` line-height with `-0.04em` tracking. A focused Playwright regression enforces the minimum vertical rhythm and tracking bounds in Chromium desktop and WebKit mobile.
+
+All local release gates pass with 125 Vitest tests, the 110,001-input exhaustive fiscal gate, and 16 Playwright journeys. GitHub Quality and Cloudflare Pages passed the exact code-bearing commit. Production serves byte-identical CSS and JavaScript, retains its security headers, and renders the corrected headline without horizontal overflow at 320 CSS pixels.
 
 ## Canonical orientation
 
