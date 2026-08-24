@@ -92,6 +92,35 @@ test("translates one RAL and one compensation change without external requests",
   expect(externalRequests).toEqual([]);
 });
 
+test("keeps the hero headline legible without typographic collisions", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const headline = page.getByRole("heading", {
+    name: "Capire lo stipendio, prima di accettarlo.",
+  });
+
+  const typography = await headline.evaluate((element) => {
+    const browser = globalThis as unknown as {
+      getComputedStyle: (target: unknown) => {
+        fontSize: string;
+        letterSpacing: string;
+        lineHeight: string;
+      };
+    };
+    const style = browser.getComputedStyle(element);
+    const fontSize = Number.parseFloat(style.fontSize);
+
+    return {
+      letterSpacingRatio: Number.parseFloat(style.letterSpacing) / fontSize,
+      lineHeightRatio: Number.parseFloat(style.lineHeight) / fontSize,
+    };
+  });
+
+  expect(typography.lineHeightRatio).toBeGreaterThanOrEqual(0.97);
+  expect(typography.letterSpacingRatio).toBeGreaterThanOrEqual(-0.05);
+});
+
 test("represents low-RAL benefits without implying employer overpayment", async ({
   page,
 }) => {
