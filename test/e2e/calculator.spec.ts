@@ -19,6 +19,49 @@ async function expectNoHorizontalPageScroll(page: Page) {
     .toBeLessThanOrEqual(1);
 }
 
+async function expectNoUnexpectedVisibleOverflow(page: Page) {
+  const offenders = await page.locator("body *").evaluateAll((elements) => {
+    const browser = globalThis as unknown as {
+      getComputedStyle: (target: unknown) => {
+        display: string;
+        overflowX: string;
+        visibility: string;
+      };
+    };
+
+    return elements
+      .filter((element) => {
+        const style = browser.getComputedStyle(element);
+        const bounds = element.getBoundingClientRect();
+        const overflowIsContained = [
+          "auto",
+          "clip",
+          "hidden",
+          "scroll",
+        ].includes(style.overflowX);
+
+        return (
+          bounds.width > 1 &&
+          style.display !== "inline" &&
+          style.display !== "none" &&
+          style.visibility !== "hidden" &&
+          !overflowIsContained &&
+          element.tagName !== "INPUT" &&
+          element.tagName !== "SPAN" &&
+          element.tagName !== "TEXTAREA" &&
+          element.scrollWidth - element.clientWidth > 4
+        );
+      })
+      .map((element) => ({
+        className: String(element.className).slice(0, 80),
+        overflow: element.scrollWidth - element.clientWidth,
+        tagName: element.tagName,
+      }));
+  });
+
+  expect(offenders).toEqual([]);
+}
+
 async function calculate(page: Page, ral: string) {
   await page.getByLabel(/La tua RAL/).fill(ral);
   await page.getByRole("button", { name: "Traduci la RAL" }).click();
@@ -121,6 +164,72 @@ test("keeps the hero headline legible without typographic collisions", async ({
   expect(typography.letterSpacingRatio).toBeGreaterThanOrEqual(-0.05);
 });
 
+test("keeps the opening usable across the responsive continuum", async ({
+  page,
+}) => {
+  const widths = [
+    320, 360, 390, 430, 480, 560, 640, 672, 680, 700, 768, 832, 840, 900, 960,
+    1024, 1100, 1152, 1160, 1280, 1440, 1600, 1920,
+  ];
+  const viewports = [
+    ...widths.map((width) => ({ width, height: 900 })),
+    { width: 667, height: 375 },
+    { width: 844, height: 390 },
+    { width: 768, height: 1024 },
+    { width: 1024, height: 600 },
+    { width: 1280, height: 600 },
+  ];
+
+  await page.goto("/");
+  const input = page.getByLabel(/La tua RAL/);
+  const submit = page.getByRole("button", { name: "Traduci la RAL" });
+
+  for (const viewport of viewports) {
+    await page.setViewportSize(viewport);
+    await input.fill("120.000");
+    await expect(input).toBeVisible();
+    await expect(submit).toBeVisible();
+    await expectNoHorizontalPageScroll(page);
+    await expectNoUnexpectedVisibleOverflow(page);
+
+    const layout = await input.evaluate((element) => {
+      const inputBounds = element.getBoundingClientRect();
+      const fieldGroup = element.parentElement?.parentElement;
+      const form = fieldGroup?.parentElement;
+      const submitButton = form?.querySelector("button");
+      const fieldBounds = fieldGroup?.getBoundingClientRect();
+      const buttonBounds = submitButton?.getBoundingClientRect();
+
+      return {
+        fieldOverflow:
+          (fieldGroup?.scrollWidth ?? 0) - (fieldGroup?.clientWidth ?? 0),
+        inputWidth: inputBounds.width,
+        overlapsSubmit:
+          fieldBounds !== undefined &&
+          buttonBounds !== undefined &&
+          fieldBounds.left < buttonBounds.right &&
+          fieldBounds.right > buttonBounds.left &&
+          fieldBounds.top < buttonBounds.bottom &&
+          fieldBounds.bottom > buttonBounds.top,
+      };
+    });
+
+    const viewportLabel = `${viewport.width}×${viewport.height}`;
+    expect(
+      layout.inputWidth,
+      `RAL input width at ${viewportLabel}`,
+    ).toBeGreaterThan(100);
+    expect(
+      layout.fieldOverflow,
+      `RAL field overflow at ${viewportLabel}`,
+    ).toBeLessThanOrEqual(1);
+    expect(
+      layout.overlapsSubmit,
+      `RAL controls overlap at ${viewportLabel}`,
+    ).toBe(false);
+  }
+});
+
 test("represents low-RAL benefits without implying employer overpayment", async ({
   page,
 }) => {
@@ -198,6 +307,49 @@ test("validates the proposed RAL without losing the current translation", async 
   await expect(
     page.getByRole("heading", { name: "La tua RAL, tradotta" }),
   ).toBeVisible();
+});
+
+test("keeps calculation, comparison, and evidence coherent at intermediate widths", async ({
+  page,
+}) => {
+  test.slow();
+  const scenarios = [
+    { width: 700, current: "10.000", proposed: "20.000" },
+    { width: 840, current: "55.240", proposed: "55.241" },
+    { width: 1024, current: "46.000", proposed: "45.000" },
+    { width: 1100, current: "120.000", proposed: "10.000" },
+  ];
+
+  for (const scenario of scenarios) {
+    await page.setViewportSize({ width: scenario.width, height: 720 });
+    await page.goto("/");
+    await calculate(page, scenario.current);
+    await expectNoHorizontalPageScroll(page);
+    await expectNoUnexpectedVisibleOverflow(page);
+    await compare(page, scenario.proposed);
+    await expectNoHorizontalPageScroll(page);
+    await expectNoUnexpectedVisibleOverflow(page);
+
+    await page
+      .getByRole("group", { name: "Mensilità" })
+      .getByText("14", { exact: true })
+      .click();
+    await expect(page.getByRole("radio", { name: "14" })).toBeChecked();
+    const explanation = page
+      .getByText("Capire e verificare questa voce")
+      .first();
+
+    if (await explanation.isVisible()) {
+      await explanation.click();
+      const evidence = page
+        .getByText("Verifica formula, regole e fonti")
+        .first();
+      if (await evidence.isVisible()) await evidence.click();
+    }
+
+    await expectNoHorizontalPageScroll(page);
+    await expectNoUnexpectedVisibleOverflow(page);
+  }
 });
 
 test("reflows the full comparison at 320 CSS pixels", async ({ page }) => {

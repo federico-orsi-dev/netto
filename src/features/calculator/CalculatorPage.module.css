@@ -74,7 +74,7 @@
 .intro h1 {
   max-width: 11ch;
   margin-bottom: var(--space-4);
-  font-size: clamp(2.8rem, 6.2vw, 5.6rem);
+  font-size: clamp(2.65rem, 6.2vw, 5.6rem);
   font-weight: 780;
   letter-spacing: -0.045em;
   line-height: 0.98;
@@ -185,6 +185,19 @@
   text-align: right;
 }
 
+@media (max-width: 72rem) {
+  .intro {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .introAction {
+    width: min(100%, 54rem);
+    margin-left: auto;
+  }
+}
+
 @media (max-width: 42rem) {
   .header,
   .intro,
@@ -198,12 +211,7 @@
     display: none;
   }
 
-  .intro {
-    grid-template-columns: 1fr;
-  }
-
   .intro h1 {
-    font-size: clamp(2.65rem, 13vw, 4.25rem);
     letter-spacing: -0.04em;
     line-height: 1;
   }
