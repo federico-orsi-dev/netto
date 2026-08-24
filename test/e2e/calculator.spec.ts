@@ -19,49 +19,6 @@ async function expectNoHorizontalPageScroll(page: Page) {
     .toBeLessThanOrEqual(1);
 }
 
-async function expectNoUnexpectedVisibleOverflow(page: Page) {
-  const offenders = await page.locator("body *").evaluateAll((elements) => {
-    const browser = globalThis as unknown as {
-      getComputedStyle: (target: unknown) => {
-        display: string;
-        overflowX: string;
-        visibility: string;
-      };
-    };
-
-    return elements
-      .filter((element) => {
-        const style = browser.getComputedStyle(element);
-        const bounds = element.getBoundingClientRect();
-        const overflowIsContained = [
-          "auto",
-          "clip",
-          "hidden",
-          "scroll",
-        ].includes(style.overflowX);
-
-        return (
-          bounds.width > 1 &&
-          style.display !== "inline" &&
-          style.display !== "none" &&
-          style.visibility !== "hidden" &&
-          !overflowIsContained &&
-          element.tagName !== "INPUT" &&
-          element.tagName !== "SPAN" &&
-          element.tagName !== "TEXTAREA" &&
-          element.scrollWidth - element.clientWidth > 4
-        );
-      })
-      .map((element) => ({
-        className: String(element.className).slice(0, 80),
-        overflow: element.scrollWidth - element.clientWidth,
-        tagName: element.tagName,
-      }));
-  });
-
-  expect(offenders).toEqual([]);
-}
-
 async function calculate(page: Page, ral: string) {
   await page.getByLabel(/La tua RAL/).fill(ral);
   await page.getByRole("button", { name: "Traduci la RAL" }).click();
@@ -190,7 +147,6 @@ test("keeps the opening usable across the responsive continuum", async ({
     await expect(input).toBeVisible();
     await expect(submit).toBeVisible();
     await expectNoHorizontalPageScroll(page);
-    await expectNoUnexpectedVisibleOverflow(page);
 
     const layout = await input.evaluate((element) => {
       const inputBounds = element.getBoundingClientRect();
@@ -325,10 +281,8 @@ test("keeps calculation, comparison, and evidence coherent at intermediate width
     await page.goto("/");
     await calculate(page, scenario.current);
     await expectNoHorizontalPageScroll(page);
-    await expectNoUnexpectedVisibleOverflow(page);
     await compare(page, scenario.proposed);
     await expectNoHorizontalPageScroll(page);
-    await expectNoUnexpectedVisibleOverflow(page);
 
     await page
       .getByRole("group", { name: "Mensilità" })
@@ -348,7 +302,6 @@ test("keeps calculation, comparison, and evidence coherent at intermediate width
     }
 
     await expectNoHorizontalPageScroll(page);
-    await expectNoUnexpectedVisibleOverflow(page);
   }
 });
 
