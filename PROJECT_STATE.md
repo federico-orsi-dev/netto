@@ -7,8 +7,8 @@
 - **Current task:** none
 - **Next permitted milestone:** none; submit the current artifact rather than extend it
 - **Pending human gate:** none
-- **Release:** the final submission artifact is live at [netto-c2o.pages.dev](https://netto-c2o.pages.dev/); code-bearing commit `53df1de25bbf43905186ada48a1dced95ef0531c` passed GitHub Quality and Cloudflare Pages with byte-identical JavaScript and CSS
-- **Last meaningful run:** `RUN-2026-08-24-029` — hero headline typography correction
+- **Release:** the final submission artifact is live at [netto-c2o.pages.dev](https://netto-c2o.pages.dev/); responsive product commit `c65d44de2dc4d49f8c08b6a4449ad3b8ce9c2d48` and test-reliability follow-up `b893775eb7ad9057301f3a51e47947d52f4e95b0` passed GitHub Quality and Cloudflare Pages with byte-identical production artifacts
+- **Last meaningful run:** `RUN-2026-08-24-030` — responsive integrity release
 - **Last updated:** 2026-08-24
 
 ## M1 closure
@@ -120,6 +120,14 @@ Code-bearing commit `53df1de25bbf43905186ada48a1dced95ef0531c` corrects the hero
 
 All local release gates pass with 125 Vitest tests, the 110,001-input exhaustive fiscal gate, and 16 Playwright journeys. GitHub Quality and Cloudflare Pages passed the exact code-bearing commit. Production serves byte-identical CSS and JavaScript, retains its security headers, and renders the corrected headline without horizontal overflow at 320 CSS pixels.
 
+## Responsive integrity release
+
+A dense viewport-continuum audit found one material structural defect left by the earlier phone/desktop breakpoint model: between 680 and 1,152 CSS pixels the two-column opening compressed the salary field until values were partially hidden, while the separate mobile headline formula created an abrupt type-size jump at 672/680 pixels. Results, comparison, disclosures, long evidence, and the 320-pixel product journey were otherwise coherent.
+
+The opening now uses one fluid headline scale and vertically composes through 72rem, with the calculator constrained and right-aligned at medium widths before the intentional wide two-column composition resumes. The correction adds one media-query group, eight net authored CSS lines, no component, no dependency, and no duplicated mobile markup. Focused Playwright coverage now sweeps 23 widths from 320 through 1,920 CSS pixels plus phone-landscape, tablet, and short-laptop aspect ratios, and exercises calculation, comparison, rule-boundary, instalment, explanation, and evidence states at intermediate widths.
+
+Local validation passes 125 Vitest tests, all 110,001 supported whole-euro RAL inputs, and 20 Playwright journeys across Chromium and WebKit with the covered axe checks. GitHub Quality and Cloudflare Pages passed final product/test commit `b893775eb7ad9057301f3a51e47947d52f4e95b0`. Production returns HTTPS 200 with the expected security headers and byte-identical JavaScript/CSS. The fiscal engine, product scope, canonical numeric ownership, privacy boundary, architecture, components, and runtime dependencies are unchanged.
+
 ## Canonical orientation
 
 - [Product specification](docs/product/product-spec.md)
@@ -151,5 +159,7 @@ All local release gates pass with 125 Vitest tests, the 110,001-input exhaustive
 - [Final submission acceptance](docs/ai-engineering/runs/2026-08-23-026-final-submission-acceptance.md)
 - [Final visual authorship and compensation causality](docs/ai-engineering/runs/2026-08-24-027-final-visual-authorship.md)
 - [Final production submission closure](docs/ai-engineering/runs/2026-08-24-028-final-production-submission-closure.md)
+- [Hero headline typography correction](docs/ai-engineering/runs/2026-08-24-029-hero-headline-typography.md)
+- [Responsive integrity release](docs/ai-engineering/runs/2026-08-24-030-responsive-integrity.md)
 
 This file is a snapshot, not a diary. It describes authority recorded in canonical artifacts; it does not create authority.
